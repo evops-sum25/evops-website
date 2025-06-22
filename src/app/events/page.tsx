@@ -4,7 +4,7 @@ import TagBar from "@/components/shared/TagBar";
 import Image from "next/image";
 
 export default function Home() {
-  const tags = ["BDSM", "math", "B23", "study", "math3"];
+  const tags = ["bdsm", "math", "b23", "study", "math3"];
 
   return (
     <main className="flex h-screen w-screen flex-col items-center overflow-x-hidden">

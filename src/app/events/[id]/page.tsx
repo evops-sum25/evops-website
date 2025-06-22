@@ -28,7 +28,7 @@ export default function EventFeed() {
       <Image src={test} alt="event" className="w-full" />
       <div className="flex flex-row gap-2 overflow-auto p-2">
         {tagData.map(({ name, color }, i) => (
-          <Tag name={name} color={color} key={i} />
+          <Tag key={i} name={name} color={color} />
         ))}
       </div>
     </main>

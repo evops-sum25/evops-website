@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-type TagColor =
+export type TagColor =
   | "red"
   | "orange"
   | "yellow"
@@ -11,12 +11,12 @@ type TagColor =
   | "pink"
   | "gray";
 
-interface Props {
+export interface TagProps {
   name: string;
   color: TagColor;
 }
 
-export default function Tag(props: Props) {
+export default function Tag(props: TagProps) {
   return (
     <button
       className={clsx([

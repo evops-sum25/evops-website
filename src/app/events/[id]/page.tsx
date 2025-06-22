@@ -1,9 +1,8 @@
 import test from "@/../public/test.png";
 import Tag from "@/components/shared/Tag";
 import Image from "next/image";
-import { type ReactElement } from "react";
 
-export default function EventFeed(): ReactElement {
+export default function EventFeed() {
   const tagData = [
     { name: "study", color: "orange" },
     { name: "study", color: "green" },

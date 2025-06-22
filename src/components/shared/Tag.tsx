@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import { type ReactElement } from "react";
 
 type TagColor =
   | "red"
@@ -17,7 +16,7 @@ interface Props {
   color: TagColor;
 }
 
-export default function Tag(props: Props): ReactElement {
+export default function Tag(props: Props) {
   return (
     <button
       className={clsx([

@@ -3,7 +3,7 @@ import ArrowControl from "@/components/shared/ArrowControl";
 import TagBar from "@/components/shared/TagBar";
 import Image from "next/image";
 
-export default function Home(): React.ReactNode {
+export default function Home() {
   const tags = ["BDSM", "math", "B23", "study", "math3"];
 
   return (

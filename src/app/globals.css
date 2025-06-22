@@ -24,3 +24,7 @@ body {
 .scroll-hide::-webkit-scrollbar {
   display: none;
 }
+
+.evops-tag {
+  @apply rounded-xl bg-[#99ACF9] p-2 font-bold text-white;
+}

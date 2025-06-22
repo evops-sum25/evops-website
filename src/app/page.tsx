@@ -13,7 +13,7 @@ export default function Home(): React.ReactNode {
           <button className="text-md rounded-xl bg-[#E26E6E] p-2 font-bold text-white">
             BDSM
           </button>
-          <button className="text-md rounded-xl bg-[#99ACF9] p-2 font-bold text-white">
+          <button className="evops-tag">
             math
           </button>
           <button className="text-md rounded-xl bg-[#99ACF9] p-2 font-bold text-white">

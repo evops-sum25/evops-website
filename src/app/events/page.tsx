@@ -3,9 +3,9 @@ import test from "../../../public/test.png";
 
 export default function Home(): React.ReactNode {
   return (
-    <main className="flex h-screen w-screen flex-col items-center overflow-x-hidden">
+    <main className="flex h-screen w-screen flex-col items-center">
       <div className="flex w-full flex-col items-center space-y-2">
-        <h1 className="ml-8 w-full text-2xl font-bold text-black">
+        <h1 className="text-base-content ml-8 w-full text-2xl font-bold">
           Probstat Final Preparation
         </h1>
         <Image src={test} alt="event" className="w-full" />

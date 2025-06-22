@@ -1,18 +1,13 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-:root {
-  --background: #ffffff;
-}
-
 @theme inline {
-  --color-background: var(--background);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 body {
-  background: var(--background);
+  @apply bg-base-300;
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -26,5 +21,9 @@ body {
 }
 
 .evops-tag {
-  @apply rounded-xl bg-[#99ACF9] p-2 font-bold text-white;
+  @apply text-neutral-content rounded-lg px-3 py-1 font-bold;
+}
+
+.evops-predef {
+  @apply bg-blue-500;
 }

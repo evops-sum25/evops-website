@@ -1,5 +1,5 @@
-import test from "../../public/test.png";
 import Image from "next/image";
+import test from "../../../public/test.png";
 
 export default function Home(): React.ReactNode {
   return (

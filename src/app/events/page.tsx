@@ -1,7 +1,7 @@
-import Image from "next/image";
 import test from "@/../public/test.png";
-import TagBar from "@/components/shared/TagBar";
 import ArrowControl from "@/components/shared/ArrowControl";
+import TagBar from "@/components/shared/TagBar";
+import Image from "next/image";
 
 export default function Home(): React.ReactNode {
   const tags = ["BDSM", "math", "B23", "study", "math3"];

@@ -1,7 +1,7 @@
 "use client";
-import React, { useState } from "react";
 import clsx from "clsx";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import { useState } from "react";
 
 export default function ArrowControl() {
   const [activeArrow, setActiveArrow] = useState<"up" | "down" | null>(null);

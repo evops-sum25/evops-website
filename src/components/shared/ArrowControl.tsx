@@ -1,8 +1,9 @@
 "use client";
 import React, { useState } from "react";
+import clsx from "clsx";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
-export default function ArrowControlClient() {
+export default function ArrowControl() {
   const [activeArrow, setActiveArrow] = useState<"up" | "down" | null>(null);
 
   return (
@@ -11,14 +12,20 @@ export default function ArrowControlClient() {
         <ChevronUp
           size={40}
           strokeWidth={activeArrow === "up" ? 3 : 1}
-          color={activeArrow === "up" ? "#2ECC71" : "#000"}
+          className={clsx(
+            "transition-colors",
+            activeArrow === "up" ? "text-green-500" : "text-base-content",
+          )}
         />
       </button>
       <button onClick={() => setActiveArrow("down")} className="cursor-pointer">
         <ChevronDown
           size={40}
           strokeWidth={activeArrow === "down" ? 3 : 1}
-          color={activeArrow === "down" ? "#FF5449" : "#000"}
+          className={clsx(
+            "transition-colors",
+            activeArrow === "down" ? "text-red-500" : "text-base-content",
+          )}
         />
       </button>
     </div>

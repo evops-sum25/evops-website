@@ -1,5 +1,5 @@
 import Image from "next/image";
-import test from "../../../public/test.png";
+import test from "@/../public/test.png";
 import TagBar from "@/components/shared/TagBar";
 import ArrowControl from "@/components/shared/ArrowControl";
 

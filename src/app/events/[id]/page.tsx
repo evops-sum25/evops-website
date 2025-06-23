@@ -40,9 +40,11 @@ export default function EventPage() {
 
   return (
     <>
-      <a href="../" className="btn btn-ghost btn-circle">
-        <ChevronLeft />
-      </a>
+      <nav>
+        <a href="../" className="btn btn-ghost btn-circle">
+          <ChevronLeft />
+        </a>
+      </nav>
 
       <main className="flex w-screen flex-col items-center">
         <div className="flex w-192 max-w-full flex-col">

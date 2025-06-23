@@ -66,9 +66,10 @@ export default function EventPage() {
           </div>
 
           <div className="flex flex-row gap-2">
-            {event.imageUrls.keys().map((i) => (
-              <a href={`#image-${i + 1}`}>{i + 1}</a>
-            ))}
+            {event.imageUrls
+              .keys()
+              .map((i) => <a href={`#image-${i + 1}`}>{i + 1}</a>)
+              .toArray()}
           </div>
         </div>
 

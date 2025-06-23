@@ -21,9 +21,7 @@ export default function EventPage() {
       id: "01979d7b-424d-7f92-a5ad-8aed8a065255",
       name: "Ilya-Linh Nguen",
     },
-    imageUrls: [
-      "https://img.redbull.com/images/c_crop,x_321,y_0,h_1049,w_787/c_fill,w_450,h_600/q_auto:low,f_auto/redbullcom/2020/4/19/d1jrdrpou7hvstulfozq/red-bull-campus-clutch-valorant-agents-phoenix-jett",
-    ],
+    imageUrls: [test, test],
     title: "Valorant Training",
     description:
       "Come if you want to become a candidate for master of sport! Lorem ipsum dolor sit amet, lorem ipsum dolor sit amet.",
@@ -41,11 +39,39 @@ export default function EventPage() {
 
   return (
     <main className="flex w-screen flex-col items-center">
-      <div className="w-192 max-w-full">
+      <div className="flex w-192 max-w-full flex-col">
         <h2 className="text-base-content/50">{event.author.name}</h2>
         <h2 className="text-4xl font-bold">{event.title}</h2>
 
-        <Image src={test} alt="Event thumbnail" className="w-full rounded-md" />
+        <div className="flex flex-col items-center">
+          <div className="carousel h-120 w-full rounded-md">
+            {event.imageUrls.map((src, i) => (
+              <div
+                key={i}
+                className="carousel-item relative flex size-full flex-row justify-center"
+                id={`image-${i + 1}`}
+              >
+                <Image
+                  src={src}
+                  alt="Event thumbnail"
+                  className="z-10 h-auto max-h-full w-auto max-w-full rounded-md"
+                />
+                <Image
+                  src={src}
+                  alt="Event thumbnail"
+                  className="absolute size-full object-fill blur-3xl"
+                />
+              </div>
+            ))}
+          </div>
+
+          <div className="flex flex-row gap-2">
+            {event.imageUrls.keys().map((i) => (
+              <a href={`#image-${i + 1}`}>{i + 1}</a>
+            ))}
+          </div>
+        </div>
+
         <div className="flex flex-row flex-wrap gap-2">
           {event.tags.map(({ name }, i) => (
             <Tag key={i} name={name} color="blue" />

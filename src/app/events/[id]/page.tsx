@@ -47,12 +47,14 @@ export default function EventPage() {
       </nav>
 
       <main className="flex w-screen flex-col items-center">
-        <div className="flex w-192 max-w-full flex-col">
-          <h2 className="text-base-content/50">{event.author.name}</h2>
-          <h2 className="text-4xl font-bold">{event.title}</h2>
+        <div className="flex w-192 max-w-full flex-col gap-2">
+          <div className="flex flex-col gap-2 px-2">
+            <span className="text-base-content/50">{event.author.name}</span>
+            <h2 className="text-4xl font-bold">{event.title}</h2>
+          </div>
 
-          <div className="flex flex-col items-center">
-            <div className="carousel h-120 w-full rounded-md">
+          <div className="relative flex flex-col items-center">
+            <div className="carousel aspect-square max-h-120 w-full rounded-md">
               {event.imageUrls.map((src, i) => (
                 <div
                   key={i}
@@ -72,12 +74,15 @@ export default function EventPage() {
                 </div>
               ))}
             </div>
-
-            <div className="flex flex-row gap-2">
+            <div className="bg-neutral/50 text-neutral-content absolute bottom-2 z-20 flex flex-row rounded-full">
               {event.imageUrls
                 .keys()
                 .map((i) => (
-                  <a key={i} href={`#image-${i + 1}`}>
+                  <a
+                    key={i}
+                    href={`#image-${i + 1}`}
+                    className="btn btn-ghost btn-circle btn-sm"
+                  >
                     {i + 1}
                   </a>
                 ))
@@ -85,13 +90,15 @@ export default function EventPage() {
             </div>
           </div>
 
-          <div className="flex flex-row flex-wrap gap-2">
-            {event.tags.map(({ name }, i) => (
-              <Tag key={i} name={name} color="blue" />
-            ))}
-          </div>
+          <div className="flex flex-col gap-2 px-2">
+            <div className="flex flex-row flex-wrap gap-2">
+              {event.tags.map(({ name }, i) => (
+                <Tag key={i} name={name} color="blue" />
+              ))}
+            </div>
 
-          <p>{event.description}</p>
+            <p>{event.description}</p>
+          </div>
         </div>
       </main>
     </>

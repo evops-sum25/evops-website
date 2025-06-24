@@ -2,6 +2,7 @@
 
 import clsx from "clsx";
 import { ChevronLeft, User } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 
 function pseudoValidateUserName(userName: string): boolean {
@@ -15,14 +16,14 @@ export default function SignUpPage() {
   return (
     <>
       <nav>
-        <a href="../" className="btn btn-ghost btn-circle">
+        <Link href="../" className="btn btn-ghost btn-circle">
           <ChevronLeft />
-        </a>
+        </Link>
       </nav>
-      <main className="flex w-screen flex-col items-center justify-center p-4">
+      <main className="flex h-screen w-screen flex-col items-center justify-center p-4">
         <fieldset className="fieldset flex w-full max-w-96 flex-col items-center gap-4">
           <legend className="fieldset-legend w-full">
-            <h1 className="w-full text-center text-lg">New Account</h1>
+            <h1 className="w-full text-center text-lg">Sign Up</h1>
           </legend>
 
           <div className="input w-full">

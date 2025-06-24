@@ -2,11 +2,31 @@ import test from "@/../public/test.png";
 import ArrowControl from "@/components/shared/ArrowControl";
 import EventMeta from "@/components/shared/EventMeta";
 import ReactionsBar from "@/components/shared/ReactionsBar";
+import { TagProps } from "@/components/shared/Tag";
 import TagBar from "@/components/shared/TagBar";
 import Image from "next/image";
 
 export default function Home() {
-  const tags = ["bdsm", "math", "b23", "study", "math3"];
+  const tags: TagProps[] = [
+    {
+      id: "01979d7b-43c7-7781-82ab-620976261950",
+      name: "BSDM",
+      color: "cyan",
+      aliases: ["videogames", "esports", "cybersport"],
+    },
+    {
+      id: "01979d7b-43c7-7781-82ab-620976261959",
+      name: "okko",
+      color: "red",
+      aliases: ["videogames", "esports", "cybersport"],
+    },
+    {
+      id: "01979d7b-43c7-7781-82ab-620976261958",
+      name: "lupa",
+      color: "purple",
+      aliases: ["videogames", "esports", "cybersport"],
+    },
+  ];
   const reactions = [
     {
       emoji: "😀",
@@ -26,7 +46,7 @@ export default function Home() {
     },
   ];
 
-  const article =
+  const description =
     "Lorem ipsum dolor sit amet. Eum error unde qui omnis numquam qui voluptas architecto vel tempore explicabo ut reprehenderit facilis vel voluptas dolor et assumenda nesciunt. Qui quasi dolor est repudiandae voluptatem nam blanditiis aperiam ad quisquam doloribus";
   const timePlace = {
     place: "IU 108",
@@ -36,7 +56,7 @@ export default function Home() {
 
   return (
     <main className="flex h-screen w-screen flex-col items-center overflow-x-hidden">
-      <section className="card my-4 flex w-full flex-col items-center space-y-3">
+      <section className="card my-4 flex w-full flex-col items-center space-y-2">
         <div className="w-full">
           <h1 className="text-base-content ml-4 w-full text-2xl font-bold">
             Probstat Final Preparation
@@ -49,19 +69,21 @@ export default function Home() {
             />
           </figure>
         </div>
-        <TagBar tags={tags} />
-        <div className="flex w-full flex-row items-center justify-around px-2">
-          <ReactionsBar reactions={reactions} />
-          <ArrowControl />
+        <div className="flex flex-col items-center gap-3 px-2">
+          <TagBar tags={tags} />
+          <div className="flex w-full flex-row items-center justify-around">
+            <ReactionsBar reactions={reactions} />
+            <ArrowControl />
+          </div>
+          <article className="text-base-content clamping w-full text-start">
+            {description}
+          </article>
+          <EventMeta
+            date={timePlace.date}
+            place={timePlace.place}
+            time={timePlace.time}
+          />
         </div>
-        <article className="text-base-content clamping w-full px-2 text-start">
-          {article}
-        </article>
-        <EventMeta
-          date={timePlace.date}
-          place={timePlace.place}
-          time={timePlace.time}
-        />
       </section>
     </main>
   );

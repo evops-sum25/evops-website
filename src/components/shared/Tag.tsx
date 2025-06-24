@@ -12,8 +12,10 @@ export type TagColor =
   | "gray";
 
 export interface TagProps {
+  id: string;
   name: string;
-  color: TagColor;
+  color?: TagColor;
+  aliases: string[];
 }
 
 export default function Tag(props: TagProps) {

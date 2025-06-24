@@ -1,4 +1,4 @@
-interface EventMetaProps {
+export interface EventMetaProps {
   place: string;
   date: string;
   time: string;
@@ -13,7 +13,7 @@ export default function EventMeta({ place, date, time }: EventMetaProps) {
     minute: "2-digit",
   });
   return (
-    <div className="text-base-content mt-4 flex flex-row items-center gap-2 font-bold">
+    <div className="text-base-content flex flex-row items-center gap-2 text-center font-bold">
       <p>{place}</p>
       <span>|</span>
       <data value={date}>{date}</data>

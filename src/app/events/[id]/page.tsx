@@ -1,6 +1,11 @@
 import test from "@/../public/test.png";
-import Tag from "@/components/shared/Tag";
-import { ChevronLeft } from "lucide-react";
+import ArrowControl from "@/components/shared/ArrowControl";
+import EventMeta, { EventMetaProps } from "@/components/shared/EventMeta";
+import ReactionsBar from "@/components/shared/ReactionsBar";
+import { TagColor } from "@/components/shared/Tag";
+import TagBar from "@/components/shared/TagBar";
+import { formatDate } from "@/lib/functions/formatDate";
+import { ChevronLeft, Eye } from "lucide-react";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 
@@ -10,10 +15,12 @@ interface Event {
   id: string;
   author: { id: string; name: string; profilePictureUrl?: string };
   imageUrls: (string | StaticImageData)[];
-  tags: { id: string; name: string; aliases: string[] }[];
+  tags: { id: string; name: string; aliases: string[]; color?: TagColor }[];
   withAttendance: boolean;
   createdAt: string;
   modifiedAt: string;
+  reactions: { emoji: string; count: number }[];
+  metadata: EventMetaProps;
 }
 
 export default function EventPage() {
@@ -29,15 +36,53 @@ export default function EventPage() {
       "Come if you want to become a candidate for master of sport! Lorem ipsum dolor sit amet, lorem ipsum dolor sit amet.",
     tags: [
       {
+        id: "01979d7b-43c7-7781-82ab-620976261950",
+        name: "games",
+        color: "cyan",
+        aliases: ["videogames", "esports", "cybersport"],
+      },
+      {
         id: "01979d7b-43c7-7781-82ab-620976261959",
         name: "games",
+        color: "red",
+        aliases: ["videogames", "esports", "cybersport"],
+      },
+      {
+        id: "01979d7b-43c7-7781-82ab-620976261958",
+        name: "games",
+        color: "purple",
         aliases: ["videogames", "esports", "cybersport"],
       },
     ],
     withAttendance: true,
     createdAt: "2025-06-23T15:49:50.742836Z",
     modifiedAt: "2025-06-23T15:49:50.742836Z",
+    metadata: {
+      place: "IU 108",
+      date: "01.01.1970",
+      time: "18:30",
+    },
+    reactions: [
+      {
+        emoji: "😀",
+        count: 32,
+      },
+      {
+        emoji: "😇",
+        count: 52,
+      },
+      {
+        emoji: "🤗",
+        count: 2,
+      },
+      {
+        emoji: "🤪",
+        count: 32,
+      },
+    ],
   };
+
+  const { date, time } = formatDate(event.createdAt);
 
   return (
     <>
@@ -88,14 +133,35 @@ export default function EventPage() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-2 px-2">
-            <div className="flex flex-row flex-wrap gap-2">
-              {event.tags.map(({ name }, i) => (
-                <Tag key={i} name={name} color="blue" />
-              ))}
+          <div className="flex flex-col items-start gap-3 px-3">
+            <TagBar tags={event.tags} />
+
+            <div className="flex w-full flex-row items-center justify-around">
+              <ReactionsBar reactions={event.reactions} />
+              <ArrowControl />
             </div>
 
-            <p>{event.description}</p>
+            <EventMeta
+              date={event.metadata.date}
+              place={event.metadata.place}
+              time={event.metadata.time}
+            />
+
+            <article className="text-base-content w-full text-start">
+              {event.description}
+            </article>
+            <div className="flex w-full flex-row items-center justify-between">
+              <span className="text-base-content flex flex-row gap-1">
+                <Eye />
+                <p>900</p>
+              </span>
+
+              <span className="text-end text-xs">
+                {date}
+                <br />
+                {time}
+              </span>
+            </div>
           </div>
         </div>
       </main>

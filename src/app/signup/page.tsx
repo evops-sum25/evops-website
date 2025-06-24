@@ -1,6 +1,17 @@
+"use client";
+
+import clsx from "clsx";
 import { ChevronLeft, User } from "lucide-react";
+import { useState } from "react";
+
+function pseudoValidateUserName(userName: string): boolean {
+  return userName.length > 0;
+}
 
 export default function SignUpPage() {
+  const [userName, setUserName] = useState("");
+  const userNameIsValid = pseudoValidateUserName(userName);
+
   return (
     <>
       <nav>
@@ -16,10 +27,33 @@ export default function SignUpPage() {
 
           <div className="input w-full">
             <User className="text-base-content/50 size-4" />
-            <input type="text" className="w-full" required placeholder="Name" />
+            <input
+              type="text"
+              className="w-full"
+              required
+              placeholder="Name"
+              onChange={(event) => {
+                setUserName(event.target.value);
+              }}
+            />
           </div>
 
-          <button className="btn btn-primary w-full">Sign up</button>
+          <div
+            className={clsx([!userNameIsValid && "tooltip"])}
+            data-tip="The username cannot be empty."
+          >
+            <button
+              className="btn btn-primary w-full"
+              disabled={!userNameIsValid}
+              onClick={() => {
+                alert(
+                  `Pseudo-sending ${JSON.stringify({ form: { name: userName } })} to the back end.`,
+                );
+              }}
+            >
+              Sign up
+            </button>
+          </div>
         </fieldset>
       </main>
     </>

@@ -19,7 +19,7 @@ export default function SignUpPage() {
           <ChevronLeft />
         </a>
       </nav>
-      <main className="flex h-screen w-screen flex-col items-center justify-center p-4">
+      <main className="flex w-screen flex-col items-center justify-center p-4">
         <fieldset className="fieldset flex w-full max-w-96 flex-col items-center gap-4">
           <legend className="fieldset-legend w-full">
             <h1 className="w-full text-center text-lg">New Account</h1>

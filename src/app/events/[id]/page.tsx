@@ -55,7 +55,7 @@ export default function EventPage() {
           </div>
 
           <div className="relative flex flex-col items-center">
-            <div className="carousel aspect-square max-h-120 w-full rounded-md">
+            <figure className="carousel aspect-square max-h-120 w-full rounded-md">
               {event.imageUrls.map((src, i) => (
                 <div
                   key={i}
@@ -74,7 +74,7 @@ export default function EventPage() {
                   />
                 </div>
               ))}
-            </div>
+            </figure>
             <div className="bg-neutral/50 text-neutral-content absolute bottom-2 z-20 flex flex-row rounded-full">
               {event.imageUrls.map((_, i) => (
                 <Link

@@ -1,8 +1,16 @@
 @import "tailwindcss";
+
 @plugin "daisyui";
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family:
+    sans-serif -apple-system,
+    Arial,
+    Helvetica,
+    BlinkMacSystemFont,
+    "Segoe UI Emoji",
+    "Segoe UI Symbol",
+    "Noto Color Emoji";
 }
 
 .scroll-hide {

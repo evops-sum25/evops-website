@@ -39,7 +39,7 @@ export default function SignUpPage() {
           </div>
 
           <div
-            className={clsx([!userNameIsValid && "tooltip"])}
+            className={clsx(["w-full", !userNameIsValid && "tooltip"])}
             data-tip="The username cannot be empty."
           >
             <button

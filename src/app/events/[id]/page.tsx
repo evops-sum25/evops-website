@@ -1,14 +1,15 @@
 import test from "@/../public/test.png";
 import Tag from "@/components/shared/Tag";
 import { ChevronLeft } from "lucide-react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
+import Link from "next/link";
 
 interface Event {
   title: string;
   description: string;
   id: string;
   author: { id: string; name: string; profilePictureUrl?: string };
-  imageUrls: string[];
+  imageUrls: (string | StaticImageData)[];
   tags: { id: string; name: string; aliases: string[] }[];
   withAttendance: boolean;
   createdAt: string;
@@ -41,9 +42,9 @@ export default function EventPage() {
   return (
     <>
       <nav>
-        <a href="../" className="btn btn-ghost btn-circle">
+        <Link href="../" className="btn btn-ghost btn-circle">
           <ChevronLeft />
-        </a>
+        </Link>
       </nav>
 
       <main className="flex w-screen flex-col items-center">
@@ -75,18 +76,15 @@ export default function EventPage() {
               ))}
             </div>
             <div className="bg-neutral/50 text-neutral-content absolute bottom-2 z-20 flex flex-row rounded-full">
-              {event.imageUrls
-                .keys()
-                .map((i) => (
-                  <a
-                    key={i}
-                    href={`#image-${i + 1}`}
-                    className="btn btn-ghost btn-circle btn-sm"
-                  >
-                    {i + 1}
-                  </a>
-                ))
-                .toArray()}
+              {event.imageUrls.map((_, i) => (
+                <Link
+                  key={i}
+                  href={`#image-${i + 1}`}
+                  className="btn btn-ghost btn-circle btn-sm"
+                >
+                  {i + 1}
+                </Link>
+              ))}
             </div>
           </div>
 

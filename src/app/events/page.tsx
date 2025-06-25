@@ -1,7 +1,19 @@
+"use client";
 import { TagProps } from "@/components/shared/Tag";
 import TagBar from "@/components/shared/TagBar";
+import { ApiContext } from "@/lib/providers/ApiProvider";
+import { useContext } from "react";
 
 export default function Home() {
+  const api = useContext(ApiContext);
+
+  const eventData = api.eventService.list({});
+
+  const f = async () => {
+    return await eventData;
+  };
+
+  const l = await f();
   const tags: TagProps[] = [
     {
       id: "01979d7b-43c7-7781-82ab-620976261950",
@@ -48,7 +60,7 @@ export default function Home() {
           {/*  <ArrowControl />*/}
           {/*</div>*/}
           <article className="text-base-content clamping w-full text-start">
-            {description}
+            {}
           </article>
           {/*<EventMeta*/}
           {/*  date={timePlace.date}*/}

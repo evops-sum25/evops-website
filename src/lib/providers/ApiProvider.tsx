@@ -18,7 +18,7 @@ export const ApiContext = createContext<Api>(undefined!);
 
 export default function ApiProvider(props: { children: ReactNode }) {
   const grpcWebTransport = createGrpcWebTransport({
-    baseUrl: "http://127.0.0.1:8080",
+    baseUrl: process.env.publicApi!,
   });
 
   const eventService = createClient(EventService, grpcWebTransport);

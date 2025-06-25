@@ -15,8 +15,6 @@ interface Event {
   withAttendance: boolean;
   createdAt: string;
   modifiedAt: string;
-  // reactions: { emoji: string; count: number }[];
-  // metadata: EventMetaProps;
 }
 
 export default function EventPage() {
@@ -53,29 +51,6 @@ export default function EventPage() {
     withAttendance: true,
     createdAt: "2025-06-23T15:49:50.742836Z",
     modifiedAt: "2025-06-23T15:49:50.742836Z",
-    // metadata: {
-    //   place: "IU 108",
-    //   date: "01.01.1970",
-    //   time: "18:30",
-    // },
-    // reactions: [
-    //   {
-    //     emoji: "😀",
-    //     count: 32,
-    //   },
-    //   {
-    //     emoji: "😇",
-    //     count: 52,
-    //   },
-    //   {
-    //     emoji: "🤗",
-    //     count: 2,
-    //   },
-    //   {
-    //     emoji: "🤪",
-    //     count: 32,
-    //   },
-    // ],
   };
 
   const { date, time } = formatDate(event.createdAt);
@@ -132,26 +107,10 @@ export default function EventPage() {
           <div className="flex flex-col items-start gap-3 px-3">
             <TagBar tags={event.tags} />
 
-            {/*<div className="flex w-full flex-row items-center justify-around">*/}
-            {/*  <ReactionsBar reactions={event.reactions} />*/}
-            {/*  <ArrowControl />*/}
-            {/*</div>*/}
-
-            {/*<EventMeta*/}
-            {/*  date={event.metadata.date}*/}
-            {/*  place={event.metadata.place}*/}
-            {/*  time={event.metadata.time}*/}
-            {/*/>*/}
-
             <article className="text-base-content w-full text-start">
               {event.description}
             </article>
             <div className="flex w-full flex-row items-center justify-end">
-              {/*<span className="text-base-content flex flex-row gap-1">*/}
-              {/*  <Eye />*/}
-              {/*  <p>900</p>*/}
-              {/*</span>*/}
-
               <span className="text-end text-xs">
                 {date}
                 <br />

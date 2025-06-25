@@ -1,3 +1,4 @@
+import ApiProvider from "@/lib/providers/ApiProvider";
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -11,7 +12,9 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <ApiProvider>{children}</ApiProvider>
+      </body>
     </html>
   );
 }

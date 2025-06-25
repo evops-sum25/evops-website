@@ -1,5 +1,7 @@
 import { TagProps } from "@/components/shared/Tag";
 import TagBar from "@/components/shared/TagBar";
+import { ApiContext } from "@/lib/providers/ApiProvider";
+import { useContext } from "react";
 
 export default function Home() {
   const tags: TagProps[] = [
@@ -22,32 +24,9 @@ export default function Home() {
       aliases: ["videogames", "esports", "cybersport"],
     },
   ];
-  const reactions = [
-    {
-      emoji: "😀",
-      count: 32,
-    },
-    {
-      emoji: "😇",
-      count: 52,
-    },
-    {
-      emoji: "🤗",
-      count: 2,
-    },
-    {
-      emoji: "🤪",
-      count: 32,
-    },
-  ];
 
   const description =
     "Lorem ipsum dolor sit amet. Eum error unde qui omnis numquam qui voluptas architecto vel tempore explicabo ut reprehenderit facilis vel voluptas dolor et assumenda nesciunt. Qui quasi dolor est repudiandae voluptatem nam blanditiis aperiam ad quisquam doloribus";
-  const timePlace = {
-    place: "IU 108",
-    date: "01.01.1970",
-    time: "18:30",
-  };
 
   return (
     <main className="flex h-screen w-screen flex-col items-center overflow-x-hidden">

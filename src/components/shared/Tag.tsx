@@ -22,7 +22,7 @@ export default function Tag(props: TagProps) {
   return (
     <button
       className={clsx([
-        "btn btn-sm border-0 shadow-none active:text-white",
+        "btn btn-sm lg:btn-lg border-0 shadow-none active:text-white",
         props.color == "red" &&
           "bg-red-400/10 text-red-400 hover:bg-red-400/25 active:bg-red-400/75",
         props.color == "orange" &&

@@ -1,4 +1,3 @@
-import Api from "@/lib/functions/api";
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -12,9 +11,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className="antialiased">
-        <Api>{children}</Api>
-      </body>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }

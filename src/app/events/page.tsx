@@ -9,7 +9,7 @@ export default async function Home() {
   const response = await api.eventService.list({});
 
   return (
-    <main className="main-layout w-screen overflow-x-hidden px-80">
+    <main className="main-layout w-screen overflow-x-hidden px-4 lg:px-80">
       {response.events.map((event) => (
         <section
           key={event.id}

@@ -3,6 +3,7 @@
 import clsx from "clsx";
 import { ChevronLeft, User } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 function pseudoValidateUserName(userName: string): boolean {
@@ -13,6 +14,7 @@ export default function SignUpPage() {
   const [userName, setUserName] = useState("");
   const userNameIsValid = pseudoValidateUserName(userName);
 
+  const router = useRouter();
   return (
     <>
       <nav>
@@ -20,7 +22,7 @@ export default function SignUpPage() {
           <ChevronLeft />
         </Link>
       </nav>
-      <main className="flex h-screen w-screen flex-col items-center justify-center p-4">
+      <main className="flex h-full w-full flex-col items-center justify-center p-4">
         <fieldset className="fieldset flex w-full max-w-96 flex-col items-center gap-4">
           <legend className="fieldset-legend w-full">
             <h1 className="w-full text-center text-lg">Sign Up</h1>
@@ -47,9 +49,8 @@ export default function SignUpPage() {
               className="btn btn-primary w-full"
               disabled={!userNameIsValid}
               onClick={() => {
-                alert(
-                  `Pseudo-sending ${JSON.stringify({ form: { name: userName } })} to the back end.`,
-                );
+                localStorage.setItem("signedUp", "true");
+                router.push("/");
               }}
             >
               Sign up

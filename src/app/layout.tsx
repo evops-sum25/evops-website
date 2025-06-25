@@ -1,3 +1,4 @@
+import SingUpWrapper from "@/components/widgets/SingUpWrapper";
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -11,7 +12,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <SingUpWrapper />
+        {children}
+      </body>
     </html>
   );
 }

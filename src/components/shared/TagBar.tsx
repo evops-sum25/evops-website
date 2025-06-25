@@ -1,3 +1,4 @@
+"use client";
 import Tag, { TagProps } from "@/components/shared/Tag";
 
 export interface TagBarProps {

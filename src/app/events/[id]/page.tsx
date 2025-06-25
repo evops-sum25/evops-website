@@ -1,3 +1,5 @@
+"use server";
+
 import TagBar from "@/components/shared/TagBar";
 import getApi from "@/lib/functions/api";
 import { formatDate } from "@/lib/functions/formatDate";
@@ -5,12 +7,15 @@ import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 
 interface EventPageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
-export default async function EventPage({ params }: EventPageProps) {
+export default async function EventPage(props: EventPageProps) {
   const api = getApi();
-  const response = await api.eventService.find({ id: params.id });
+  const response = await api.eventService.find({
+    id: await props.params.then((it) => it.id),
+  });
+
   if (!response.event) {
     return <p>Error</p>;
   }

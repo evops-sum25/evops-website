@@ -1,16 +1,16 @@
 "use server";
+
 import TagBar from "@/components/shared/TagBar";
 import getApi from "@/lib/functions/api";
 import Link from "next/link";
 
 export default async function Home() {
   const api = getApi();
-
-  const event = await api.eventService.list({});
+  const response = await api.eventService.list({});
 
   return (
     <main className="flex h-screen w-screen flex-col items-center overflow-x-hidden">
-      {event.events.map((event) => (
+      {response.events.map((event) => (
         <Link
           key={event.id}
           href={`/events/${event.id}`}

@@ -71,18 +71,18 @@ export default function Home() {
         </div>
         <div className="flex flex-col items-center gap-3 px-2">
           <TagBar tags={tags} />
-          <div className="flex w-full flex-row items-center justify-around">
-            <ReactionsBar reactions={reactions} />
-            <ArrowControl />
-          </div>
+          {/*<div className="flex w-full flex-row items-center justify-around">*/}
+          {/*  <ReactionsBar reactions={reactions} />*/}
+          {/*  <ArrowControl />*/}
+          {/*</div>*/}
           <article className="text-base-content clamping w-full text-start">
             {description}
           </article>
-          <EventMeta
-            date={timePlace.date}
-            place={timePlace.place}
-            time={timePlace.time}
-          />
+          {/*<EventMeta*/}
+          {/*  date={timePlace.date}*/}
+          {/*  place={timePlace.place}*/}
+          {/*  time={timePlace.time}*/}
+          {/*/>*/}
         </div>
       </section>
     </main>

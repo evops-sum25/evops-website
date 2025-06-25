@@ -1,9 +1,9 @@
-"use client";
+"use server";
 
 import getApi from "@/lib/functions/api";
+import { redirect } from "next/navigation";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
-import { FormEvent, useEffect, useState } from "react";
 
 interface Tag {
   id: string;
@@ -11,73 +11,37 @@ interface Tag {
   aliases: string[];
 }
 
-export default function CreateEventPage() {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [imageUrls, setImageUrls] = useState<string[]>([""]);
-  const [tagIds, setTagIds] = useState<string[]>([]);
-  const [tags, setTags] = useState<Tag[]>([]);
-  const [withAttendance, setWithAttendance] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
+async function createEvent(formData: FormData) {
+  "use server";
+  const api = getApi();
+  const title = formData.get("title") as string;
+  const description = formData.get("description") as string;
+  const imageUrls = (formData.get("imageUrls") as string)?.split(",").map(s => s.trim()).filter(Boolean) ?? [];
+  const tagIds = formData.getAll("tagIds") as string[];
+  const withAttendance = formData.get("withAttendance") === "on";
+  const authorId = "demo-user-id"; // TODO: заменить на реальный user id из сессии
 
-  useEffect(() => {
-    const fetchTags = async () => {
-      try {
-        const api = getApi();
-        const response = await api.tagService.list({});
-        setTags(response.tags ?? []);
-      } catch (e) {
-        setError("Не удалось загрузить теги");
-      }
-    };
-    fetchTags();
-  }, []);
+  try {
+    await api.eventService.create({
+      form: {
+        authorId,
+        imageUrls,
+        title,
+        description,
+        tagIds,
+        withAttendance,
+      },
+    });
+    redirect("/events");
+  } catch (e) {
+    redirect("/events/create?error=1");
+  }
+}
 
-  const handleImageUrlChange = (idx: number, value: string) => {
-    setImageUrls((prev) => prev.map((url, i) => (i === idx ? value : url)));
-  };
-
-  const addImageUrlField = () => setImageUrls((prev) => [...prev, ""]);
-  const removeImageUrlField = (idx: number) =>
-    setImageUrls((prev) => prev.filter((_, i) => i !== idx));
-
-  const handleTagSelect = (id: string) => {
-    setTagIds((prev) =>
-      prev.includes(id) ? prev.filter((tid) => tid !== id) : [...prev, id],
-    );
-  };
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
-    setSuccess(false);
-    try {
-      const api = getApi();
-      await api.eventService.create({
-        form: {
-          title,
-          description,
-          authorId: "0197a6b7-5974-7ac3-ab48-39514390261b",
-          imageUrls: imageUrls.filter(Boolean),
-          tagIds: tagIds,
-          withAttendance: withAttendance,
-        },
-      });
-      setSuccess(true);
-      setTitle("");
-      setDescription("");
-      setImageUrls([""]);
-      setTagIds([]);
-      setWithAttendance(false);
-    } catch (e) {
-      setError("Ошибка при создании ивента");
-    } finally {
-      setLoading(false);
-    }
-  };
+export default async function CreateEventPage() {
+  const api = getApi();
+  const response = await api.tagService.list({});
+  const tags: Tag[] = response.tags ?? [];
 
   return (
     <>
@@ -89,73 +53,47 @@ export default function CreateEventPage() {
       <main className="main-layout w-full justify-center p-4">
         <form
           className="flex w-full max-w-2xl flex-col gap-4"
-          onSubmit={handleSubmit}
+          action={createEvent}
+          method="POST"
         >
           <fieldset className="fieldset flex flex-col gap-4">
-            <legend className="fieldset-legend text-lg">Создать ивент</legend>
-            {success && (
-              <div className="alert alert-success">Ивент успешно создан!</div>
-            )}
-            {error && <div className="alert alert-error">{error}</div>}
+            <legend className="fieldset-legend text-lg">Create Event</legend>
+            {/* Success and error messages will be handled via server response/redirect */}
             <input
               className="input input-bordered"
               type="text"
-              placeholder="Заголовок"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              name="title"
+              placeholder="Title"
               required
             />
             <textarea
               className="textarea textarea-bordered"
-              placeholder="Описание"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              name="description"
+              placeholder="Description"
               required
             />
             <div>
-              <label className="mb-2 block">Изображения</label>
-              {imageUrls.map((url, idx) => (
-                <div key={idx} className="mb-2 flex gap-2">
-                  <input
-                    className="input input-bordered flex-1"
-                    type="url"
-                    placeholder="Image URL"
-                    value={url}
-                    onChange={(e) => handleImageUrlChange(idx, e.target.value)}
-                  />
-                  {imageUrls.length > 1 && (
-                    <button
-                      type="button"
-                      className="btn btn-error"
-                      onClick={() => removeImageUrlField(idx)}
-                    >
-                      -
-                    </button>
-                  )}
-                  {idx === imageUrls.length - 1 && (
-                    <button
-                      type="button"
-                      className="btn btn-success"
-                      onClick={addImageUrlField}
-                    >
-                      +
-                    </button>
-                  )}
-                </div>
-              ))}
+              <label className="mb-2 block">Images</label>
+              <input
+                className="input input-bordered flex-1 mb-2"
+                type="url"
+                name="imageUrls"
+                placeholder="Image URL (comma separated for multiple)"
+              />
             </div>
             <div>
-              <label className="mb-2 block">Теги</label>
+              <label className="mb-2 block">Tags</label>
               <div className="flex flex-wrap gap-2">
                 {tags.map((tag) => (
-                  <button
-                    type="button"
-                    key={tag.id}
-                    className={`btn btn-sm ${tagIds.includes(tag.id) ? "btn-primary" : "btn-outline"}`}
-                    onClick={() => handleTagSelect(tag.id)}
-                  >
+                  <label key={tag.id} className="btn btn-sm btn-outline">
+                    <input
+                      type="checkbox"
+                      name="tagIds"
+                      value={tag.id}
+                      className="mr-2"
+                    />
                     {tag.name}
-                  </button>
+                  </label>
                 ))}
               </div>
             </div>
@@ -163,17 +101,15 @@ export default function CreateEventPage() {
               <input
                 type="checkbox"
                 className="checkbox"
-                checked={withAttendance}
-                onChange={(e) => setWithAttendance(e.target.checked)}
+                name="withAttendance"
               />
-              С регистрацией на посещение
+              With attendance registration
             </label>
             <button
               className="btn btn-primary"
               type="submit"
-              disabled={loading}
             >
-              {loading ? "Создание..." : "Создать ивент"}
+              Create Event
             </button>
           </fieldset>
         </form>

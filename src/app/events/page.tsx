@@ -1,39 +1,46 @@
-"use client";
-import { TagProps } from "@/components/shared/Tag";
+"use server";
 import TagBar from "@/components/shared/TagBar";
-import { ApiContext } from "@/lib/providers/ApiProvider";
-import { useContext } from "react";
+import { EventServiceListResponseSchema } from "@/gen/evops/api/v1/api_pb";
+import getApi from "@/lib/functions/api";
+import { create } from "@bufbuild/protobuf";
 
-export default function Home() {
-  const api = useContext(ApiContext);
+export default async function Home() {
+  const api = getApi();
 
-  const eventData = api.eventService.list({});
+  // const tags: TagProps[] = await api.tagService.list({}).then((it) =>
+  //   it.tags.map(
+  //     (it) =>
+  //       ({
+  //         id: it.id,
+  //         name: it.name,
+  //         color: "blue",
+  //         aliases: it.aliases,
+  //       }) as TagProps,
+  //   ),
+  // );
 
-  const f = async () => {
-    return await eventData;
-  };
+  const events = create(EventServiceListResponseSchema, { events: [] });
 
-  const l = await f();
-  const tags: TagProps[] = [
-    {
-      id: "01979d7b-43c7-7781-82ab-620976261950",
-      name: "BSDM",
-      color: "cyan",
-      aliases: ["videogames", "esports", "cybersport"],
-    },
-    {
-      id: "01979d7b-43c7-7781-82ab-620976261959",
-      name: "okko",
-      color: "red",
-      aliases: ["videogames", "esports", "cybersport"],
-    },
-    {
-      id: "01979d7b-43c7-7781-82ab-620976261958",
-      name: "lupa",
-      color: "purple",
-      aliases: ["videogames", "esports", "cybersport"],
-    },
-  ];
+  // const tags: TagProps[] = [
+  //   {
+  //     id: "01979d7b-43c7-7781-82ab-620976261950",
+  //     name: "BSDM",
+  //     color: "cyan",
+  //     aliases: ["videogames", "esports", "cybersport"],
+  //   },
+  //   {
+  //     id: "01979d7b-43c7-7781-82ab-620976261959",
+  //     name: "okko",
+  //     color: "red",
+  //     aliases: ["videogames", "esports", "cybersport"],
+  //   },
+  //   {
+  //     id: "01979d7b-43c7-7781-82ab-620976261958",
+  //     name: "lupa",
+  //     color: "purple",
+  //     aliases: ["videogames", "esports", "cybersport"],
+  //   },
+  // ];
 
   const description =
     "Lorem ipsum dolor sit amet. Eum error unde qui omnis numquam qui voluptas architecto vel tempore explicabo ut reprehenderit facilis vel voluptas dolor et assumenda nesciunt. Qui quasi dolor est repudiandae voluptatem nam blanditiis aperiam ad quisquam doloribus";
@@ -54,7 +61,7 @@ export default function Home() {
           </figure>
         </div>
         <div className="flex flex-col items-center gap-3 px-2">
-          <TagBar tags={tags} />
+          <TagBar tags={events.events[0].tags} />
           {/*<div className="flex w-full flex-row items-center justify-around">*/}
           {/*  <ReactionsBar reactions={reactions} />*/}
           {/*  <ArrowControl />*/}

@@ -1,4 +1,4 @@
-import ApiProvider from "@/lib/providers/ApiProvider";
+import Api from "@/lib/functions/api";
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -13,7 +13,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        <ApiProvider>{children}</ApiProvider>
+        <Api>{children}</Api>
       </body>
     </html>
   );

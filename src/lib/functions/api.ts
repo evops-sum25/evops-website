@@ -1,4 +1,3 @@
-"use client";
 import {
   EventService,
   TagService,
@@ -6,7 +5,6 @@ import {
 } from "@/gen/evops/api/v1/api_pb";
 import { Client, createClient } from "@connectrpc/connect";
 import { createGrpcWebTransport } from "@connectrpc/connect-web";
-import { createContext, ReactNode } from "react";
 
 export interface Api {
   eventService: Client<typeof EventService>;
@@ -14,9 +12,7 @@ export interface Api {
   userService: Client<typeof UserService>;
 }
 
-export const ApiContext = createContext<Api>(undefined!);
-
-export default function ApiProvider(props: { children: ReactNode }) {
+export default function getApi(): Api {
   const grpcWebTransport = createGrpcWebTransport({
     baseUrl: process.env.publicApi!,
   });
@@ -25,9 +21,5 @@ export default function ApiProvider(props: { children: ReactNode }) {
   const tagService = createClient(TagService, grpcWebTransport);
   const userService = createClient(UserService, grpcWebTransport);
 
-  return (
-    <ApiContext.Provider value={{ eventService, tagService, userService }}>
-      {props.children}
-    </ApiContext.Provider>
-  );
+  return { eventService, tagService, userService };
 }

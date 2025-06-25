@@ -1,9 +1,9 @@
 "use server";
 
 import getApi from "@/lib/functions/api";
-import { redirect } from "next/navigation";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 interface Tag {
   id: string;
@@ -16,10 +16,14 @@ async function createEvent(formData: FormData) {
   const api = getApi();
   const title = formData.get("title") as string;
   const description = formData.get("description") as string;
-  const imageUrls = (formData.get("imageUrls") as string)?.split(",").map(s => s.trim()).filter(Boolean) ?? [];
+  const imageUrls =
+    (formData.get("imageUrls") as string)
+      ?.split(",")
+      .map((s) => s.trim())
+      .filter(Boolean) ?? [];
   const tagIds = formData.getAll("tagIds") as string[];
   const withAttendance = formData.get("withAttendance") === "on";
-  const authorId = "demo-user-id"; // TODO: заменить на реальный user id из сессии
+  const authorId = "0197a881-0249-73b0-ac6a-ce7cd31e4d07";
 
   try {
     await api.eventService.create({
@@ -75,7 +79,7 @@ export default async function CreateEventPage() {
             <div>
               <label className="mb-2 block">Images</label>
               <input
-                className="input input-bordered flex-1 mb-2"
+                className="input input-bordered mb-2 flex-1"
                 type="url"
                 name="imageUrls"
                 placeholder="Image URL (comma separated for multiple)"
@@ -105,10 +109,7 @@ export default async function CreateEventPage() {
               />
               With attendance registration
             </label>
-            <button
-              className="btn btn-primary"
-              type="submit"
-            >
+            <button className="btn btn-primary" type="submit">
               Create Event
             </button>
           </fieldset>

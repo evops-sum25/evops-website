@@ -22,7 +22,7 @@ export default function SignUpPage() {
           <ChevronLeft />
         </Link>
       </nav>
-      <main className="flex h-full w-full flex-col items-center justify-center p-4">
+      <main className="main-layout w-full justify-center p-4">
         <fieldset className="fieldset flex w-full max-w-96 flex-col items-center gap-4">
           <legend className="fieldset-legend w-full">
             <h1 className="w-full text-center text-lg">Sign Up</h1>

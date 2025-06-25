@@ -33,7 +33,7 @@ export default async function EventPage(props: EventPageProps) {
         </Link>
       </nav>
 
-      <main className="flex w-screen flex-col items-center">
+      <main className="main-layout">
         <div className="flex w-192 max-w-full flex-col gap-2">
           <div className="flex flex-col gap-2 px-2 lg:items-center">
             <span className="text-base-content/50">

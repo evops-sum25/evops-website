@@ -1,7 +1,5 @@
 import { TagProps } from "@/components/shared/Tag";
 import TagBar from "@/components/shared/TagBar";
-import { ApiContext } from "@/lib/providers/ApiProvider";
-import { useContext } from "react";
 
 export default function Home() {
   const tags: TagProps[] = [

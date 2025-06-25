@@ -1,8 +1,8 @@
-"use server";
-
 import TagBar from "@/components/shared/TagBar";
 import getApi from "@/lib/functions/api";
 import Link from "next/link";
+
+export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const api = getApi();

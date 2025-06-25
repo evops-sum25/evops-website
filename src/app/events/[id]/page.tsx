@@ -1,10 +1,10 @@
-"use server";
-
 import TagBar from "@/components/shared/TagBar";
 import getApi from "@/lib/functions/api";
 import { formatDate } from "@/lib/functions/formatDate";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
+
+export const dynamic = "force-dynamic";
 
 interface EventPageProps {
   params: Promise<{ id: string }>;

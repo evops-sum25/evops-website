@@ -28,3 +28,7 @@ body {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+.main-layout {
+  @apply flex h-screen flex-col items-center;
+}

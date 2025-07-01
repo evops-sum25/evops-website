@@ -1,8 +1,8 @@
 "use client";
 
+import BackButton from "@/components/shared/BackButton";
 import clsx from "clsx";
-import { ChevronLeft, User } from "lucide-react";
-import Link from "next/link";
+import { User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -18,9 +18,7 @@ export default function SignUpPage() {
   return (
     <>
       <nav>
-        <Link href="../" className="btn btn-ghost btn-circle">
-          <ChevronLeft />
-        </Link>
+        <BackButton />
       </nav>
       <main className="main-layout w-full justify-center p-4">
         <fieldset className="fieldset flex w-full max-w-96 flex-col items-center gap-4">

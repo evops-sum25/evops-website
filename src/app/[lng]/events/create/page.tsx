@@ -1,6 +1,5 @@
+import BackButton from "@/components/shared/BackButton";
 import getApi from "@/lib/functions/api";
-import { ChevronLeft } from "lucide-react";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
@@ -50,9 +49,7 @@ export default async function CreateEventPage() {
   return (
     <>
       <nav>
-        <Link href="../" className="btn btn-ghost btn-circle">
-          <ChevronLeft />
-        </Link>
+        <BackButton />
       </nav>
       <main className="main-layout w-full justify-center p-4">
         <form

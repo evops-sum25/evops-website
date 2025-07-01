@@ -1,0 +1,23 @@
+{
+  "signup": {
+    "title": "Регистрация",
+    "namePlaceholder": "Имя",
+    "button": "Зарегистрироваться",
+    "usernameEmpty": "Имя пользователя не может быть пустым."
+  },
+  "signUpHeader": {
+    "greeting": "Привет, гость!",
+    "button": "Войти"
+  },
+  "event-create": {
+    "title": "Создать Событие",
+    "back": "Назад",
+    "placeholderTitle": "Название",
+    "placeholderDesc": "Описание",
+    "labelImage": "Изображения",
+    "placeholderImageUrls": "URL изображения (запятая на несколько)",
+    "labelTags": "Теги",
+    "labelAttendance": "Посещаемость",
+    "button": "Создать Событие!"
+  }
+}

@@ -1,7 +1,7 @@
+import BackButton from "@/components/shared/BackButton";
 import TagBar from "@/components/shared/TagBar";
 import getApi from "@/lib/functions/api";
 import { formatDate } from "@/lib/functions/formatDate";
-import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
@@ -28,9 +28,7 @@ export default async function EventPage(props: EventPageProps) {
   return (
     <>
       <nav>
-        <Link href="../" className="btn btn-ghost btn-circle">
-          <ChevronLeft />
-        </Link>
+        <BackButton />
       </nav>
 
       <main className="main-layout">

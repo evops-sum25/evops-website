@@ -1,0 +1,23 @@
+{
+  "signup": {
+    "title": "Sign Up",
+    "namePlaceholder": "Name",
+    "button": "Sign up",
+    "usernameEmpty": "The username cannot be empty."
+  },
+  "signUpHeader": {
+    "greeting": "Hi, guest!",
+    "button": "Sign Up"
+  },
+  "event-new": {
+    "title": "Create Event",
+    "back": "Back",
+    "placeholderTitle": "Title",
+    "placeholderDesc": "Description",
+    "labelImage": "Images",
+    "placeholderImageUrls": "Image URL (comma separated for multiple)",
+    "labelTags": "Tags",
+    "labelAttendance": "With attendance",
+    "button": "Create Event"
+  }
+}

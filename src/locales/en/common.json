@@ -8,5 +8,15 @@
   "signUpHeader": {
     "greeting": "Hi, guest!",
     "button": "Sign Up"
+  },
+  "event-new": {
+    "title": "Create Event",
+    "placeholderTitle": "Title",
+    "placeholderDesc": "Description",
+    "labelImage": "Images",
+    "placeholderImageUrls": "Image URL (comma separated for multiple)",
+    "labelTags": "Tags",
+    "labelAttendance": "With attendance",
+    "button": "Create Event"
   }
 }

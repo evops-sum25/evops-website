@@ -8,5 +8,15 @@
   "signUpHeader": {
     "greeting": "Привет, гость!",
     "button": "Войти"
+  },
+  "event-create": {
+    "title": "Создать Событие",
+    "placeholderTitle": "Название",
+    "placeholderDesc": "Описание",
+    "labelImage": "Изображения",
+    "placeholderImageUrls": "URL изображения (запятая на несколько)",
+    "labelTags": "Теги",
+    "labelAttendance": "Посещаемость",
+    "button": "Создать Событие!"
   }
 }

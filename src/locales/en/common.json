@@ -4,5 +4,9 @@
     "namePlaceholder": "Name",
     "button": "Sign up",
     "usernameEmpty": "The username cannot be empty."
+  },
+  "signUpHeader": {
+    "greeting": "Hi, guest!",
+    "button": "Sign Up"
   }
 }

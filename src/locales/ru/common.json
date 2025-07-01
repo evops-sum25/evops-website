@@ -4,5 +4,9 @@
     "namePlaceholder": "Имя",
     "button": "Зарегистрироваться",
     "usernameEmpty": "Имя пользователя не может быть пустым."
+  },
+  "signUpHeader": {
+    "greeting": "Привет, гость!",
+    "button": "Войти"
   }
 }

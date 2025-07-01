@@ -1,0 +1,8 @@
+{
+  "signup": {
+    "title": "Sign Up",
+    "namePlaceholder": "Name",
+    "button": "Sign up",
+    "usernameEmpty": "The username cannot be empty."
+  }
+}

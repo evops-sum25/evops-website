@@ -11,8 +11,8 @@ i18next
   .use(LanguageDetector)
   .use(
     resourcesToBackend(
-      (language: string, namespace: string) =>
-        import(`@/locales/${language}/${namespace}.json`),
+      (language: string) =>
+        import(`../../locales/${language}/common.json`),
     ),
   )
   .init({

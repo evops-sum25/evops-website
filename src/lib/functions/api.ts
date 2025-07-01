@@ -14,8 +14,8 @@ export interface Api {
 
 export default function getApi(): Api {
   const grpcWebTransport = createGrpcWebTransport({
-    // baseUrl: process.env.publicApi!,
-    baseUrl: "http://backend:8080",
+    baseUrl: process.env.publicApi!,
+    // baseUrl: "http://backend:8080",
   });
 
   const eventService = createClient(EventService, grpcWebTransport);

@@ -11,6 +11,7 @@
   },
   "event-create": {
     "title": "Создать Событие",
+    "back": "Назад",
     "placeholderTitle": "Название",
     "placeholderDesc": "Описание",
     "labelImage": "Изображения",

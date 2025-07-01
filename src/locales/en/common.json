@@ -11,6 +11,7 @@
   },
   "event-new": {
     "title": "Create Event",
+    "back": "Back",
     "placeholderTitle": "Title",
     "placeholderDesc": "Description",
     "labelImage": "Images",

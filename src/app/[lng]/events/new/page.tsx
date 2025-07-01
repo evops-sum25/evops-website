@@ -1,6 +1,13 @@
 import { getT } from "@/app/i18n";
 import BackButton from "@/components/shared/BackButton";
 import getApi from "@/lib/functions/api";
+import {
+  Image,
+  ListChecks,
+  Tag as TagIcon,
+  Text,
+  UserCheck,
+} from "lucide-react";
 import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
@@ -57,71 +64,116 @@ export default async function CreateEventPage({
 
   return (
     <>
-      <nav>
+      <nav className="mb-4 flex items-center gap-2">
         <BackButton />
+        <span className="text-lg font-semibold">{t("back")}</span>
       </nav>
-      <main className="main-layout w-full justify-center p-4">
-        <form
-          className="flex w-full max-w-2xl flex-col items-center gap-8"
-          action={createEvent}
-        >
-          <input type="hidden" name="lng" value={lng} />
-          <fieldset className="fieldset flex w-96 flex-col items-center gap-6">
-            <legend className="fieldset-legend text-lg">{t("title")}</legend>
-            {/* Success and error messages will be handled via server response/redirect */}
-            <input
-              className="input input-bordered"
-              type="text"
-              name="title"
-              placeholder={t("placeholderTitle")}
-              required
-            />
-            <textarea
-              className="textarea textarea-bordered"
-              name="description"
-              placeholder={t("placeholderDesc")}
-              required
-            />
-            <div>
-              <label className="mb-2 block text-center text-base">
-                {t("labelImage")}
-              </label>
-              <input
-                className="input input-bordered mb-2 flex-1"
-                type="url"
-                name="imageUrls"
-                placeholder={t("placeholderImageUrls")}
-              />
-            </div>
-            <div>
-              <label className="mb-2 block text-base">{t("labelTags")}</label>
-              <div className="flex flex-wrap gap-2">
-                {tags.map((tag) => (
-                  <label key={tag.id} className="btn btn-sm btn-outline">
+      <main className="bg-base-100 flex min-h-[80vh] w-full items-center justify-center p-4">
+        <div className="card bg-base-200 w-full max-w-4xl shadow-xl">
+          <div className="card-body">
+            <h1 className="card-title mb-1 text-2xl">{t("title")}</h1>
+            <form className="w-full" action={createEvent}>
+              <input type="hidden" name="lng" value={lng} />
+              <div className="flex w-full flex-col gap-8 lg:flex-row">
+                {/* Левая колонка: основные поля */}
+                <div className="flex flex-1 flex-col gap-6">
+                  <div className="form-control">
+                    <label className="label gap-2">
+                      <Text className="text-primary h-5 w-5" />
+                      <span className="label-text font-medium">
+                        {t("title")}
+                      </span>
+                    </label>
                     <input
-                      type="checkbox"
-                      name="tagIds"
-                      value={tag.id}
-                      className="mr-2"
+                      className="input input-bordered"
+                      type="text"
+                      name="title"
+                      placeholder={t("placeholderTitle")}
+                      required
                     />
-                    {tag.name}
-                  </label>
-                ))}
+                  </div>
+                  <div className="form-control">
+                    <label className="label gap-2">
+                      <ListChecks className="text-primary h-5 w-5" />
+                      <span className="label-text font-medium">
+                        {t("description")}
+                      </span>
+                    </label>
+                    <textarea
+                      className="textarea textarea-bordered"
+                      name="description"
+                      placeholder={t("placeholderDesc")}
+                      required
+                    />
+                  </div>
+                  <div className="form-control">
+                    <label className="label gap-2">
+                      <Image className="text-primary h-5 w-5" />
+                      <span className="label-text font-medium">
+                        {t("labelImage")}
+                      </span>
+                    </label>
+                    <input
+                      className="input input-bordered"
+                      type="url"
+                      name="imageUrls"
+                      placeholder={t("placeholderImageUrls")}
+                    />
+                  </div>
+                </div>
+                {/* Визуальный разделитель для десктопа */}
+                <div className="hidden flex-col justify-center lg:flex">
+                  <div className="divider lg:divider-horizontal" />
+                </div>
+                {/* Правая колонка: теги и чекбокс */}
+                <div className="flex flex-1 flex-col gap-6">
+                  <div className="form-control">
+                    <label className="label gap-2">
+                      <TagIcon className="text-primary h-5 w-5" />
+                      <span className="label-text font-medium">
+                        {t("labelTags")}
+                      </span>
+                    </label>
+                    <div className="flex flex-wrap gap-2">
+                      {tags.map((tag) => (
+                        <label
+                          key={tag.id}
+                          className="btn btn-sm btn-outline flex items-center gap-2"
+                        >
+                          <input
+                            type="checkbox"
+                            name="tagIds"
+                            value={tag.id}
+                            className="checkbox checkbox-xs"
+                          />
+                          {tag.name}
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="form-control mt-2 flex-row items-center gap-2">
+                    <label className="flex cursor-pointer items-center gap-2">
+                      <UserCheck className="text-primary h-5 w-5" />
+                      <input
+                        type="checkbox"
+                        className="checkbox"
+                        name="withAttendance"
+                      />
+                      <span className="label-text font-medium">
+                        {t("labelAttendance")}
+                      </span>
+                    </label>
+                  </div>
+                </div>
               </div>
-            </div>
-            <label className="flex items-center gap-2 text-base">
-              <input
-                type="checkbox"
-                className="checkbox"
-                name="withAttendance"
-              />
-              {t("labelAttendance")}
-            </label>
-            <button className="btn btn-primary" type="submit">
-              {t("button")}
-            </button>
-          </fieldset>
-        </form>
+              <div className="card-actions mt-8 flex justify-end">
+                <button className="btn btn-primary btn-wide" type="submit">
+                  {t("button")}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       </main>
     </>
   );

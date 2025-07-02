@@ -9,7 +9,7 @@
     "greeting": "Привет, гость!",
     "button": "Войти"
   },
-  "event-create": {
+  "event-new": {
     "title": "Создать Событие",
     "back": "Назад",
     "placeholderTitle": "Название",

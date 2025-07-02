@@ -60,7 +60,7 @@ export default async function CreateEventPage({
   const api = getApi();
   const response = await api.tagService.list({});
   const tags: Tag[] = response.tags ?? [];
-  const { t } = await getT("common", { keyPrefix: "event-create" });
+  const { t } = await getT("common", { keyPrefix: "event-new" });
 
   return (
     <>

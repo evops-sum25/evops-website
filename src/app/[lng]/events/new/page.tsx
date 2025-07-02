@@ -2,7 +2,7 @@ import { getT } from "@/app/i18n";
 import BackButton from "@/components/shared/BackButton";
 import getApi from "@/lib/functions/api";
 import {
-  Image,
+  Image as LucideImage,
   ListChecks,
   Tag as TagIcon,
   Text,
@@ -108,7 +108,7 @@ export default async function CreateEventPage({
                   </div>
                   <div className="form-control">
                     <label className="label gap-2">
-                      <Image className="text-primary h-5 w-5" />
+                      <LucideImage className="text-primary h-5 w-5" />
                       <span className="label-text font-medium">
                         {t("labelImage")}
                       </span>

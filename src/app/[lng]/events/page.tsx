@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import TagBar from "@/components/shared/TagBar";
 import getApi from "@/lib/functions/api";
 import Link from "next/link";

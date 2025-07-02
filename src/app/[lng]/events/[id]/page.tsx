@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import BackButton from "@/components/shared/BackButton";
 import TagBar from "@/components/shared/TagBar";
 import getApi from "@/lib/functions/api";

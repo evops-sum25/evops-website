@@ -2,8 +2,8 @@ import { getT } from "@/app/i18n";
 import BackButton from "@/components/shared/BackButton";
 import getApi from "@/lib/functions/api";
 import {
-  Image as LucideImage,
   ListChecks,
+  Image as LucideImage,
   Tag as TagIcon,
   Text,
   UserCheck,
@@ -30,7 +30,7 @@ async function createEvent(formData: FormData) {
       .filter(Boolean) ?? [];
   const tagIds = formData.getAll("tagIds") as string[];
   const withAttendance = formData.get("withAttendance") === "on";
-  const authorId = "0197c736-fe69-7302-aad6-a181e016089c";
+  const authorId = "0197dae1-3a79-7162-90a8-435348da2608";
 
   try {
     await api.eventService.create({
@@ -44,7 +44,8 @@ async function createEvent(formData: FormData) {
       },
     });
   } catch (e) {
-    alert(e);
+    console.error("ErRoR ", e);
+    // alert(e);
     throw e;
   }
   const lng = (formData.get("lng") as string) || "en";

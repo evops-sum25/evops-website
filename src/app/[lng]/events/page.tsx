@@ -27,25 +27,17 @@ export default async function Home() {
                 <h1 className="text-base-content ml-4 w-full text-2xl font-bold lg:mb-3 lg:text-center lg:text-3xl">
                   {event.title}
                 </h1>
-                <figure className="carousel aspect-square max-h-120 w-full rounded-md">
-                  {event.imageUrls.map((src, i) => (
-                    <div
-                      key={i}
-                      className="carousel-item relative flex size-full flex-row justify-center"
-                      id={`image-${i + 1}`}
-                    >
-                      <img
-                        src={src}
-                        alt="Event thumbnail"
-                        className="z-10 h-auto max-h-full w-auto max-w-full rounded-md"
-                      />
-                      <img
-                        src={src}
-                        alt="Event thumbnail"
-                        className="absolute size-full object-fill blur-3xl"
-                      />
-                    </div>
-                  ))}
+                <figure className="relative aspect-square max-h-120 w-full rounded-md">
+                  <img
+                    src={event.imageUrls[0]}
+                    alt="Event thumbnail"
+                    className="z-10 h-auto max-h-full w-auto max-w-full rounded-md"
+                  />
+                  <img
+                    src={event.imageUrls[0]}
+                    alt="Event thumbnail"
+                    className="absolute size-full object-fill blur-3xl"
+                  />
                 </figure>
               </div>
             </Link>

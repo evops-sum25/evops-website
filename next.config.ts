@@ -6,9 +6,7 @@ const nextConfig: NextConfig = {
   },
   eslint: { ignoreDuringBuilds: true },
   output: "standalone",
-  env: {
-    publicApi: process.env.NEXT_PUBLIC_API,
-  },
+  env: { NEXT_PUBLIC_API: process.env.NEXT_PUBLIC_API },
 };
 
 export default nextConfig;

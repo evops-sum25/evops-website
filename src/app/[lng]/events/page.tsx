@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import TagBar from "@/components/shared/TagBar";
+import { Event } from "@/gen/evops/api/v1/api_pb";
 import getApi from "@/lib/functions/api";
 import Link from "next/link";
-// import Image from "next/image";
 
 export const dynamic = "force-dynamic";
 
@@ -12,7 +12,7 @@ export default async function Home() {
 
   return (
     <main className="main-layout w-screen overflow-x-hidden px-4 lg:px-80">
-      {response.events.map((event) => {
+      {response.events.map((event: Event) => {
         return (
           <section
             key={event.id}
@@ -25,7 +25,7 @@ export default async function Home() {
               style={{ textDecoration: "none" }}
             >
               <div className="w-full">
-                <h1 className="text-base-content ml-4 w-full text-2xl font-bold lg:mb-3 lg:text-center lg:text-3xl">
+                <h1 className="text-base-content clamping mb-3 ml-4 w-full text-2xl font-bold lg:mb-3 lg:text-center lg:text-3xl">
                   {event.title}
                 </h1>
                 <figure className="relative aspect-square max-h-120 w-full rounded-md">
@@ -36,8 +36,8 @@ export default async function Home() {
                           `/v1/events/images/${event.imageIds[0]}`,
                           api.url,
                         ).toString()}
+                        className="z-10 h-auto max-h-full max-w-full rounded-md"
                         alt="Event thumbnail"
-                        className="z-10 h-auto max-h-full w-auto max-w-full rounded-md"
                       />
                       <img
                         src={new URL(

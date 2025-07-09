@@ -1,13 +1,7 @@
 import { getT } from "@/app/i18n";
 import BackButton from "@/components/shared/BackButton";
 import getApi from "@/lib/functions/api";
-import {
-  ListChecks,
-  Image as LucideImage,
-  Tag as TagIcon,
-  Text,
-  UserCheck,
-} from "lucide-react";
+import { ListChecks, Tag as TagIcon, Text, UserCheck } from "lucide-react";
 import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
@@ -23,11 +17,6 @@ async function createEvent(formData: FormData) {
   const api = getApi();
   const title = formData.get("title") as string;
   const description = formData.get("description") as string;
-  const imageUrls =
-    (formData.get("imageUrls") as string)
-      ?.split(",")
-      .map((s) => s.trim())
-      .filter(Boolean) ?? [];
   const tagIds = formData.getAll("tagIds") as string[];
   const withAttendance = formData.get("withAttendance") === "on";
   const authorId = "0197dae1-3a79-7162-90a8-435348da2608";
@@ -36,7 +25,6 @@ async function createEvent(formData: FormData) {
     await api.eventService.create({
       form: {
         authorId,
-        imageUrls,
         title,
         description,
         tagIds,
@@ -76,7 +64,7 @@ export default async function CreateEventPage({
             <form className="w-full" action={createEvent}>
               <input type="hidden" name="lng" value={lng} />
               <div className="flex w-full flex-col gap-8 lg:flex-row">
-                {/* Левая колонка: основные поля */}
+                {/* Left column: main fields. */}
                 <div className="flex flex-1 flex-col gap-6">
                   <div className="form-control">
                     <label className="label gap-2">
@@ -107,26 +95,12 @@ export default async function CreateEventPage({
                       required
                     />
                   </div>
-                  <div className="form-control">
-                    <label className="label gap-2">
-                      <LucideImage className="text-primary h-5 w-5" />
-                      <span className="label-text font-medium">
-                        {t("labelImage")}
-                      </span>
-                    </label>
-                    <input
-                      className="input input-bordered"
-                      type="url"
-                      name="imageUrls"
-                      placeholder={t("placeholderImageUrls")}
-                    />
-                  </div>
                 </div>
-                {/* Визуальный разделитель для десктопа */}
+                {/* Visual delimiter for the desktop version. */}
                 <div className="hidden flex-col justify-center lg:flex">
                   <div className="divider lg:divider-horizontal" />
                 </div>
-                {/* Правая колонка: теги и чекбокс */}
+                {/* Right column: tags, checkbox. */}
                 <div className="flex flex-1 flex-col gap-6">
                   <div className="form-control">
                     <label className="label gap-2">

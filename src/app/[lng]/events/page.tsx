@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import TagBar from "@/components/shared/TagBar";
 import getApi from "@/lib/functions/api";
-import { streamToU8A } from "@/lib/functions/image";
 import Link from "next/link";
 // import Image from "next/image";
 
@@ -11,19 +10,9 @@ export default async function Home() {
   const api = getApi();
   const response = await api.eventService.list({});
 
-  const images: string[] = await Promise.all(
-    response.events.map(async (e) => {
-      const imageId = String(e.imageIds?.[0]);
-      const imageStream = await api.eventService.findImage({ imageId });
-      const image = await streamToU8A(imageStream);
-      const base64 = Buffer.from(image).toString("base64");
-      return `data:image/webp;base64,${base64}`;
-    }),
-  );
-
   return (
     <main className="main-layout w-screen overflow-x-hidden px-4 lg:px-80">
-      {response.events.map((event, idx) => {
+      {response.events.map((event) => {
         return (
           <section
             key={event.id}
@@ -40,16 +29,28 @@ export default async function Home() {
                   {event.title}
                 </h1>
                 <figure className="relative aspect-square max-h-120 w-full rounded-md">
-                  <img
-                    src={images[idx]}
-                    alt="Event thumbnail"
-                    className="z-10 h-auto max-h-full w-auto max-w-full rounded-md"
-                  />
-                  <img
-                    src={images[idx]}
-                    alt="Event thumbnail"
-                    className="absolute size-full object-fill blur-3xl"
-                  />
+                  {event.imageIds[0] !== undefined ? (
+                    <>
+                      <img
+                        src={new URL(
+                          `/v1/events/images/${event.imageIds[0]}`,
+                          api.url,
+                        ).toString()}
+                        alt="Event thumbnail"
+                        className="z-10 h-auto max-h-full w-auto max-w-full rounded-md"
+                      />
+                      <img
+                        src={new URL(
+                          `/v1/events/images/${event.imageIds[0]}`,
+                          api.url,
+                        ).toString()}
+                        alt="Event thumbnail"
+                        className="absolute size-full object-fill blur-3xl"
+                      />
+                    </>
+                  ) : (
+                    <></>
+                  )}
                 </figure>
               </div>
             </Link>

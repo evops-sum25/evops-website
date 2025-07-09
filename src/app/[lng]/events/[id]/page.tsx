@@ -43,19 +43,25 @@ export default async function EventPage(props: EventPageProps) {
 
           <div className="relative flex flex-col items-center">
             <figure className="carousel aspect-square max-h-120 w-full rounded-md">
-              {response.event.imageUrls.map((src, i) => (
+              {response.event.imageIds.map((imageId, i) => (
                 <div
                   key={i}
                   className="carousel-item relative flex size-full flex-row justify-center"
                   id={`image-${i + 1}`}
                 >
                   <img
-                    src={src}
+                    src={new URL(
+                      `/v1/events/images/${imageId}`,
+                      api.url,
+                    ).toString()}
                     alt="Event thumbnail"
                     className="z-10 h-auto max-h-full w-auto max-w-full rounded-md"
                   />
                   <img
-                    src={src}
+                    src={new URL(
+                      `/v1/events/images/${imageId}`,
+                      api.url,
+                    ).toString()}
                     alt="Event thumbnail"
                     className="absolute size-full object-fill blur-3xl"
                   />
@@ -63,7 +69,7 @@ export default async function EventPage(props: EventPageProps) {
               ))}
             </figure>
             <div className="bg-neutral/50 text-neutral-content absolute bottom-2 z-20 flex flex-row rounded-full">
-              {response.event.imageUrls.map((_, i) => (
+              {response.event.imageIds.map((_, i) => (
                 <Link
                   key={i}
                   href={`#image-${i + 1}`}

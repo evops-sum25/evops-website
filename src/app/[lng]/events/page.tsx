@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import TagBar from "@/components/shared/TagBar";
 import { Event } from "@/gen/evops/api/v1/api_pb";
-import getApi from "@/lib/functions/api";
+import getApi from "@/lib/api/api";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
@@ -29,7 +29,7 @@ export default async function Home() {
                   {event.title}
                 </h1>
                 <figure className="relative aspect-square max-h-120 w-full rounded-md">
-                  {event.imageIds[0] !== undefined ? (
+                  {event.imageIds && event.imageIds.length > 0 ? (
                     <>
                       <img
                         src={new URL(
@@ -49,7 +49,9 @@ export default async function Home() {
                       />
                     </>
                   ) : (
-                    <></>
+                    <div className="bg-base-300 flex h-full w-full items-center justify-center rounded-md">
+                      <span className="text-base-content/50">No image</span>
+                    </div>
                   )}
                 </figure>
               </div>

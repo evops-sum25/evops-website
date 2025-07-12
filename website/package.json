@@ -1,0 +1,43 @@
+{
+  "name": "evops",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "codegen": "buf generate --clean",
+    "dev": "pnpm run codegen && next dev --turbopack",
+    "build": "pnpm run codegen && next build",
+    "start": "pnpm run codegen && next start",
+    "lint": "pnpm run codegen && next lint",
+    "format": "prettier --write ./",
+    "format:check": "prettier --check ./"
+  },
+  "dependencies": {
+    "@connectrpc/connect": "^2.0.2",
+    "@connectrpc/connect-web": "^2.0.2",
+    "clsx": "^2.1.1",
+    "daisyui": "^5.0.43",
+    "lucide-react": "^0.522.0",
+    "next": "15.3.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@bufbuild/buf": "^1.55.1",
+    "@bufbuild/protobuf": "^2.5.2",
+    "@bufbuild/protoc-gen-es": "^2.5.2",
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.3",
+    "eslint-config-prettier": "^10.1.5",
+    "jiti": "^2.4.2",
+    "prettier": "^3.5.3",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "prettier-plugin-tailwindcss": "^0.6.12",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

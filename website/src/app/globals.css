@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+@plugin "daisyui";
+
+body {
+  font-family:
+    sans-serif -apple-system,
+    Arial,
+    Helvetica,
+    BlinkMacSystemFont,
+    "Segoe UI Emoji",
+    "Segoe UI Symbol",
+    "Noto Color Emoji";
+}
+
+.scroll-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scroll-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.clamping {
+  -webkit-line-clamp: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.main-layout {
+  @apply flex h-screen flex-col items-center;
+}

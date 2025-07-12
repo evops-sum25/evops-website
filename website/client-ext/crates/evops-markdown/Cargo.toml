@@ -1,0 +1,21 @@
+[package]
+name = "evops-markdown"
+edition = "2024"
+
+[dependencies]
+evops-pb-ext = { workspace = true, optional = true }
+
+markdown = { workspace = true }
+schemars = { workspace = true, optional = true }
+serde = { workspace = true, optional = true, features = ["derive"] }
+thiserror = { workspace = true }
+uniffi = { workspace = true, optional = true }
+
+[features]
+protobuf = ["dep:evops-pb-ext"]
+schemars = ["serde", "dep:schemars"]
+serde = ["dep:serde"]
+uniffi = ["dep:uniffi"]
+
+[lints]
+workspace = true

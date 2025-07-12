@@ -72,7 +72,7 @@ function NewEventPage() {
           >
             {step === 1 ? (
               <div className="flex flex-col gap-6">
-                <div className="form-control">
+                <div className="form-control flex gap-3">
                   <label className="label font-medium">{t('form.title')}</label>
                   <input
                     className="input input-bordered"
@@ -84,7 +84,7 @@ function NewEventPage() {
                     required
                   />
                 </div>
-                <div className="form-control">
+                <div className="form-control flex gap-3">
                   <label className="label font-medium">
                     {t('form.description')}
                   </label>

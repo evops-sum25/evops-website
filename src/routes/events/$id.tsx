@@ -3,7 +3,7 @@ import TagBar from '@/components/shared/TagBar.tsx'
 import EventCarousel from '@/components/widgets/EventCaousel.tsx'
 import HeaderSingleEvent from '@/components/widgets/Headers/HeaderSingleEvent.tsx'
 import getApi from '@/lib/api/api.ts'
-import { useQuery } from '@tanstack/react-query'
+import { useSingleEvent } from '@/lib/api/hooks/getSingleEvent.ts'
 import { createFileRoute } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 
@@ -14,11 +14,7 @@ export const Route = createFileRoute('/events/$id')({
 function EventPage() {
   const params = Route.useParams()
   const api = getApi()
-  const { data, isLoading, error } = useQuery({
-    queryKey: ['event', params.id],
-    queryFn: async () => await api.eventService.find({ id: params.id }),
-    enabled: !!params.id,
-  })
+  const { data, isLoading, error } = useSingleEvent(params)
 
   const { t } = useTranslation('eventPage')
   if (isLoading) {

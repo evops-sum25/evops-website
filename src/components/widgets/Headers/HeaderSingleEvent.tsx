@@ -29,7 +29,7 @@ export default function HeaderSingleEvent() {
       </button>
       <div
         className={clsx(
-          !signedUp ? 'ml-8 flex-row justify-between' : 'flex-row-reverse',
+          !signedUp ? 'ml-8 flex-row justify-between' : '',
           'flex w-1/2 items-center gap-3 md:w-full',
         )}
       >
@@ -48,11 +48,11 @@ export default function HeaderSingleEvent() {
           </>
         ) : (
           <>
+            <LanguageSwitcher />
             <UserCircle className="text-primary size-8" />
             <span className="text-base-content font-semibold">
               {t('myProfile')}
             </span>
-            <LanguageSwitcher />
           </>
         )}
       </div>

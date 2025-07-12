@@ -40,11 +40,11 @@ export default function HeaderEvents() {
         </>
       ) : (
         <div className="flex items-center gap-4">
+          <LanguageSwitcher />
           <UserCircle className="text-primary size-8" />
           <span className="text-base-content font-semibold">
             {t('myProfile')}
           </span>
-          <LanguageSwitcher />
         </div>
       )}
     </header>

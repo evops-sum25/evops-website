@@ -1,0 +1,42 @@
+export default {
+  eventPage: {
+    loadingError: 'Loading error: {{message}}',
+    eventNotFound: 'Event not found',
+    noImage: 'No image',
+    backToEvents: 'Back to events',
+    greeting: 'Hi, guest!',
+    signUp: 'Sign Up',
+    myProfile: 'My profile',
+  },
+  eventsList: {
+    title: 'Events',
+    loadingError: 'Loading error: {{message}}',
+    greeting: 'Hi, guest!',
+    signUp: 'Sign Up',
+    myProfile: 'My profile',
+  },
+  newEvent: {
+    step1: 'Step 1',
+    step2: 'Step 2',
+    title: 'New Event',
+    images: 'Images',
+    step1Description: 'Fill in the basic information',
+    step2Description: 'Upload up to 5 images (optional)',
+    form: {
+      title: 'Title',
+      description: 'Description',
+      tags: 'Tags',
+      withAttendance: 'With attendance',
+      addImage: 'Add image',
+      removeImage: 'Remove',
+      next: 'Next',
+      back: 'Back',
+      createEvent: 'Create Event',
+      creating: 'Creating...',
+    },
+    validation: {
+      titleRequired: 'Title is required',
+      descriptionRequired: 'Description is required',
+    },
+  },
+} as const

@@ -1,0 +1,42 @@
+export default {
+  eventPage: {
+    loadingError: 'Ошибка загрузки: {{message}}',
+    eventNotFound: 'Событие не найдено',
+    noImage: 'Нет изображения',
+    backToEvents: 'Назад к событиям',
+    greeting: 'Привет, гость!',
+    signUp: 'Регистрация',
+    myProfile: 'Мой профиль',
+  },
+  eventsList: {
+    title: 'События',
+    loadingError: 'Ошибка загрузки: {{message}}',
+    greeting: 'Привет, гость!',
+    signUp: 'Регистрация',
+    myProfile: 'Мой профиль',
+  },
+  newEvent: {
+    step1: 'Шаг 1',
+    step2: 'Шаг 2',
+    title: 'Новое событие',
+    images: 'Изображения',
+    step1Description: 'Заполните основные данные',
+    step2Description: 'Загрузите до 5 изображений (опционально)',
+    form: {
+      title: 'Название',
+      description: 'Описание',
+      tags: 'Теги',
+      withAttendance: 'С посещаемостью',
+      addImage: 'Добавить изображение',
+      removeImage: 'Удалить',
+      next: 'Далее',
+      back: 'Назад',
+      createEvent: 'Создать событие',
+      creating: 'Создание...',
+    },
+    validation: {
+      titleRequired: 'Название обязательно',
+      descriptionRequired: 'Описание обязательно',
+    },
+  },
+} as const

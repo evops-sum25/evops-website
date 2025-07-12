@@ -3,7 +3,6 @@ import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 
 import TanStackQueryLayout from '../integrations/tanstack-query/layout.tsx'
 
-import SignUpHeader from '@/components/widgets/SignUpHeader.tsx'
 import type { QueryClient } from '@tanstack/react-query'
 
 interface MyRouterContext {
@@ -13,7 +12,6 @@ interface MyRouterContext {
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   component: () => (
     <>
-      <SignUpHeader />
       <Outlet />
       <TanStackRouterDevtools />
 

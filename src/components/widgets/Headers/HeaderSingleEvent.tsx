@@ -1,8 +1,9 @@
 import { useRouter } from '@tanstack/react-router'
+import clsx from 'clsx'
 import { ChevronLeft, UserCircle } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
-export default function SignUpHeader() {
+export default function HeaderSingleEvent() {
   const router = useRouter()
   const [signedUp, setSignedUp] = useState(false)
 
@@ -14,27 +15,26 @@ export default function SignUpHeader() {
     return () => window.removeEventListener('storage', onStorage)
   }, [])
 
-  const isEventsPage =
-    router.state.location.pathname === '/events' ||
-    router.state.location.pathname === '/events/'
-
   return (
     <header className="flex w-full flex-row items-center justify-between px-10 py-5">
       <div className="flex flex-row items-center gap-2">
-        {!isEventsPage && (
-          <button
-            className="btn btn-ghost flex flex-row items-center gap-2"
-            onClick={() => router.history.back()}
-          >
-            <ChevronLeft className="size-5" />
-            <span>Назад</span>
-          </button>
-        )}
+        <button
+          className="btn btn-ghost flex flex-row items-center gap-2"
+          onClick={() => router.history.back()}
+        >
+          <ChevronLeft className="size-5" />
+          <span>Back to events</span>
+        </button>
       </div>
-      <div className="flex flex-row items-center gap-3">
+      <div
+        className={clsx(
+          !signedUp ? 'ml-8 justify-between' : '',
+          'flex w-full flex-row items-center gap-3',
+        )}
+      >
         {!signedUp ? (
           <>
-            <p className="text-base-content font-semibold">Hi, guest!</p>
+            <p className="text-lg font-semibold">Hi, guest!</p>
             <button
               className="btn btn-primary"
               onClick={() => router.navigate({ to: '/signup' })}

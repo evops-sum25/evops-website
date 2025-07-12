@@ -2,9 +2,8 @@ import Loading from '@/components/shared/Loading'
 import TagBar from '@/components/shared/TagBar'
 import HeaderEvents from '@/components/widgets/Headers/HeaderEvents.tsx'
 import getApi from '@/lib/api/api'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useEvents } from '@/lib/api/hooks/getEvents.ts'
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { useEffect } from 'react'
 
 export const Route = createFileRoute('/events/')({
   component: EventsList,
@@ -12,19 +11,7 @@ export const Route = createFileRoute('/events/')({
 
 function EventsList() {
   const api = getApi()
-  const queryClient = useQueryClient()
-
-  useEffect(() => {
-    queryClient.invalidateQueries({ queryKey: ['events'] })
-  }, [queryClient])
-
-  const { data, isLoading, error } = useQuery({
-    queryKey: ['events'],
-    queryFn: async () => await api.eventService.list({}),
-    refetchOnWindowFocus: true,
-    refetchOnMount: true,
-    staleTime: 0,
-  })
+  const { data, isLoading, error } = useEvents()
 
   if (isLoading) return <Loading />
   if (error) return <div>Loading error: {String(error)}</div>
@@ -51,30 +38,24 @@ function EventsList() {
                   {event.title}
                 </h1>
                 <figure className="carousel aspect-square max-h-120 w-full rounded-md">
-                  {event.imageIds!.map((imageId, i) => (
-                    <div
-                      key={i}
-                      className="carousel-item relative flex size-full flex-row justify-center"
-                      id={`image-${i + 1}`}
-                    >
-                      <img
-                        src={new URL(
-                          `/v1/events/images/${imageId}`,
-                          api.url,
-                        ).toString()}
-                        alt="Event thumbnail"
-                        className="z-10 h-auto max-h-full w-auto max-w-full rounded-md"
-                      />
-                      <img
-                        src={new URL(
-                          `/v1/events/images/${imageId}`,
-                          api.url,
-                        ).toString()}
-                        alt="Event thumbnail"
-                        className="absolute size-full object-fill blur-3xl"
-                      />
-                    </div>
-                  ))}
+                  <div className="carousel-item relative flex size-full flex-row justify-center">
+                    <img
+                      src={new URL(
+                        `/v1/events/images/${event.imageIds[0]}`,
+                        api.url,
+                      ).toString()}
+                      alt="Event thumbnail"
+                      className="z-10 h-auto max-h-full w-auto max-w-full rounded-md"
+                    />
+                    <img
+                      src={new URL(
+                        `/v1/events/images/${event.imageIds[0]}`,
+                        api.url,
+                      ).toString()}
+                      alt="Event thumbnail"
+                      className="absolute size-full object-fill blur-3xl"
+                    />
+                  </div>
                 </figure>
               </div>
             </Link>

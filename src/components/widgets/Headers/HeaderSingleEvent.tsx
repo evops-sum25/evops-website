@@ -28,8 +28,8 @@ export default function HeaderSingleEvent() {
       </div>
       <div
         className={clsx(
-          !signedUp ? 'ml-8 justify-between' : '',
-          'flex w-full flex-row items-center gap-3',
+          !signedUp ? 'ml-8 flex-row justify-between' : 'flex-row-reverse',
+          'flex w-full items-center gap-3',
         )}
       >
         {!signedUp ? (

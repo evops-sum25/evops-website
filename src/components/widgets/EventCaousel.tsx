@@ -63,7 +63,7 @@ export default function EventCarousel({ images }: { images: string[] }) {
             <img
               src={link}
               alt="Event thumbnail"
-              className="z-10 h-auto max-h-[90vh] min-h-[35vh] w-auto max-w-[90vw] min-w-[35vw] rounded-md lg:max-h-[80vh] lg:max-w-[80vw]"
+              className="z-10 h-auto max-h-[90vh] min-h-[35vh] w-auto max-w-[90vw] min-w-[35vw] rounded-md md:max-h-[80vh] md:max-w-[80vw]"
             />
             <img
               src={link}

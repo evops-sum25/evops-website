@@ -1,6 +1,6 @@
-import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
+import { createFileRoute, useRouter } from '@tanstack/react-router'
 import clsx from 'clsx'
-import { ChevronLeft, User } from 'lucide-react'
+import { User } from 'lucide-react'
 import { useState } from 'react'
 
 export const Route = createFileRoute('/signup')({
@@ -18,11 +18,6 @@ function SignUpPage() {
 
   return (
     <>
-      <nav>
-        <Link to="/events" className="btn btn-ghost btn-circle">
-          <ChevronLeft />
-        </Link>
-      </nav>
       <main className="main-layout w-full justify-center p-4">
         <fieldset className="fieldset flex w-full max-w-96 flex-col items-center gap-4">
           <legend className="fieldset-legend w-full">

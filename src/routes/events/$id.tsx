@@ -59,7 +59,7 @@ function EventPage() {
         )}
       </figure>
       <TagBar tags={event.tags} />
-      <article className="text-base-content clamping mt-4 w-full text-start lg:w-auto lg:text-center lg:text-lg">
+      <article className="text-base-content mt-4 w-full text-start lg:w-auto lg:text-center lg:text-lg">
         {event.description}
       </article>
     </main>

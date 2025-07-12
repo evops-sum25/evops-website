@@ -1,8 +1,9 @@
 import Loading from '@/components/shared/Loading'
 import TagBar from '@/components/shared/TagBar'
 import getApi from '@/lib/api/api'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
+import React from 'react'
 
 export const Route = createFileRoute('/events/')({
   component: EventsList,
@@ -10,9 +11,16 @@ export const Route = createFileRoute('/events/')({
 
 function EventsList() {
   const api = getApi()
+  const queryClient = useQueryClient()
+  React.useEffect(() => {
+    queryClient.invalidateQueries(['events'])
+  }, [])
   const { data, isLoading, error } = useQuery({
     queryKey: ['events'],
     queryFn: async () => await api.eventService.list({}),
+    refetchOnWindowFocus: true,
+    refetchOnMount: true,
+    staleTime: 0,
   })
 
   if (isLoading) return <Loading />
@@ -34,7 +42,7 @@ function EventsList() {
             style={{ textDecoration: 'none' }}
           >
             <div className="w-full">
-              <h1 className="text-base-content ml-4 w-full text-2xl font-bold lg:mb-3 lg:text-center lg:text-3xl">
+              <h1 className="text-base-content mb-3 ml-4 w-full text-2xl font-bold lg:mb-3 lg:text-center lg:text-3xl">
                 {event.title}
               </h1>
               <figure className="carousel aspect-square max-h-120 w-full rounded-md">

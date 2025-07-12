@@ -5,6 +5,7 @@ import {
 } from "@/gen/evops/api/v1/api_pb";
 import { Client, createClient } from "@connectrpc/connect";
 import { createGrpcWebTransport } from "@connectrpc/connect-web";
+import { VITE_PUBLIC_API } from '@/lib/constants.ts'
 
 export interface Api {
   url: URL;
@@ -14,8 +15,7 @@ export interface Api {
 }
 
 export default function getApi(): Api {
-  // const url = new URL(process.env.NEXT_PUBLIC_API!);
-  const url = new URL("http://backend:8080");
+  const url = VITE_PUBLIC_API;
   const grpcWebTransport = createGrpcWebTransport({ baseUrl: url.toString() });
 
   const eventService = createClient(EventService, grpcWebTransport);

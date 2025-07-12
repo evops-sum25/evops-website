@@ -45,7 +45,7 @@ function EventsList() {
                         api.url,
                       ).toString()}
                       alt="Event thumbnail"
-                      className="z-10 h-auto max-h-full w-auto max-w-full rounded-md"
+                      className="z-10 h-auto max-h-full w-auto max-w-full rounded-md lg:max-h-[80vh] lg:max-w-[80vw]"
                     />
                     <img
                       src={new URL(

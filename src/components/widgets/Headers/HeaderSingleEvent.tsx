@@ -16,20 +16,18 @@ export default function HeaderSingleEvent() {
   }, [])
 
   return (
-    <header className="flex w-full flex-row items-center justify-between px-10 py-5">
-      <div className="flex flex-row items-center gap-2">
-        <button
-          className="btn btn-ghost flex flex-row items-center gap-2"
-          onClick={() => router.history.back()}
-        >
-          <ChevronLeft className="size-5" />
-          <span>Back to events</span>
-        </button>
-      </div>
+    <header className="flex w-full flex-row items-center justify-between px-4 py-5 md:px-10">
+      <button
+        className="btn btn-ghost flex flex-row items-center p-0"
+        onClick={() => router.history.back()}
+      >
+        <ChevronLeft className="size-5" />
+        <span>Back to events</span>
+      </button>
       <div
         className={clsx(
           !signedUp ? 'ml-8 flex-row justify-between' : 'flex-row-reverse',
-          'flex w-full items-center gap-3',
+          'flex w-1/2 items-center gap-3 md:w-full',
         )}
       >
         {!signedUp ? (

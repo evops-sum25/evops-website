@@ -54,16 +54,21 @@ export default function EventCarousel({ images }: { images: string[] }) {
         onTouchEnd={onTouchEnd}
         style={{ scrollBehavior: 'smooth' }}
       >
-        {images.map((src, i) => (
+        {images.map((link, i) => (
           <div
             key={i}
-            className="carousel-item w-full flex-shrink-0 snap-center"
+            className="carousel-item relative w-full flex-shrink-0 snap-center justify-center"
             style={{ scrollSnapAlign: 'center' }}
           >
             <img
-              src={src}
-              alt={`Event image ${i + 1}`}
-              className="h-auto w-full rounded-md"
+              src={link}
+              alt="Event thumbnail"
+              className="z-10 h-auto max-h-[90vh] min-h-[35vh] w-auto max-w-[90vw] min-w-[35vw] rounded-md lg:max-h-[80vh] lg:max-w-[80vw]"
+            />
+            <img
+              src={link}
+              alt="Event thumbnail"
+              className="absolute size-full object-fill blur-3xl"
             />
           </div>
         ))}

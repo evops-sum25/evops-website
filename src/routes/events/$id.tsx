@@ -3,6 +3,7 @@ import TagBar from '@/components/shared/TagBar.tsx'
 import getApi from '@/lib/api/api.ts'
 import { useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
+import { useTranslation } from 'react-i18next'
 
 export const Route = createFileRoute('/events/$id')({
   component: EventPage,
@@ -17,11 +18,18 @@ function EventPage() {
     enabled: !!params.id,
   })
 
-  if (isLoading) return <Loading />
-  if (error) return <div>Ошибка загрузки: {String(error)}</div>
-  if (!data?.event) return <div>Событие не найдено</div>
+  const { t } = useTranslation('eventPage')
+  if (isLoading) {
+    return <Loading />
+  }
+  if (error) {
+    return <div>{t('loadingError', { message: error })}</div>
+  }
+  if (data === undefined) {
+    return <div>{t('eventNotFound')}</div>
+  }
 
-  const event = data.event
+  const event = data.event!
 
   return (
     <main className="main-layout w-screen overflow-x-hidden px-4 lg:px-80">
@@ -54,7 +62,7 @@ function EventPage() {
           ))
         ) : (
           <div className="bg-base-300 flex h-full w-full items-center justify-center rounded-md">
-            <span className="text-base-content/50">No image</span>
+            <span className="text-base-content/50">{t('noImage')}</span>
           </div>
         )}
       </figure>

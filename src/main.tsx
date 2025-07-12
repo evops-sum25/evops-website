@@ -1,14 +1,11 @@
+import '@/lib/i18n'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
 // import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
-
-import * as TanStackQueryProvider from './integrations/tanstack-query/root-provider.tsx'
-
-// Import the generated route tree
-import { routeTree } from './routeTree.gen'
-
 import './globals.css'
+import * as TanStackQueryProvider from './integrations/tanstack-query/root-provider.tsx'
 import reportWebVitals from './reportWebVitals.ts'
+import { routeTree } from './routeTree.gen' // Import the generated route tree
 
 // Create a new router instance
 const router = createRouter({

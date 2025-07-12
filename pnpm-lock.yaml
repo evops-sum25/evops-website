@@ -41,6 +41,9 @@ importers:
       daisyui:
         specifier: ^5.0.46
         version: 5.0.46
+      i18next:
+        specifier: ^25.3.2
+        version: 25.3.2(typescript@5.8.3)
       lucide-react:
         specifier: ^0.525.0
         version: 0.525.0(react@19.1.0)

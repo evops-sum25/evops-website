@@ -1,3 +1,4 @@
+import Loading from '@/components/shared/Loading'
 import TagBar from '@/components/shared/TagBar'
 import getApi from '@/lib/api/api'
 import { useQuery } from '@tanstack/react-query'
@@ -9,14 +10,13 @@ export const Route = createFileRoute('/events/')({
 
 async function EventsList() {
   const api = getApi()
-  // const response = await api.eventService.list({})
   const { data, isLoading, error } = useQuery({
     queryKey: ['events'],
     queryFn: async () => await api.eventService.list({}),
   })
 
-  if (isLoading) return <div>Загрузка...</div>
-  if (error) return <div>Ошибка загрузки: {String(error)}</div>
+  if (isLoading) return <Loading />
+  if (error) return <div>Loading error: {String(error)}</div>
 
   const events = data?.events || []
 

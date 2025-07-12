@@ -10,20 +10,13 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
-import { Route as IndexRouteImport } from './routes/index'
 import { Route as EventsIndexRouteImport } from './routes/events/index'
 import { Route as EventsNewRouteImport } from './routes/events/new'
 import { Route as EventsIdRouteImport } from './routes/events/$id'
-import { Route as DemoTanstackQueryRouteImport } from './routes/demo.tanstack-query'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EventsIndexRoute = EventsIndexRouteImport.update({
@@ -41,68 +34,36 @@ const EventsIdRoute = EventsIdRouteImport.update({
   path: '/events/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
-  id: '/demo/tanstack-query',
-  path: '/demo/tanstack-query',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
   '/signup': typeof SignupRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/events/$id': typeof EventsIdRoute
   '/events/new': typeof EventsNewRoute
   '/events': typeof EventsIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
   '/signup': typeof SignupRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/events/$id': typeof EventsIdRoute
   '/events/new': typeof EventsNewRoute
   '/events': typeof EventsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
   '/signup': typeof SignupRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/events/$id': typeof EventsIdRoute
   '/events/new': typeof EventsNewRoute
   '/events/': typeof EventsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/signup'
-    | '/demo/tanstack-query'
-    | '/events/$id'
-    | '/events/new'
-    | '/events'
+  fullPaths: '/signup' | '/events/$id' | '/events/new' | '/events'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/signup'
-    | '/demo/tanstack-query'
-    | '/events/$id'
-    | '/events/new'
-    | '/events'
-  id:
-    | '__root__'
-    | '/'
-    | '/signup'
-    | '/demo/tanstack-query'
-    | '/events/$id'
-    | '/events/new'
-    | '/events/'
+  to: '/signup' | '/events/$id' | '/events/new' | '/events'
+  id: '__root__' | '/signup' | '/events/$id' | '/events/new' | '/events/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
   SignupRoute: typeof SignupRoute
-  DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
   EventsIdRoute: typeof EventsIdRoute
   EventsNewRoute: typeof EventsNewRoute
   EventsIndexRoute: typeof EventsIndexRoute
@@ -115,13 +76,6 @@ declare module '@tanstack/react-router' {
       path: '/signup'
       fullPath: '/signup'
       preLoaderRoute: typeof SignupRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/events/': {
@@ -145,20 +99,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventsIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/demo/tanstack-query': {
-      id: '/demo/tanstack-query'
-      path: '/demo/tanstack-query'
-      fullPath: '/demo/tanstack-query'
-      preLoaderRoute: typeof DemoTanstackQueryRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
   SignupRoute: SignupRoute,
-  DemoTanstackQueryRoute: DemoTanstackQueryRoute,
   EventsIdRoute: EventsIdRoute,
   EventsNewRoute: EventsNewRoute,
   EventsIndexRoute: EventsIndexRoute,

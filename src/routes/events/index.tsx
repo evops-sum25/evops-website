@@ -1,19 +1,18 @@
 import TagBar from '@/components/shared/TagBar'
 import getApi from '@/lib/api/api'
-import { createFileRoute, Link } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
+import { createFileRoute, Link } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/events/')({
   component: EventsList,
-
 })
 
 async function EventsList() {
   const api = getApi()
   // const response = await api.eventService.list({})
-  const {data, isLoading, error} = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ['events'],
-    queryFn: async () => await api.eventService.list({})
+    queryFn: async () => await api.eventService.list({}),
   })
 
   if (isLoading) return <div>Загрузка...</div>
@@ -46,12 +45,18 @@ async function EventsList() {
                     id={`image-${i + 1}`}
                   >
                     <img
-                      src={new URL(`/v1/events/images/${imageId}`, api.url).toString()}
+                      src={new URL(
+                        `/v1/events/images/${imageId}`,
+                        api.url,
+                      ).toString()}
                       alt="Event thumbnail"
                       className="z-10 h-auto max-h-full w-auto max-w-full rounded-md"
                     />
                     <img
-                      src={new URL(`/v1/events/images/${imageId}`, api.url).toString()}
+                      src={new URL(
+                        `/v1/events/images/${imageId}`,
+                        api.url,
+                      ).toString()}
                       alt="Event thumbnail"
                       className="absolute size-full object-fill blur-3xl"
                     />

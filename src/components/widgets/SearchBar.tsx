@@ -1,3 +1,3 @@
 export default function SearchBar() {
-  return <></>;
+  return <></>
 }

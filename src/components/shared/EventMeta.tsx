@@ -1,17 +1,17 @@
 export interface EventMetaProps {
-  place: string;
-  date: string;
-  time: string;
+  place: string
+  date: string
+  time: string
 }
 
 export default function EventMeta({ place, date, time }: EventMetaProps) {
   const parsedDate = new Date(
-    `${date.split(".").reverse().join("-")}T${time.replace(" PM", "").replace(" AM", "")}`,
-  );
+    `${date.split('.').reverse().join('-')}T${time.replace(' PM', '').replace(' AM', '')}`,
+  )
   const formattedTime = parsedDate.toLocaleTimeString(undefined, {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+    hour: '2-digit',
+    minute: '2-digit',
+  })
   return (
     <div className="text-base-content flex flex-row items-center gap-2 text-center font-bold">
       <p>{place}</p>
@@ -20,5 +20,5 @@ export default function EventMeta({ place, date, time }: EventMetaProps) {
       <span>|</span>
       <time>{formattedTime}</time>
     </div>
-  );
+  )
 }

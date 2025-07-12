@@ -1,8 +1,8 @@
-"use client";
-import Tag, { TagProps } from "@/components/shared/Tag";
+'use client'
+import Tag, { TagProps } from '@/components/shared/Tag'
 
 export interface TagBarProps {
-  tags: TagProps[];
+  tags: TagProps[]
 }
 
 export default function TagBar(props: TagBarProps) {
@@ -14,9 +14,9 @@ export default function TagBar(props: TagBarProps) {
           id={tag.id}
           aliases={tag.aliases}
           name={tag.name}
-          color={"blue"}
+          color={'blue'}
         />
       ))}
     </div>
-  );
+  )
 }

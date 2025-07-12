@@ -1,20 +1,20 @@
-"use client";
+'use client'
 
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import SignUpHeader from "./SignUpHeader";
+import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import SignUpHeader from './SignUpHeader'
 
 export default function SingUpWrapper() {
-  const pathname = usePathname();
-  const [signedUp, setSignedUp] = useState(false);
+  const pathname = usePathname()
+  const [signedUp, setSignedUp] = useState(false)
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      setSignedUp(localStorage.getItem("signedUp") === "true");
+    if (typeof window !== 'undefined') {
+      setSignedUp(localStorage.getItem('signedUp') === 'true')
     }
-  }, [pathname]);
+  }, [pathname])
 
-  if (pathname === "/signup" || signedUp) return null;
+  if (pathname === '/signup' || signedUp) return null
 
-  return <SignUpHeader />;
+  return <SignUpHeader />
 }

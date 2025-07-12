@@ -101,7 +101,7 @@ export function useNewEventForm() {
       navigate({ to: '/events' })
     },
     onError: (e: any) => {
-      alert('Ошибка создания события: ' + (e?.message || e))
+      alert('Event creation error: ' + (e?.message || e))
     },
   })
 

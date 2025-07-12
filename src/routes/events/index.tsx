@@ -4,17 +4,19 @@ import HeaderEvents from '@/components/widgets/Headers/HeaderEvents.tsx'
 import getApi from '@/lib/api/api'
 import { useEvents } from '@/lib/api/hooks/getEvents.ts'
 import { createFileRoute, Link } from '@tanstack/react-router'
+import { useTranslation } from 'react-i18next'
 
 export const Route = createFileRoute('/events/')({
   component: EventsList,
 })
 
 function EventsList() {
+  const { t } = useTranslation('eventsList')
   const api = getApi()
   const { data, isLoading, error } = useEvents()
 
   if (isLoading) return <Loading />
-  if (error) return <div>Loading error: {String(error)}</div>
+  if (error) return <div>{t('loadingError', { message: String(error) })}</div>
 
   const events = data?.events || []
 

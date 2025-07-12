@@ -1,9 +1,12 @@
+import LanguageSwitcher from '@/components/shared/LanguageSwitcher'
 import { useRouter } from '@tanstack/react-router'
 import clsx from 'clsx'
 import { ChevronLeft, UserCircle } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export default function HeaderSingleEvent() {
+  const { t } = useTranslation('eventPage')
   const router = useRouter()
   const [signedUp, setSignedUp] = useState(false)
 
@@ -22,7 +25,7 @@ export default function HeaderSingleEvent() {
         onClick={() => router.history.back()}
       >
         <ChevronLeft className="size-5" />
-        <span>Back to events</span>
+        <span>{t('backToEvents')}</span>
       </button>
       <div
         className={clsx(
@@ -32,18 +35,24 @@ export default function HeaderSingleEvent() {
       >
         {!signedUp ? (
           <>
-            <p className="text-lg font-semibold">Hi, guest!</p>
+            <div className="flex items-center gap-4">
+              <p className="text-lg font-semibold">{t('greeting')}</p>
+              <LanguageSwitcher />
+            </div>
             <button
               className="btn btn-primary"
               onClick={() => router.navigate({ to: '/signup' })}
             >
-              Sign Up
+              {t('signUp')}
             </button>
           </>
         ) : (
           <>
             <UserCircle className="text-primary size-8" />
-            <span className="text-base-content font-semibold">My profile</span>
+            <span className="text-base-content font-semibold">
+              {t('myProfile')}
+            </span>
+            <LanguageSwitcher />
           </>
         )}
       </div>

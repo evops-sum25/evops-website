@@ -1,9 +1,12 @@
+import LanguageSwitcher from '@/components/shared/LanguageSwitcher'
 import { useRouter } from '@tanstack/react-router'
 import clsx from 'clsx'
 import { UserCircle } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export default function HeaderEvents() {
+  const { t } = useTranslation('eventsList')
   const router = useRouter()
   const [signedUp, setSignedUp] = useState(false)
 
@@ -24,18 +27,24 @@ export default function HeaderEvents() {
     >
       {!signedUp ? (
         <>
-          <p className="text-lg font-semibold">Hi, guest!</p>
+          <div className="flex items-center gap-4">
+            <p className="text-lg font-semibold">{t('greeting')}</p>
+            <LanguageSwitcher />
+          </div>
           <button
             className="btn btn-primary"
             onClick={() => router.navigate({ to: '/signup' })}
           >
-            Sign Up
+            {t('signUp')}
           </button>
         </>
       ) : (
         <div className="flex items-center gap-4">
           <UserCircle className="text-primary size-8" />
-          <span className="text-base-content font-semibold">My profile</span>
+          <span className="text-base-content font-semibold">
+            {t('myProfile')}
+          </span>
+          <LanguageSwitcher />
         </div>
       )}
     </header>

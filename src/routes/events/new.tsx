@@ -1,14 +1,17 @@
+import LanguageSwitcher from '@/components/shared/LanguageSwitcher'
 import Loading from '@/components/shared/Loading'
 import { useNewEventForm, useTags } from '@/lib/api/hooks/newEventPage'
 import { createFileRoute } from '@tanstack/react-router'
 import { Plus, Trash } from 'lucide-react'
 import { ChangeEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export const Route = createFileRoute('/events/new')({
   component: NewEventPage,
 })
 
 function NewEventPage() {
+  const { t } = useTranslation('newEvent')
   const {
     step,
     formData,
@@ -37,12 +40,12 @@ function NewEventPage() {
               <span
                 className={`text-sm ${step >= 1 ? 'text-primary' : 'text-base-content/50'}`}
               >
-                Шаг 1
+                {t('step1')}
               </span>
               <span
                 className={`text-sm ${step >= 2 ? 'text-primary' : 'text-base-content/50'}`}
               >
-                Шаг 2
+                {t('step2')}
               </span>
             </div>
             <div className="bg-base-300 h-2 w-full rounded-full">
@@ -53,13 +56,14 @@ function NewEventPage() {
             </div>
           </div>
 
-          <h1 className="card-title mb-1 text-2xl">
-            {step === 1 ? 'Новое событие' : 'Изображения'}
-          </h1>
+          <div className="mb-4 flex items-center justify-between">
+            <h1 className="card-title mb-1 text-2xl">
+              {step === 1 ? t('title') : t('images')}
+            </h1>
+            <LanguageSwitcher />
+          </div>
           <p className="text-base-content/70 mb-6">
-            {step === 1
-              ? 'Заполните основные данные'
-              : 'Загрузите до 5 изображений (опционально)'}
+            {step === 1 ? t('step1Description') : t('step2Description')}
           </p>
 
           <form
@@ -69,7 +73,7 @@ function NewEventPage() {
             {step === 1 ? (
               <div className="flex flex-col gap-6">
                 <div className="form-control">
-                  <label className="label font-medium">Название</label>
+                  <label className="label font-medium">{t('form.title')}</label>
                   <input
                     className="input input-bordered"
                     type="text"
@@ -81,7 +85,9 @@ function NewEventPage() {
                   />
                 </div>
                 <div className="form-control">
-                  <label className="label font-medium">Описание</label>
+                  <label className="label font-medium">
+                    {t('form.description')}
+                  </label>
                   <textarea
                     className="textarea textarea-bordered"
                     value={formData.description}
@@ -92,7 +98,7 @@ function NewEventPage() {
                   />
                 </div>
                 <div className="form-control">
-                  <label className="label font-medium">Теги</label>
+                  <label className="label font-medium">{t('form.tags')}</label>
                   <div className="flex flex-wrap gap-2">
                     {tags.map((tag) => (
                       <label
@@ -121,7 +127,7 @@ function NewEventPage() {
                       }
                     />
                     <span className="label-text font-medium">
-                      С посещаемостью
+                      {t('form.withAttendance')}
                     </span>
                   </label>
                 </div>
@@ -178,7 +184,7 @@ function NewEventPage() {
                   onClick={handleBack}
                   className="btn btn-outline"
                 >
-                  Назад
+                  {t('form.back')}
                 </button>
               )}
               <div className="ml-auto">
@@ -188,7 +194,7 @@ function NewEventPage() {
                     className="btn btn-primary"
                     disabled={!isStep1Valid}
                   >
-                    Далее
+                    {t('form.next')}
                   </button>
                 ) : (
                   <button
@@ -199,7 +205,7 @@ function NewEventPage() {
                     {isSubmitting ? (
                       <span className="loading loading-spinner loading-sm"></span>
                     ) : (
-                      'Создать событие'
+                      t('form.createEvent')
                     )}
                   </button>
                 )}

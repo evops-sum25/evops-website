@@ -8,7 +8,7 @@ export const Route = createFileRoute('/events/')({
   component: EventsList,
 })
 
-async function EventsList() {
+function EventsList() {
   const api = getApi()
   const { data, isLoading, error } = useQuery({
     queryKey: ['events'],

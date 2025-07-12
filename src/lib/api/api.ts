@@ -5,7 +5,7 @@ import {
 } from "@/gen/evops/api/v1/api_pb";
 import { Client, createClient } from "@connectrpc/connect";
 import { createGrpcWebTransport } from "@connectrpc/connect-web";
-import { VITE_PUBLIC_API } from '@/lib/constants.ts'
+import { VITE_PUBLIC_API } from "@/lib/constants.ts";
 
 export interface Api {
   url: URL;

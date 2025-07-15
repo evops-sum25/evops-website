@@ -7,6 +7,8 @@ export function useSingleEvent(params: { id: string }) {
   return useQuery({
     queryKey: ['event', params.id],
     queryFn: async () => await api.eventService.find({ id: params.id }),
+
+    // ???
     enabled: !!params.id,
   })
 }

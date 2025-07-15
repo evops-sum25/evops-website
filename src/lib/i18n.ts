@@ -11,7 +11,7 @@ export const resources = {
 
 i18n.use(initReactI18next).init({
   resources,
-  lng: 'ru', // Устанавливаем русский как язык по умолчанию
+  lng: 'en',
   fallbackLng: 'en',
   interpolation: {
     escapeValue: false, // react already safes from xss

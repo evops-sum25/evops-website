@@ -1,4 +1,7 @@
 export default {
+  service: {
+    fetchingData: 'Fetching data…',
+  },
   eventPage: {
     loadingError: 'Loading error: {{message}}',
     eventNotFound: 'Event not found',
@@ -20,7 +23,7 @@ export default {
     step2: 'Step 2',
     title: 'New Event',
     images: 'Images',
-    step1Description: 'Fill in the basic information',
+    step1Description: 'Fill in basic information',
     step2Description: 'Upload up to 5 images (optional)',
     form: {
       title: 'Title',
@@ -32,7 +35,7 @@ export default {
       next: 'Next',
       back: 'Back',
       createEvent: 'Create Event',
-      creating: 'Creating...',
+      creating: 'Creating…',
     },
     validation: {
       titleRequired: 'Title is required',

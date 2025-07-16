@@ -39,15 +39,15 @@ function EventsList() {
                 <h1 className="text-base-content mb-3 ml-4 w-full text-2xl font-bold lg:mb-3 lg:text-center lg:text-3xl">
                   {event.title}
                 </h1>
-                <figure className="carousel aspect-square max-h-120 w-full rounded-md">
-                  <div className="carousel-item relative flex size-full flex-row justify-center">
+                <figure className="carousel flex snap-x snap-mandatory overflow-x-auto scroll-smooth">
+                  <div className="carousel-item relative w-full flex-shrink-0 snap-center justify-center">
                     <img
                       src={new URL(
                         `/v1/events/images/${event.imageIds[0]}`,
                         api.url,
                       ).toString()}
                       alt="Event thumbnail"
-                      className="z-10 h-auto max-h-full w-auto max-w-full rounded-md lg:max-h-[80vh] lg:max-w-[80vw]"
+                      className="z-10 h-auto max-h-70 w-auto rounded-md md:max-h-100"
                     />
                     <img
                       src={new URL(

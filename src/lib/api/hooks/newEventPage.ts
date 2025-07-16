@@ -77,7 +77,7 @@ export function useNewEventForm() {
     mutationFn: async (data: FormDataState) => {
       const event = await api.eventService.create({
         form: {
-          authorId: '0197fe79-5048-71c2-ad0d-67d13ebe1157',
+          authorId: '019814c2-47b5-7f03-aa89-0b7185bd9a32',
           title: data.title,
           description: data.description,
           tagIds: data.tagIds,

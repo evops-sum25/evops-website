@@ -6,7 +6,7 @@ const api = getApi()
 export function useEvents() {
   return useQuery({
     queryKey: ['events'],
-    queryFn: async () => await api.eventService.list({}),
+    queryFn: async () => await api.eventService.list({limit: 25n}),
     refetchOnWindowFocus: true,
     refetchOnMount: true,
     staleTime: 0,

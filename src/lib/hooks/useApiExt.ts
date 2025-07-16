@@ -1,4 +1,4 @@
-import { type ApiExt, initApiExt } from '@/lib/api/ext'
+import { type ApiExt, initApiExt } from '@/lib/api/ext.ts'
 import { useEffect, useState } from 'react'
 
 export default function useApiExt() {

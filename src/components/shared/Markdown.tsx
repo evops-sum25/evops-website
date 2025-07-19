@@ -14,7 +14,7 @@ import {
   MarkdownText,
   MarkdownThematicBreak,
 } from '@/gen/evops/ext/v1/ext_pb'
-import useApiExt from '@/hooks/useApiExt'
+import useApiExt from '@/lib/hooks/useApiExt'
 import { useEffect, useState } from 'react'
 
 export interface Props {

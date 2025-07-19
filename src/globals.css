@@ -30,5 +30,5 @@ body {
 }
 
 .main-layout {
-  @apply flex h-screen flex-col items-center;
+  @apply flex flex-col items-center;
 }

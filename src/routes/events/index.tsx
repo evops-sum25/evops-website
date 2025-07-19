@@ -1,9 +1,11 @@
 import Loading from '@/components/shared/Loading'
 import TagBar from '@/components/shared/TagBar'
 import HeaderEvents from '@/components/widgets/Headers/HeaderEvents.tsx'
+import { Event as ApiEvent } from '@/gen/evops/api/v1/api_pb.ts'
 import getApi from '@/lib/api/api'
 import { useEvents } from '@/lib/api/hooks/getEvents.ts'
 import { createFileRoute, Link } from '@tanstack/react-router'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export const Route = createFileRoute('/events/')({
@@ -13,12 +15,43 @@ export const Route = createFileRoute('/events/')({
 function EventsList() {
   const { t } = useTranslation('eventsList')
   const api = getApi()
-  const { data, isLoading, error } = useEvents()
+  const [events, setEvents] = useState<ApiEvent[]>([])
+  const [lastEvent, setLastEvent] = useState<string>('')
+  const [isFetching, setFetching] = useState<boolean>(false)
+
+  const { data, isLoading, error, refetch } = useEvents(lastEvent)
+
+  useEffect(() => {
+    if (data?.events && data.events.length > 0) {
+      setEvents((prev) => {
+        if (!lastEvent) {
+          return [...data.events]
+        }
+        return [...prev, ...data.events]
+      })
+
+      setLastEvent(data.events[data.events.length - 1].id)
+    }
+    setFetching(false)
+  }, [data])
+
+  const scrollHandler = useCallback(() => {
+    const position =
+      document.documentElement.scrollHeight -
+      (document.documentElement.scrollTop + window.innerHeight)
+    if (position < 300 && !isFetching) {
+      setFetching(true)
+      refetch()
+    }
+  }, [isFetching, refetch])
+
+  useEffect(() => {
+    document.addEventListener('scroll', scrollHandler)
+    return () => document.removeEventListener('scroll', scrollHandler)
+  }, [lastEvent, isFetching])
 
   if (isLoading) return <Loading />
   if (error) return <div>{t('loadingError', { message: String(error) })}</div>
-
-  const events = data?.events || []
 
   return (
     <>

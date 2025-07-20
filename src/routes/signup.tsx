@@ -18,7 +18,7 @@ function SignUpPage() {
 
   return (
     <>
-      <main className="main-layout w-full justify-center p-4">
+      <main className="main-layout w-full justify-center p-4 md:ml-56 md:max-w-[calc(100vw-14rem)]">
         <fieldset className="fieldset flex w-full max-w-96 flex-col items-center gap-4">
           <legend className="fieldset-legend w-full">
             <h1 className="w-full text-center text-lg">Sign Up</h1>

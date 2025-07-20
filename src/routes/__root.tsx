@@ -1,6 +1,7 @@
 import { Outlet, createRootRouteWithContext } from '@tanstack/react-router'
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 
+import AsideNav from '@/components/widgets/AsideNav'
+import Footer from '@/components/widgets/Footer'
 import TanStackQueryLayout from '../integrations/tanstack-query/layout.tsx'
 
 import type { QueryClient } from '@tanstack/react-query'
@@ -12,9 +13,10 @@ interface MyRouterContext {
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   component: () => (
     <>
+      <AsideNav />
       <Outlet />
-      <TanStackRouterDevtools />
-
+      <Footer />
+      {/*<TanStackRouterDevtools />*/}
       <TanStackQueryLayout />
     </>
   ),

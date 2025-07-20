@@ -56,11 +56,11 @@ function EventsList() {
   return (
     <>
       <HeaderEvents />
-      <main className="main-layout w-screen overflow-x-hidden px-4 lg:px-80">
+      <main className="main-layout w-full overflow-x-hidden px-4 md:ml-56 md:max-w-[calc(100vw-14rem)] lg:px-80">
         {events.map((event) => (
           <section
             key={event.id}
-            className="card my-4 flex w-full flex-col items-center space-y-2"
+            className="card my-10 flex w-full flex-col items-center space-y-2"
           >
             <Link
               to="/events/$id"
@@ -69,7 +69,7 @@ function EventsList() {
               style={{ textDecoration: 'none' }}
             >
               <div className="w-full">
-                <h1 className="text-base-content mb-3 ml-4 w-full text-2xl font-bold lg:mb-3 lg:text-center lg:text-3xl">
+                <h1 className="text-base-content mb-3 w-full text-2xl font-bold lg:mb-3 lg:text-center lg:text-3xl">
                   {event.title}
                 </h1>
                 <figure className="carousel flex snap-x snap-mandatory overflow-x-auto scroll-smooth">
@@ -79,7 +79,7 @@ function EventsList() {
                         `/v1/events/images/${event.imageIds[0]}`,
                         api.url,
                       ).toString()}
-                      alt="Event thumbnail"
+                      alt=""
                       className="z-10 h-auto max-h-70 w-auto rounded-md md:max-h-100"
                     />
                     <img
@@ -87,7 +87,7 @@ function EventsList() {
                         `/v1/events/images/${event.imageIds[0]}`,
                         api.url,
                       ).toString()}
-                      alt="Event thumbnail"
+                      alt=""
                       className="absolute size-full object-fill blur-3xl"
                     />
                   </div>

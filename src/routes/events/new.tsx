@@ -32,7 +32,7 @@ function NewEventPage() {
   if (tagsLoading) return <Loading />
 
   return (
-    <div className="flex min-h-[80vh] w-full items-center justify-center p-4">
+    <div className="flex min-h-[80vh] w-full items-center justify-center p-4 md:ml-56 md:max-w-[calc(100vw-14rem)]">
       <div className="card bg-base-200 w-full max-w-2xl shadow-xl">
         <div className="card-body">
           <div className="mb-6">

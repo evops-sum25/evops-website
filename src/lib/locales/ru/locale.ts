@@ -39,4 +39,9 @@ export default {
       descriptionRequired: 'Описание обязательно',
     },
   },
+  asideNav: {
+    home: 'Дом',
+    create: 'Создать',
+    profile: 'Профиль',
+  },
 } as const

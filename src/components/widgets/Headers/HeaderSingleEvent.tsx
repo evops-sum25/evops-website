@@ -19,7 +19,7 @@ export default function HeaderSingleEvent() {
   }, [])
 
   return (
-    <header className="flex w-full flex-row items-center justify-between px-4 py-5 md:px-10">
+    <header className="flex w-full flex-row items-center justify-between px-4 py-5 md:ml-56 md:max-w-[calc(100vw-14rem)] md:px-10">
       <button
         className="btn btn-ghost flex flex-row items-center p-0"
         onClick={() => router.history.back()}

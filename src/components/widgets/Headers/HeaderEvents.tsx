@@ -22,7 +22,7 @@ export default function HeaderEvents() {
     <header
       className={clsx(
         signedUp ? 'flex-row-reverse' : 'flex-row',
-        'flex w-full items-center justify-between px-10 py-5',
+        'flex w-full items-center justify-between px-10 py-5 md:ml-56 md:max-w-[calc(100vw-14rem)]',
       )}
     >
       {!signedUp ? (

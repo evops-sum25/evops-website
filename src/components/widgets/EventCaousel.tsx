@@ -62,12 +62,12 @@ export default function EventCarousel({ images }: { images: string[] }) {
           >
             <img
               src={link}
-              alt="Event thumbnail"
+              alt=""
               className="z-10 h-auto max-h-70 w-auto rounded-md md:max-h-100"
             />
             <img
               src={link}
-              alt="Event thumbnail"
+              alt=""
               className="absolute size-full object-fill blur-3xl"
             />
           </div>

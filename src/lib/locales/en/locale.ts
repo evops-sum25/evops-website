@@ -42,4 +42,9 @@ export default {
       descriptionRequired: 'Description is required',
     },
   },
+  asideNav: {
+    home: 'Home',
+    create: 'Create',
+    profile: 'Profile',
+  },
 } as const

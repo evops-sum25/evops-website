@@ -35,7 +35,7 @@ function EventPage() {
   return (
     <>
       <HeaderSingleEvent />
-      <main className="main-layout w-screen overflow-x-hidden px-4 lg:px-80">
+      <main className="main-layout w-full overflow-x-hidden px-4 md:ml-56 md:max-w-[calc(100vw-14rem)] lg:px-80">
         <h1 className="mb-4 text-2xl font-bold">{event.title}</h1>
         {event?.author ? (
           <span className="text-base-content mb-4 text-xl font-bold">

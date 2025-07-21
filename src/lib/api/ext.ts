@@ -4,7 +4,9 @@ import {
   ValidateEventTitleResultSchema,
   ValidateTagAliasResultSchema,
   ValidateTagNameResultSchema,
-  ValidateUserNameResultSchema,
+  ValidateUserDisplayNameResultSchema,
+  ValidateUserLoginResultSchema,
+  ValidateUserPasswordResultSchema,
 } from '@/gen/evops/ext/v1/ext_pb.ts'
 import {
   fromBinary,
@@ -14,24 +16,43 @@ import {
 import { createPlugin, type ManifestLike, type Plugin } from '@extism/extism'
 
 export interface ApiExt {
+  getEventDescriptionLenCharMax: ExtismFnJs<number>
+  getEventDescriptionLenCharMin: ExtismFnJs<number>
+  getEventTitleLenCharMax: ExtismFnJs<number>
+  getEventTitleLenCharMin: ExtismFnJs<number>
+  getTagAliasLenCharMax: ExtismFnJs<number>
+  getTagAliasLenCharMin: ExtismFnJs<number>
+  getTagNameLenCharMax: ExtismFnJs<number>
+  getTagNameLenCharMin: ExtismFnJs<number>
+  getTagNameRegex: ExtismFnJs<string>
+  getUserDisplayNameLenCharMax: ExtismFnJs<number>
+  getUserDisplayNameLenCharMin: ExtismFnJs<number>
+  getUserLoginLenCharMax: ExtismFnJs<number>
+  getUserLoginLenCharMin: ExtismFnJs<number>
+  getUserLoginRegex: ExtismFnJs<string>
+  getUserPasswordLenCharMax: ExtismFnJs<number>
+  getUserPasswordLenCharMin: ExtismFnJs<number>
+  getUserPasswordRegex: ExtismFnJs<string>
   parseMarkdown: ExtismFnJsPb<string, typeof MarkdownRootSchema>
-  validateUserName: ExtismFnJsPb<string, typeof ValidateUserNameResultSchema>
-  validateEventTitle: ExtismFnJsPb<
-    string,
-    typeof ValidateEventTitleResultSchema
-  >
   validateEventDescription: ExtismFnJsPb<
     string,
     typeof ValidateEventDescriptionResultSchema
   >
-  validateTagName: ExtismFnJsPb<string, typeof ValidateTagNameResultSchema>
+  validateEventTitle: ExtismFnJsPb<
+    string,
+    typeof ValidateEventTitleResultSchema
+  >
   validateTagAlias: ExtismFnJsPb<string, typeof ValidateTagAliasResultSchema>
-  getUserNameMaxLen: ExtismFnJs<number>
-  getEventTitleMaxLen: ExtismFnJs<number>
-  getEventDescriptionMaxLen: ExtismFnJs<number>
-  getTagNameMaxLen: ExtismFnJs<number>
-  getTagNameRegex: ExtismFnJs<string>
-  getTagAliasMaxLen: ExtismFnJs<string>
+  validateTagName: ExtismFnJsPb<string, typeof ValidateTagNameResultSchema>
+  validateUserDisplayName: ExtismFnJsPb<
+    string,
+    typeof ValidateUserDisplayNameResultSchema
+  >
+  validateUserLogin: ExtismFnJsPb<string, typeof ValidateUserLoginResultSchema>
+  validateUserPassword: ExtismFnJsPb<
+    string,
+    typeof ValidateUserPasswordResultSchema
+  >
 }
 
 export async function initApiExt(
@@ -39,45 +60,100 @@ export async function initApiExt(
 ): Promise<ApiExt> {
   const extismPlugin = await createPlugin(pluginManifest)
   return {
+    getEventDescriptionLenCharMax: extismFnJs(
+      extismPlugin,
+      'get_event_description_len_char_max',
+    ),
+    getEventDescriptionLenCharMin: extismFnJs(
+      extismPlugin,
+      'get_event_description_len_char_min',
+    ),
+    getEventTitleLenCharMax: extismFnJs(
+      extismPlugin,
+      'get_event_title_len_char_max',
+    ),
+    getEventTitleLenCharMin: extismFnJs(
+      extismPlugin,
+      'get_event_title_len_char_min',
+    ),
+    getTagAliasLenCharMax: extismFnJs(
+      extismPlugin,
+      'get_tag_alias_len_char_max',
+    ),
+    getTagAliasLenCharMin: extismFnJs(
+      extismPlugin,
+      'get_tag_alias_len_char_min',
+    ),
+    getTagNameLenCharMax: extismFnJs(extismPlugin, 'get_tag_name_len_char_max'),
+    getTagNameLenCharMin: extismFnJs(extismPlugin, 'get_tag_name_len_char_min'),
+    getTagNameRegex: extismFnJs(extismPlugin, 'get_tag_name_regex'),
+    getUserDisplayNameLenCharMax: extismFnJs(
+      extismPlugin,
+      'get_user_display_name_len_char_max',
+    ),
+    getUserDisplayNameLenCharMin: extismFnJs(
+      extismPlugin,
+      'get_user_display_name_len_char_min',
+    ),
+    getUserLoginLenCharMax: extismFnJs(
+      extismPlugin,
+      'get_user_login_len_char_max',
+    ),
+    getUserLoginLenCharMin: extismFnJs(
+      extismPlugin,
+      'get_user_login_len_char_min',
+    ),
+    getUserLoginRegex: extismFnJs(extismPlugin, 'get_user_login_regex'),
+    getUserPasswordLenCharMax: extismFnJs(
+      extismPlugin,
+      'get_user_password_len_char_max',
+    ),
+    getUserPasswordLenCharMin: extismFnJs(
+      extismPlugin,
+      'get_user_password_len_char_min',
+    ),
+    getUserPasswordRegex: extismFnJs(extismPlugin, 'get_user_password_regex'),
     parseMarkdown: extismFnJsPb(
       extismPlugin,
       'parse_markdown',
       MarkdownRootSchema,
-    ),
-    validateUserName: extismFnJsPb(
-      extismPlugin,
-      'validate_user_name',
-      ValidateUserNameResultSchema,
-    ),
-    validateEventTitle: extismFnJsPb(
-      extismPlugin,
-      'validate_event_title',
-      ValidateEventTitleResultSchema,
     ),
     validateEventDescription: extismFnJsPb(
       extismPlugin,
       'validate_event_description',
       ValidateEventDescriptionResultSchema,
     ),
-    validateTagName: extismFnJsPb(
+
+    validateEventTitle: extismFnJsPb(
       extismPlugin,
-      'validate_tag_name',
-      ValidateTagNameResultSchema,
+      'validate_event_title',
+      ValidateEventTitleResultSchema,
     ),
     validateTagAlias: extismFnJsPb(
       extismPlugin,
       'validate_tag_alias',
       ValidateTagAliasResultSchema,
     ),
-    getUserNameMaxLen: extismFnJs(extismPlugin, 'get_user_name_max_len'),
-    getEventTitleMaxLen: extismFnJs(extismPlugin, 'get_event_title_max_len'),
-    getEventDescriptionMaxLen: extismFnJs(
+    validateTagName: extismFnJsPb(
       extismPlugin,
-      'get_event_description_max_len',
+      'validate_tag_name',
+      ValidateTagNameResultSchema,
     ),
-    getTagNameMaxLen: extismFnJs(extismPlugin, 'get_tag_name_max_len'),
-    getTagNameRegex: extismFnJs(extismPlugin, 'get_tag_name_regex'),
-    getTagAliasMaxLen: extismFnJs(extismPlugin, 'get_tag_alias_max_len'),
+    validateUserDisplayName: extismFnJsPb(
+      extismPlugin,
+      'validate_user_display_name',
+      ValidateUserDisplayNameResultSchema,
+    ),
+    validateUserLogin: extismFnJsPb(
+      extismPlugin,
+      'validate_user_login',
+      ValidateUserLoginResultSchema,
+    ),
+    validateUserPassword: extismFnJsPb(
+      extismPlugin,
+      'validate_user_password',
+      ValidateUserPasswordResultSchema,
+    ),
   }
 }
 

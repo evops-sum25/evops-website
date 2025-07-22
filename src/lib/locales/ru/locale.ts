@@ -21,7 +21,7 @@ export default {
     title: 'Новое событие',
     images: 'Изображения',
     step1Description: 'Заполните основные данные',
-    step2Description: 'Загрузите до 5 изображений (опционально)',
+    step2Description: 'Загрузите до 10 изображений (опционально)',
     form: {
       title: 'Название',
       description: 'Описание',

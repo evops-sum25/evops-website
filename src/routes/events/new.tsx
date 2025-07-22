@@ -151,7 +151,7 @@ function NewEventPage() {
                     )}
                   </div>
                 ))}
-                {formData.imageFields.length < 5 && (
+                {formData.imageFields.length < 10 && (
                   <button
                     type="button"
                     className="btn btn-outline btn-sm w-fit"

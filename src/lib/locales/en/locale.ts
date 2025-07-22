@@ -24,7 +24,7 @@ export default {
     title: 'New Event',
     images: 'Images',
     step1Description: 'Fill in basic information',
-    step2Description: 'Upload up to 5 images (optional)',
+    step2Description: 'Upload up to 10 images (optional)',
     form: {
       title: 'Title',
       description: 'Description',

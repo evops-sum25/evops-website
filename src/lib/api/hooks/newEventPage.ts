@@ -53,7 +53,7 @@ export function useNewEventForm() {
     reader.readAsDataURL(file)
   }
   const handleAddImageField = () => {
-    if (formData.imageFields.length < 5) {
+    if (formData.imageFields.length < 10) {
       setFormData((prev) => ({
         ...prev,
         imageFields: [...prev.imageFields, { file: null, preview: '' }],
@@ -74,26 +74,43 @@ export function useNewEventForm() {
 
   const createEventMutation = useMutation({
     mutationFn: async (data: FormDataState) => {
-      const eventRes = await api.eventService.create({
-        form: {
-          title: data.title,
-          description: data.description,
-          tagIds: data.tagIds,
+      const token = localStorage.getItem('accessToken')
+
+      const eventRes = await api.eventService.create(
+        {
+          form: {
+            title: data.title,
+            description: data.description,
+            tagIds: data.tagIds,
+          },
         },
-      })
-      const eventId = eventRes.eventId
-      for (const imgField of data.imageFields) {
-        if (imgField.file) {
-          const formData = new window.FormData()
-          formData.append('image', imgField.file)
-          const token = localStorage.getItem('accessToken')
-          await fetch(`${api.url}v1/events/${eventId}/images`, {
+        {
+          headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+        },
+      )
+
+      const imageFiles = data.imageFields
+        .filter((field) => field.file !== null)
+        .map((field) => field.file!)
+
+      if (imageFiles.length > 0) {
+        for (const file of imageFiles) {
+          const formData = new FormData()
+          formData.append('image', file)
+
+          await fetch(`${api.url}v1/events/${eventRes.eventId}/images`, {
             method: 'POST',
             body: formData,
-            headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            mode: 'cors',
+          }).catch((error) => {
+            console.warn('Image upload failed:', error)
           })
         }
       }
+
       return eventRes
     },
     onSuccess: () => {

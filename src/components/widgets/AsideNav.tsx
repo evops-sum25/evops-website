@@ -46,7 +46,7 @@ export default function AsideNav() {
   return (
     <aside className="bg-base-100 border-base-200 z-40 hidden border-r md:fixed md:top-0 md:left-0 md:flex md:h-full md:w-56 md:flex-col">
       <div className="border-base-200 mt-2 flex items-center justify-center gap-3 border-b p-4">
-        <img alt="EvOps-logo" src="/logo.png" className="size-8"/>
+        <img alt="EvOps-logo" src="/logo.png" className="size-8" />
         <h1 className="text-primary text-xl font-bold">EvOps</h1>
       </div>
       <nav className="flex flex-col gap-2 p-4">

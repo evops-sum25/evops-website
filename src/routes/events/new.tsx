@@ -1,12 +1,13 @@
-import LanguageSwitcher from '@/components/shared/LanguageSwitcher'
 import Loading from '@/components/shared/Loading'
 import { useNewEventForm, useTags } from '@/lib/api/hooks/newEventPage'
+import { requireAuth } from '@/lib/api/requireAuth.ts'
 import { createFileRoute } from '@tanstack/react-router'
 import { Plus, Trash } from 'lucide-react'
 import { ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export const Route = createFileRoute('/events/new')({
+  beforeLoad: () => requireAuth(),
   component: NewEventPage,
 })
 
@@ -60,7 +61,6 @@ function NewEventPage() {
             <h1 className="card-title mb-1 text-2xl">
               {step === 1 ? t('title') : t('images')}
             </h1>
-            <LanguageSwitcher />
           </div>
           <p className="text-base-content/70 mb-6">
             {step === 1 ? t('step1Description') : t('step2Description')}
@@ -115,21 +115,6 @@ function NewEventPage() {
                       </label>
                     ))}
                   </div>
-                </div>
-                <div className="form-control flex-row items-center gap-2">
-                  <label className="flex cursor-pointer items-center gap-2">
-                    <input
-                      type="checkbox"
-                      className="checkbox"
-                      checked={formData.withAttendance}
-                      onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                        handleInputChange('withAttendance', e.target.checked)
-                      }
-                    />
-                    <span className="label-text font-medium">
-                      {t('form.withAttendance')}
-                    </span>
-                  </label>
                 </div>
               </div>
             ) : (

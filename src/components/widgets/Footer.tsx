@@ -1,18 +1,26 @@
-import { useRouter } from '@tanstack/react-router'
+import { useLocation, useRouter } from '@tanstack/react-router'
 import { Home, Plus, User } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 export default function Footer() {
   const router = useRouter()
+  const location = useLocation()
   const [currentPath, setCurrentPath] = useState('')
 
   useEffect(() => {
-    setCurrentPath(window.location.pathname)
-  }, [])
+    setCurrentPath(location.pathname)
+  }, [location.pathname])
 
   const isActive = (path: string) => {
     if (path === '/events' && currentPath === '/') return true
     return currentPath === path
+  }
+
+  const shouldHide =
+    location.pathname === '/login' || location.pathname === '/signup'
+
+  if (shouldHide) {
+    return null
   }
 
   return (

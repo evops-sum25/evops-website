@@ -1,11 +1,13 @@
 import Loading from '@/components/shared/Loading'
 import { useNewEventForm, useTags } from '@/lib/api/hooks/newEventPage'
+import { requireAuth } from '@/lib/api/requireAuth.ts'
 import { createFileRoute } from '@tanstack/react-router'
 import { Plus, Trash } from 'lucide-react'
 import { ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export const Route = createFileRoute('/events/new')({
+  beforeLoad: () => requireAuth(),
   component: NewEventPage,
 })
 

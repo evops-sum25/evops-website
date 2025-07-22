@@ -1,9 +1,11 @@
 import { useMyInfo } from '@/lib/api/hooks/useAuth'
+import { requireAuth } from '@/lib/api/requireAuth.ts'
 import { createFileRoute } from '@tanstack/react-router'
 import { UserCircle } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 export const Route = createFileRoute('/profile')({
+  beforeLoad: () => requireAuth(),
   component: ProfilePage,
 })
 function ProfilePage() {

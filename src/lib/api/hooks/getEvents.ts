@@ -22,8 +22,7 @@ export function useEvents({
   return useQuery({
     queryKey: ['events', apiParam],
     queryFn: async () => {
-      const res = await api.eventService.list(apiParam)
-      return res
+      return await api.eventService.list(apiParam)
     },
     refetchOnWindowFocus: false,
     refetchOnMount: true,

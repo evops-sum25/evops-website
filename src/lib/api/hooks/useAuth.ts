@@ -14,7 +14,6 @@ export function useLogin() {
       })
       if (!res.tokens) throw new Error('No tokens returned')
 
-      // Инвалидируем кеш после успешного входа
       queryClient.invalidateQueries({ queryKey: ['myInfo'] })
 
       return res.tokens
@@ -37,11 +36,10 @@ export function useSignUp() {
       password: string
     }) => {
       const res = await api.authService.signUp({
-        form: { login, display_name: displayName, password },
+        form: { login, displayName, password },
       })
       if (!res.tokens) throw new Error('No tokens returned')
 
-      // Инвалидируем кеш после успешной регистрации
       queryClient.invalidateQueries({ queryKey: ['myInfo'] })
 
       return res.tokens

@@ -44,4 +44,8 @@ export default {
     create: 'Создать',
     profile: 'Профиль',
   },
+  header: {
+    login: 'Войти',
+    signup: 'Регистрация',
+  },
 } as const

@@ -1,6 +1,5 @@
 import Loading from '@/components/shared/Loading'
 import TagBar from '@/components/shared/TagBar'
-import HeaderEvents from '@/components/widgets/Headers/HeaderEvents.tsx'
 import { Event as ApiEvent } from '@/gen/evops/api/v1/api_pb.ts'
 import getApi from '@/lib/api/api'
 import { useEvents } from '@/lib/api/hooks/getEvents.ts'
@@ -55,7 +54,6 @@ function EventsList() {
 
   return (
     <>
-      <HeaderEvents />
       <main className="main-layout w-full overflow-x-hidden px-4 md:ml-56 md:max-w-[calc(100vw-14rem)] lg:px-80">
         {events.map((event) => (
           <section

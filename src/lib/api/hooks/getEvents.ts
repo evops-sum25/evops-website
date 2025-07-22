@@ -3,17 +3,28 @@ import { useQuery } from '@tanstack/react-query'
 
 const api = getApi()
 
-export function useEvents(last: string = '') {
-  let apiParam
-  if (last === '') {
-    apiParam = { limit: 25n }
-  } else {
-    apiParam = { limit: 25n, lastId: last }
-  }
+export function useEvents({
+  lastId = '',
+  limit = 25,
+  tagIds = [],
+  search = '',
+}: {
+  lastId?: string
+  limit?: number
+  tagIds?: string[]
+  search?: string
+} = {}) {
+  const apiParam: any = { limit }
+  if (lastId) apiParam.lastId = lastId
+  if (tagIds.length > 0) apiParam.tagIds = tagIds
+  if (search) apiParam.search = search
 
   return useQuery({
-    queryKey: ['events'],
-    queryFn: async () => await api.eventService.list(apiParam),
+    queryKey: ['events', apiParam],
+    queryFn: async () => {
+      const res = await api.eventService.list(apiParam)
+      return res.events
+    },
     refetchOnWindowFocus: true,
     refetchOnMount: true,
     staleTime: 0,

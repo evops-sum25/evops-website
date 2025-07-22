@@ -1,7 +1,6 @@
 import Loading from '@/components/shared/Loading'
 import TagBar from '@/components/shared/TagBar.tsx'
 import EventCarousel from '@/components/widgets/EventCaousel.tsx'
-import HeaderSingleEvent from '@/components/widgets/Headers/HeaderSingleEvent.tsx'
 import getApi from '@/lib/api/api.ts'
 import { useSingleEvent } from '@/lib/api/hooks/getSingleEvent.ts'
 import { createFileRoute } from '@tanstack/react-router'
@@ -34,7 +33,6 @@ function EventPage() {
 
   return (
     <>
-      <HeaderSingleEvent />
       <main className="main-layout w-full overflow-x-hidden px-4 md:ml-56 md:max-w-[calc(100vw-14rem)] lg:px-80">
         <h1 className="mb-4 text-2xl font-bold">{event.title}</h1>
         {event?.author ? (

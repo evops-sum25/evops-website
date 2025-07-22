@@ -47,4 +47,8 @@ export default {
     create: 'Create',
     profile: 'Profile',
   },
+  header: {
+    login: 'Log In',
+    signup: 'Sign Up',
+  },
 } as const

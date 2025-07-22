@@ -14,7 +14,7 @@ function ProfilePage() {
     <main className="main-layout flex w-full flex-col items-center justify-center p-4 md:ml-56 md:max-w-[calc(100vw-14rem)]">
       <div className="card bg-base-100 w-full max-w-md shadow-xl">
         <div className="card-body items-center text-center">
-          <div className="avatar mb-4">
+          <div className="mb-4">
             <div className="bg-base-200 flex w-24 items-center justify-center rounded-full">
               <UserCircle className="text-primary size-20" />
             </div>

@@ -48,4 +48,11 @@ export default {
     login: 'Войти',
     signup: 'Регистрация',
   },
+  profile: {
+    title: 'Профиль',
+    login: 'Логин',
+    displayName: 'Имя пользователя',
+    id: 'ID пользователя',
+    error: 'Не удалось загрузить профиль',
+  },
 } as const

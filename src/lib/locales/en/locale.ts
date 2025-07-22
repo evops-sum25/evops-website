@@ -51,4 +51,11 @@ export default {
     login: 'Log In',
     signup: 'Sign Up',
   },
+  profile: {
+    title: 'Profile',
+    login: 'Login',
+    displayName: 'Display Name',
+    id: 'User ID',
+    error: 'Failed to load profile',
+  },
 } as const

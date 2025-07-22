@@ -1,4 +1,5 @@
 import Loading from '@/components/shared/Loading'
+import Markdown from '@/components/shared/Markdown.tsx'
 import TagBar from '@/components/shared/TagBar.tsx'
 import EventCarousel from '@/components/widgets/EventCaousel.tsx'
 import getApi from '@/lib/api/api.ts'
@@ -44,8 +45,8 @@ function EventPage() {
         )}
         {images.length > 0 && <EventCarousel images={images} />}
         <TagBar tags={event.tags} />
-        <article className="text-base-content mt-4 w-full text-start lg:w-auto lg:text-center lg:text-lg">
-          {event.description}
+        <article className="text-base-content mt-4 w-full lg:w-auto">
+          <Markdown text={event.description} />
         </article>
       </main>
     </>

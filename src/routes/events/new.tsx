@@ -99,21 +99,23 @@ function NewEventPage() {
                 </div>
                 <div className="form-control">
                   <label className="label font-medium">{t('form.tags')}</label>
-                  <div className="flex flex-wrap gap-2">
-                    {tags.map((tag) => (
-                      <label
-                        key={tag.id}
-                        className={`btn btn-sm btn-outline flex cursor-pointer items-center gap-2 ${formData.tagIds.includes(tag.id) ? 'btn-primary' : ''}`}
-                      >
-                        <input
-                          type="checkbox"
-                          checked={formData.tagIds.includes(tag.id)}
-                          onChange={() => handleTagToggle(tag.id)}
-                          className="checkbox checkbox-xs"
-                        />
-                        {tag.name}
-                      </label>
-                    ))}
+                  <div className="border-base-300 h-32 overflow-y-auto rounded-lg border p-3">
+                    <div className="flex flex-wrap gap-2">
+                      {tags.map((tag) => (
+                        <label
+                          key={tag.id}
+                          className={`btn btn-sm btn-outline flex cursor-pointer items-center gap-2 ${formData.tagIds.includes(tag.id) ? 'btn-primary' : ''}`}
+                        >
+                          <input
+                            type="checkbox"
+                            checked={formData.tagIds.includes(tag.id)}
+                            onChange={() => handleTagToggle(tag.id)}
+                            className="checkbox checkbox-xs"
+                          />
+                          {tag.name}
+                        </label>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>

@@ -122,7 +122,7 @@ function EventsList() {
               </div>
               <button
                 onClick={clearSearch}
-                className="btn btn-outline btn-sm min-w-fit gap-2"
+                className="btn btn-primary btn-sm min-w-fit gap-2"
               >
                 <svg
                   className="h-4 w-4"
@@ -148,7 +148,7 @@ function EventsList() {
         {displayEvents.map((event) => (
           <section
             key={event.id}
-            className="card mb-10 flex w-full flex-col items-center space-y-2"
+            className="card mb-10 flex w-screen flex-col items-center space-y-2 md:w-full"
           >
             <Link
               to="/events/$id"

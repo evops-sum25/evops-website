@@ -140,7 +140,7 @@ function NewEventPage() {
                         className="h-20 w-20 rounded-lg object-cover shadow-lg"
                       />
                     )}
-                    {formData.imageFields.length > 1 && (
+                    {img.preview && (
                       <button
                         type="button"
                         className="btn btn-sm btn-error ml-2"

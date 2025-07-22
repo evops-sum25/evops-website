@@ -114,21 +114,6 @@ function NewEventPage() {
                     ))}
                   </div>
                 </div>
-                <div className="form-control flex-row items-center gap-2">
-                  <label className="flex cursor-pointer items-center gap-2">
-                    <input
-                      type="checkbox"
-                      className="checkbox"
-                      checked={formData.withAttendance}
-                      onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                        handleInputChange('withAttendance', e.target.checked)
-                      }
-                    />
-                    <span className="label-text font-medium">
-                      {t('form.withAttendance')}
-                    </span>
-                  </label>
-                </div>
               </div>
             ) : (
               <div className="flex flex-col gap-6">

@@ -31,7 +31,7 @@ function LoginPage() {
   }
 
   return (
-    <main className="main-layout flex min-h-[80vh] w-full items-center justify-center p-4 md:ml-56 md:max-w-[calc(100vw-14rem)]">
+    <main className="main-layout flex min-h-[80vh] w-full items-center justify-center p-4">
       <form
         className="card bg-base-100 w-full max-w-md p-0 shadow-xl"
         onSubmit={handleSubmit}

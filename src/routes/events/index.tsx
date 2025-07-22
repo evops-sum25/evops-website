@@ -15,45 +15,34 @@ function EventsList() {
   const { t } = useTranslation('eventsList')
   const api = getApi()
   const [events, setEvents] = useState<ApiEvent[]>([])
-  const [lastEventId, setLastEventId] = useState<string>('')
+  const [lastEvent, setLastEvent] = useState<string>('')
   const [isFetching, setFetching] = useState<boolean>(false)
 
-  const { data, isLoading, error, refetch } = useEvents({
-    lastId: lastEventId,
-    limit: 25,
-    tagIds: [],
-    search: '',
-  })
+  const { data, isLoading, error, refetch } = useEvents(lastEvent)
 
   useEffect(() => {
     if (data?.events && data.events.length > 0) {
       setEvents((prev) => {
-        if (!lastEventId) {
+        if (!lastEvent) {
           return [...data.events]
         }
         return [...prev, ...data.events]
       })
 
-      setLastEventId(data.events[data.events.length - 1].id)
+      setLastEvent(data.events[data.events.length - 1].id)
     }
     setFetching(false)
-  }, [data, lastEventId])
-
-  const loadMore = useCallback(() => {
-    if (!isFetching && data?.events && data.events.length > 0) {
-      setFetching(true)
-      refetch()
-    }
-  }, [isFetching, refetch, data])
+  }, [data])
 
   const scrollHandler = useCallback(() => {
     const position =
       document.documentElement.scrollHeight -
       (document.documentElement.scrollTop + window.innerHeight)
     if (position < 300 && !isFetching) {
-      loadMore()
+      setFetching(true)
+      refetch()
     }
-  }, [isFetching, loadMore])
+  }, [isFetching, refetch])
 
   useEffect(() => {
     document.addEventListener('scroll', scrollHandler)

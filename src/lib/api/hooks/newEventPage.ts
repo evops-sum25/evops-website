@@ -12,7 +12,7 @@ export function useTags() {
     queryKey: ['tags'],
     queryFn: async () => {
       const res = await api.tagService.list({})
-      return (res.tags as TagProps[]) || []
+      return (res.tags || []).map((tag: any) => ({ ...tag, color: 'gray' }))
     },
   })
 }
@@ -26,7 +26,6 @@ export function useNewEventForm() {
     title: '',
     description: '',
     tagIds: [],
-    withAttendance: false,
     imageFields: [{ file: null, preview: '' }],
   })
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
@@ -75,26 +74,27 @@ export function useNewEventForm() {
 
   const createEventMutation = useMutation({
     mutationFn: async (data: FormDataState) => {
-      const event = await api.eventService.create({
+      const eventRes = await api.eventService.create({
         form: {
-          authorId: '019814c2-47b5-7f03-aa89-0b7185bd9a32',
           title: data.title,
           description: data.description,
           tagIds: data.tagIds,
-          withAttendance: data.withAttendance,
         },
       })
+      const eventId = eventRes.eventId
       for (const imgField of data.imageFields) {
         if (imgField.file) {
           const formData = new window.FormData()
           formData.append('image', imgField.file)
-          await fetch(`${api.url}v1/events/${event.eventId}/images`, {
+          const token = localStorage.getItem('accessToken')
+          await fetch(`${api.url}v1/events/${eventId}/images`, {
             method: 'POST',
             body: formData,
+            headers: token ? { Authorization: `Bearer ${token}` } : undefined,
           })
         }
       }
-      return event
+      return eventRes
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['events'] })

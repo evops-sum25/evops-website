@@ -1,6 +1,5 @@
 import Loading from '@/components/shared/Loading'
 import TagBar from '@/components/shared/TagBar'
-import HeaderEvents from '@/components/widgets/Headers/HeaderEvents.tsx'
 import { Event as ApiEvent } from '@/gen/evops/api/v1/api_pb.ts'
 import getApi from '@/lib/api/api'
 import { useEvents } from '@/lib/api/hooks/getEvents.ts'
@@ -48,14 +47,13 @@ function EventsList() {
   useEffect(() => {
     document.addEventListener('scroll', scrollHandler)
     return () => document.removeEventListener('scroll', scrollHandler)
-  }, [lastEvent, isFetching])
+  }, [scrollHandler])
 
-  if (isLoading) return <Loading />
+  if (isLoading && events.length === 0) return <Loading />
   if (error) return <div>{t('loadingError', { message: String(error) })}</div>
 
   return (
     <>
-      <HeaderEvents />
       <main className="main-layout w-full overflow-x-hidden px-4 md:ml-56 md:max-w-[calc(100vw-14rem)] lg:px-80">
         {events.map((event) => (
           <section
@@ -72,26 +70,28 @@ function EventsList() {
                 <h1 className="text-base-content mb-3 w-full text-2xl font-bold lg:mb-3 lg:text-center lg:text-3xl">
                   {event.title}
                 </h1>
-                <figure className="carousel flex snap-x snap-mandatory overflow-x-auto scroll-smooth">
-                  <div className="carousel-item relative w-full flex-shrink-0 snap-center justify-center">
-                    <img
-                      src={new URL(
-                        `/v1/events/images/${event.imageIds[0]}`,
-                        api.url,
-                      ).toString()}
-                      alt=""
-                      className="z-10 h-auto max-h-70 w-auto rounded-md md:max-h-100"
-                    />
-                    <img
-                      src={new URL(
-                        `/v1/events/images/${event.imageIds[0]}`,
-                        api.url,
-                      ).toString()}
-                      alt=""
-                      className="absolute size-full object-fill blur-3xl"
-                    />
-                  </div>
-                </figure>
+                {event.imageIds && event.imageIds.length > 0 && (
+                  <figure className="carousel flex snap-x snap-mandatory overflow-x-auto scroll-smooth">
+                    <div className="carousel-item relative w-full flex-shrink-0 snap-center justify-center">
+                      <img
+                        src={new URL(
+                          `/v1/events/images/${event.imageIds[0]}`,
+                          api.url,
+                        ).toString()}
+                        alt=""
+                        className="z-10 h-auto max-h-70 w-auto rounded-md md:max-h-100"
+                      />
+                      <img
+                        src={new URL(
+                          `/v1/events/images/${event.imageIds[0]}`,
+                          api.url,
+                        ).toString()}
+                        alt=""
+                        className="absolute size-full object-fill blur-3xl"
+                      />
+                    </div>
+                  </figure>
+                )}
               </div>
             </Link>
             <div className="flex w-full flex-col items-start gap-3 px-2 lg:items-center lg:justify-center">

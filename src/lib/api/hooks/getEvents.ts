@@ -14,10 +14,7 @@ export function useEvents(last: string = '') {
   return useQuery({
     queryKey: ['events'],
     queryFn: async () => await api.eventService.list(apiParam),
-    refetchOnWindowFocus: true,
-    refetchOnMount: true,
+    refetchOnWindowFocus: false,
     staleTime: 0,
-    refetchInterval: 5 * 1000,
-    refetchIntervalInBackground: true,
   })
 }

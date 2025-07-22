@@ -1,0 +1,1527 @@
+{
+  "openapi": "3.1.0",
+  "info": { "title": "evops.api", "version": "" },
+  "paths": {
+    "/v1/auth/login": {
+      "post": {
+        "tags": ["AuthService"],
+        "summary": "evops.api.v1.AuthService.LogIn",
+        "description": "...",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthServiceLogInRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthServiceLogInResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request (e.g. invalid JSON syntax)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "422": {
+            "description": "Unprocessable Entity (e.g. wrong data types)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "text/plain; charset=utf-8": {} }
+          }
+        }
+      }
+    },
+    "/v1/auth/me": {
+      "get": {
+        "tags": ["AuthService"],
+        "summary": "evops.api.v1.AuthService.GetMyInfo",
+        "description": "...",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthServiceGetMyInfoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request (e.g. invalid JSON syntax)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "401": {
+            "description": "Unauthorized (e.g. invalid JWT)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "422": {
+            "description": "Unprocessable Entity (e.g. wrong data types)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "text/plain; charset=utf-8": {} }
+          }
+        },
+        "security": [{ "EvOps JWT": [] }]
+      }
+    },
+    "/v1/auth/refresh": {
+      "post": {
+        "tags": ["AuthService"],
+        "summary": "evops.api.v1.AuthService.RefreshSession",
+        "description": "...",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthServiceRefreshSessionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthServiceRefreshSessionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request (e.g. invalid JSON syntax)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "422": {
+            "description": "Unprocessable Entity (e.g. wrong data types)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "text/plain; charset=utf-8": {} }
+          }
+        }
+      }
+    },
+    "/v1/auth/signup": {
+      "post": {
+        "tags": ["AuthService"],
+        "summary": "evops.api.v1.AuthService.SignUp",
+        "description": "...",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthServiceSignUpRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthServiceSignUpResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request (e.g. invalid JSON syntax)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "422": {
+            "description": "Unprocessable Entity (e.g. wrong data types)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "text/plain; charset=utf-8": {} }
+          }
+        }
+      }
+    },
+    "/v1/events": {
+      "get": {
+        "tags": ["EventService"],
+        "summary": "evops.api.v1.EventService.List",
+        "description": "Lists all events.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "last-id",
+            "description": "UUID of last listed event.",
+            "schema": {
+              "description": "UUID of last listed event.",
+              "anyOf": [
+                { "$ref": "#/components/schemas/EventId" },
+                { "type": "null" }
+              ]
+            },
+            "style": "form"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Size of one batch of events.",
+            "schema": {
+              "description": "Size of one batch of events.",
+              "anyOf": [
+                { "$ref": "#/components/schemas/PgLimit" },
+                { "type": "null" }
+              ]
+            },
+            "style": "form"
+          },
+          {
+            "in": "query",
+            "name": "tag-id",
+            "description": "Tag ids of events to be listed.",
+            "schema": {
+              "description": "Tag ids of events to be listed.",
+              "type": "array",
+              "items": { "$ref": "#/components/schemas/TagId" },
+              "default": []
+            },
+            "style": "form"
+          },
+          {
+            "in": "query",
+            "name": "search",
+            "description": "Search string to match against event titles and descriptions (case-insensitive).",
+            "schema": {
+              "description": "Search string to match against event titles and descriptions (case-insensitive).",
+              "type": ["string", "null"]
+            },
+            "style": "form"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventServiceListResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request (e.g. invalid JSON syntax)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "text/plain; charset=utf-8": {} }
+          }
+        }
+      },
+      "post": {
+        "tags": ["EventService"],
+        "summary": "evops.api.v1.EventService.Create",
+        "description": "Creates a new event.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventServiceCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventServiceCreateResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request (e.g. invalid JSON syntax)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "401": {
+            "description": "Unauthorized (e.g. invalid JWT)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "422": {
+            "description": "Unprocessable Entity (e.g. wrong data types)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "text/plain; charset=utf-8": {} }
+          }
+        },
+        "security": [{ "EvOps JWT": [] }]
+      }
+    },
+    "/v1/events/{event-id}": {
+      "get": {
+        "tags": ["EventService"],
+        "summary": "evops.api.v1.EventService.Find",
+        "description": "Retrieves a single event by ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "event-id",
+            "description": "UUID of the event to retrieve.",
+            "required": true,
+            "schema": {
+              "description": "UUID of the event to retrieve.",
+              "$ref": "#/components/schemas/EventId"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventServiceFindResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request (e.g. invalid JSON syntax)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "404": {
+            "description": "Not Found (e.g. nonexistent ID)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "422": {
+            "description": "Unprocessable Entity (e.g. wrong data types)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "text/plain; charset=utf-8": {} }
+          }
+        }
+      },
+      "put": {
+        "tags": ["EventService"],
+        "summary": "evops.api.v1.EventService.Update",
+        "description": "Updates an event by ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "event-id",
+            "description": "UUID of the event to be updated.",
+            "required": true,
+            "schema": {
+              "description": "UUID of the event to be updated.",
+              "$ref": "#/components/schemas/EventId"
+            },
+            "style": "simple"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventServiceUpdateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": { "description": "no content" },
+          "400": {
+            "description": "Bad Request (e.g. invalid JSON syntax)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "401": {
+            "description": "Unauthorized (e.g. invalid JWT)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "403": {
+            "description": "Forbidden (e.g. modifying another user’s resource)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "404": {
+            "description": "Not Found (e.g. nonexistent ID)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "422": {
+            "description": "Unprocessable Entity (e.g. wrong data types)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "text/plain; charset=utf-8": {} }
+          }
+        },
+        "security": [{ "EvOps JWT": [] }]
+      },
+      "delete": {
+        "tags": ["EventService"],
+        "summary": "evops.api.v1.EventService.Delete",
+        "description": "Deletes an event by ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "event-id",
+            "description": "UUID of the event to be deleted.",
+            "required": true,
+            "schema": {
+              "description": "UUID of the event to be deleted.",
+              "$ref": "#/components/schemas/EventId"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": { "description": "no content" },
+          "400": {
+            "description": "Bad Request (e.g. invalid JSON syntax)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "401": {
+            "description": "Unauthorized (e.g. invalid JWT)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "403": {
+            "description": "Forbidden (e.g. modifying another user’s resource)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "404": {
+            "description": "Not Found (e.g. nonexistent ID)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "422": {
+            "description": "Unprocessable Entity (e.g. wrong data types)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "text/plain; charset=utf-8": {} }
+          }
+        },
+        "security": [{ "EvOps JWT": [] }]
+      }
+    },
+    "/v1/events/{event-id}/images": {
+      "put": {
+        "tags": ["EventService"],
+        "summary": "evops.api.v1.EventService.ReorderImages",
+        "description": "Reorders images of an event according to a new list.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "event-id",
+            "description": "UUID of the event to reorder images for.",
+            "required": true,
+            "schema": {
+              "description": "UUID of the event to reorder images for.",
+              "$ref": "#/components/schemas/EventId"
+            },
+            "style": "simple"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventServiceReorderImagesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": { "description": "no content" },
+          "400": {
+            "description": "Bad Request (e.g. invalid JSON syntax)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "404": {
+            "description": "Not Found (e.g. nonexistent ID)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "422": {
+            "description": "Unprocessable Entity (e.g. wrong data types)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "text/plain; charset=utf-8": {} }
+          }
+        },
+        "deprecated": true
+      },
+      "post": {
+        "tags": ["EventService"],
+        "summary": "evops.api.v1.EventService.PushImage",
+        "description": "Adds a new image to the event with the specified ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "event-id",
+            "description": "UUID of the event to add an image to.",
+            "required": true,
+            "schema": {
+              "description": "UUID of the event to add an image to.",
+              "$ref": "#/components/schemas/EventId"
+            },
+            "style": "simple"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/EventServicePushImageRequestMultipart"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventServicePushImageResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request (e.g. invalid JSON syntax)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "401": {
+            "description": "Unauthorized (e.g. invalid JWT)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "403": {
+            "description": "Forbidden (e.g. modifying another user’s resource)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "404": {
+            "description": "Not Found (e.g. nonexistent ID)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "409": {
+            "description": "Conflict (e.g. the entity exists in the database)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "422": {
+            "description": "Unprocessable Entity (e.g. wrong data types)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "text/plain; charset=utf-8": {} }
+          }
+        },
+        "security": [{ "EvOps JWT": [] }]
+      }
+    },
+    "/v1/events/images/{image-id}": {
+      "get": {
+        "tags": ["EventService"],
+        "summary": "evops.api.v1.EventService.FindImage",
+        "description": "Retrieves an event image by ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "image-id",
+            "description": "UUID of the event image to retrieve.",
+            "required": true,
+            "schema": {
+              "description": "UUID of the event image to retrieve.",
+              "$ref": "#/components/schemas/EventImageId"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": { "description": "", "content": { "image/webp": {} } },
+          "400": {
+            "description": "Bad Request (e.g. invalid JSON syntax)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "404": {
+            "description": "Not Found (e.g. nonexistent ID)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "422": {
+            "description": "Unprocessable Entity (e.g. wrong data types)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "text/plain; charset=utf-8": {} }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["EventService"],
+        "summary": "evops.api.v1.EventService.DeleteImage",
+        "description": "Deletes an event image by ID. If there are images to the right, they are shifted one position back.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "-image-id",
+            "required": true,
+            "schema": { "$ref": "#/components/schemas/EventImageId" },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": { "description": "no content" },
+          "400": {
+            "description": "Bad Request (e.g. invalid JSON syntax)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "404": {
+            "description": "Not Found (e.g. nonexistent ID)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "422": {
+            "description": "Unprocessable Entity (e.g. wrong data types)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "text/plain; charset=utf-8": {} }
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/v1/languages": {
+      "post": {
+        "tags": ["LanguageService"],
+        "summary": "evops.api.v1.LanguageService.Add",
+        "description": "Adds a new language to the system.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LanguageServiceAddRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LanguageServiceAddResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request (e.g. invalid JSON syntax)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "409": {
+            "description": "Conflict (e.g. the entity exists in the database)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "422": {
+            "description": "Unprocessable Entity (e.g. wrong data types)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "text/plain; charset=utf-8": {} }
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/v1/tags": {
+      "get": {
+        "tags": ["TagService"],
+        "summary": "evops.api.v1.TagService.List",
+        "description": "Lists all tags.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "last-id",
+            "description": "UUID of last listed event.",
+            "schema": {
+              "description": "UUID of last listed event.",
+              "anyOf": [
+                { "$ref": "#/components/schemas/TagId" },
+                { "type": "null" }
+              ]
+            },
+            "style": "form"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Size of one batch of events.",
+            "schema": {
+              "description": "Size of one batch of events.",
+              "anyOf": [
+                { "$ref": "#/components/schemas/PgLimit" },
+                { "type": "null" }
+              ]
+            },
+            "style": "form"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TagServiceListResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request (e.g. invalid JSON syntax)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "422": {
+            "description": "Unprocessable Entity (e.g. wrong data types)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "text/plain; charset=utf-8": {} }
+          }
+        }
+      },
+      "post": {
+        "tags": ["TagService"],
+        "summary": "evops.api.v1.TagService.Create",
+        "description": "Creates a new tag.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TagServiceCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TagServiceCreateResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request (e.g. invalid JSON syntax)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "401": {
+            "description": "Unauthorized (e.g. invalid JWT)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "409": {
+            "description": "Conflict (e.g. the entity exists in the database)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "422": {
+            "description": "Unprocessable Entity (e.g. wrong data types)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "text/plain; charset=utf-8": {} }
+          }
+        },
+        "security": [{ "EvOps JWT": [] }]
+      }
+    },
+    "/v1/tags/{tag-id}": {
+      "get": {
+        "tags": ["TagService"],
+        "summary": "evops.api.v1.TagService.Find",
+        "description": "Retrieves a tag by ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "tag-id",
+            "description": "UUID of the tag to retrieve.",
+            "required": true,
+            "schema": {
+              "description": "UUID of the tag to retrieve.",
+              "$ref": "#/components/schemas/TagId"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TagServiceFindResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request (e.g. invalid JSON syntax)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "404": {
+            "description": "Not Found (e.g. nonexistent ID)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "422": {
+            "description": "Unprocessable Entity (e.g. wrong data types)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "text/plain; charset=utf-8": {} }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["TagService"],
+        "summary": "evops.api.v1.TagService.Delete",
+        "description": "Deletes a tag by ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "tag-id",
+            "required": true,
+            "schema": { "$ref": "#/components/schemas/TagId" },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": { "description": "no content" },
+          "400": {
+            "description": "Bad Request (e.g. invalid JSON syntax)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "401": {
+            "description": "Unauthorized (e.g. invalid JWT)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "403": {
+            "description": "Forbidden (e.g. modifying another user’s resource)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "404": {
+            "description": "Not Found (e.g. nonexistent ID)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "422": {
+            "description": "Unprocessable Entity (e.g. wrong data types)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "text/plain; charset=utf-8": {} }
+          }
+        },
+        "security": [{ "EvOps JWT": [] }]
+      }
+    },
+    "/v1/tags/suggestions": {
+      "get": {
+        "tags": ["TagService"],
+        "summary": "evops.api.v1.TagService.Suggest",
+        "description": "Get relevant tag IDs for an event description.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "description",
+            "description": "Description to predict tags for.",
+            "required": true,
+            "schema": {
+              "description": "Description to predict tags for.",
+              "$ref": "#/components/schemas/EventDescription"
+            },
+            "style": "form"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TagServiceSuggestResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request (e.g. invalid JSON syntax)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "401": {
+            "description": "Unauthorized (e.g. invalid JWT)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "422": {
+            "description": "Unprocessable Entity (e.g. wrong data types)",
+            "content": { "text/plain; charset=utf-8": {} }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "text/plain; charset=utf-8": {} }
+          }
+        },
+        "security": [{ "EvOps JWT": [] }]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "EvOps JWT": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" }
+    },
+    "schemas": {
+      "AuthServiceLogInRequest": {
+        "type": "object",
+        "properties": {
+          "credentials": { "$ref": "#/components/schemas/UserCredentials" }
+        },
+        "required": ["credentials"]
+      },
+      "UserCredentials": {
+        "type": "object",
+        "properties": {
+          "login": { "$ref": "#/components/schemas/UserLogin" },
+          "password": { "$ref": "#/components/schemas/UserPassword" }
+        },
+        "required": ["login", "password"]
+      },
+      "UserLogin": {
+        "type": "string",
+        "minLength": 4,
+        "maxLength": 32,
+        "pattern": "^[a-zA-Z][a-zA-Z0-9_]+$"
+      },
+      "UserPassword": {
+        "type": "string",
+        "minLength": 8,
+        "maxLength": 64,
+        "pattern": "^[a-zA-Z0-9~`!@#$%^&*()\\-_+={}\\[\\]|\\\\;:\"<>,./?]+$"
+      },
+      "AuthServiceLogInResponse": {
+        "type": "object",
+        "properties": {
+          "tokens": { "$ref": "#/components/schemas/AuthTokens" }
+        },
+        "required": ["tokens"]
+      },
+      "AuthTokens": {
+        "type": "object",
+        "properties": {
+          "access": { "$ref": "#/components/schemas/JsonWebToken" },
+          "refresh": { "$ref": "#/components/schemas/JsonWebToken" }
+        },
+        "required": ["access", "refresh"]
+      },
+      "JsonWebToken": {
+        "type": "string",
+        "pattern": "^[\\w-]+\\.[\\w-]+\\.[\\w-]+$"
+      },
+      "AuthServiceGetMyInfoResponse": {
+        "type": "object",
+        "properties": { "user": { "$ref": "#/components/schemas/User" } },
+        "required": ["user"]
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "User UUID.",
+            "allOf": [{ "$ref": "#/components/schemas/UserId" }]
+          },
+          "login": {
+            "description": "Case-insensitively unique login.",
+            "allOf": [{ "$ref": "#/components/schemas/UserLogin" }]
+          },
+          "display_name": {
+            "description": "Display name.",
+            "allOf": [{ "$ref": "#/components/schemas/UserDisplayName" }]
+          }
+        },
+        "required": ["id", "login", "display_name"]
+      },
+      "UserId": { "type": "string", "format": "uuid" },
+      "UserDisplayName": { "type": "string", "minLength": 1, "maxLength": 64 },
+      "AuthServiceRefreshSessionRequest": {
+        "type": "object",
+        "properties": {
+          "refresh_token": { "$ref": "#/components/schemas/JsonWebToken" }
+        },
+        "required": ["refresh_token"]
+      },
+      "AuthServiceRefreshSessionResponse": {
+        "type": "object",
+        "properties": {
+          "tokens": { "$ref": "#/components/schemas/AuthTokens" }
+        },
+        "required": ["tokens"]
+      },
+      "AuthServiceSignUpRequest": {
+        "type": "object",
+        "properties": {
+          "form": { "$ref": "#/components/schemas/NewUserForm" }
+        },
+        "required": ["form"]
+      },
+      "NewUserForm": {
+        "type": "object",
+        "properties": {
+          "login": {
+            "description": "Case-insensitively unique login.",
+            "allOf": [{ "$ref": "#/components/schemas/UserLogin" }]
+          },
+          "display_name": {
+            "description": "Display name.",
+            "anyOf": [
+              { "$ref": "#/components/schemas/UserDisplayName" },
+              { "nullable": true, "enum": [null] }
+            ]
+          },
+          "password": { "$ref": "#/components/schemas/UserPassword" }
+        },
+        "required": ["login", "password"]
+      },
+      "AuthServiceSignUpResponse": {
+        "type": "object",
+        "properties": {
+          "tokens": { "$ref": "#/components/schemas/AuthTokens" }
+        },
+        "required": ["tokens"]
+      },
+      "EventServiceListRequestQuery": {
+        "type": "object",
+        "properties": {
+          "last-id": {
+            "description": "UUID of last listed event.",
+            "anyOf": [
+              { "$ref": "#/components/schemas/EventId" },
+              { "nullable": true, "enum": [null] }
+            ]
+          },
+          "limit": {
+            "description": "Size of one batch of events.",
+            "anyOf": [
+              { "$ref": "#/components/schemas/PgLimit" },
+              { "nullable": true, "enum": [null] }
+            ]
+          },
+          "tag-id": {
+            "description": "Tag ids of events to be listed.",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/TagId" },
+            "default": []
+          },
+          "search": {
+            "description": "Search string to match against event titles and descriptions (case-insensitive).",
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "EventId": { "type": "string", "format": "uuid" },
+      "PgLimit": {
+        "description": "Non-negative integer for pagination limits.",
+        "type": "integer",
+        "format": "int64",
+        "minimum": 0
+      },
+      "TagId": { "type": "string", "format": "uuid" },
+      "EventServiceListResponse": {
+        "type": "object",
+        "properties": {
+          "events": {
+            "description": "List of all events.",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Event" }
+          }
+        },
+        "required": ["events"]
+      },
+      "Event": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "description": "Event title.",
+            "allOf": [{ "$ref": "#/components/schemas/EventTitle" }]
+          },
+          "description": {
+            "description": "Detailed description.",
+            "allOf": [{ "$ref": "#/components/schemas/EventDescription" }]
+          },
+          "id": {
+            "description": "Event UUID.",
+            "allOf": [{ "$ref": "#/components/schemas/EventId" }]
+          },
+          "author": {
+            "description": "User who created the event.",
+            "allOf": [{ "$ref": "#/components/schemas/User" }]
+          },
+          "image_ids": {
+            "description": "UUIDs of event images.",
+            "allOf": [{ "$ref": "#/components/schemas/EventImageIds" }]
+          },
+          "tags": {
+            "description": "Associated tags.",
+            "allOf": [{ "$ref": "#/components/schemas/EventTags" }]
+          },
+          "created_at": {
+            "description": "Creation timestamp.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "modified_at": {
+            "description": "Last modification timestamp.",
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "author",
+          "image_ids",
+          "title",
+          "description",
+          "tags",
+          "created_at",
+          "modified_at"
+        ]
+      },
+      "EventImageIds": {
+        "type": "array",
+        "items": { "$ref": "#/components/schemas/EventImageId" },
+        "maxItems": 10
+      },
+      "EventImageId": { "type": "string", "format": "uuid" },
+      "EventTitle": { "type": "string", "minLength": 1, "maxLength": 64 },
+      "EventDescription": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 5000
+      },
+      "EventTags": {
+        "type": "array",
+        "items": { "$ref": "#/components/schemas/Tag" },
+        "maxItems": 10
+      },
+      "Tag": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "Tag UUID.",
+            "allOf": [{ "$ref": "#/components/schemas/TagId" }]
+          },
+          "name": {
+            "description": "Unique name (e.g., `\"Music\"`, `\"Tech\"`).",
+            "allOf": [{ "$ref": "#/components/schemas/TagName" }]
+          },
+          "aliases": {
+            "description": "Alternative names (e.g., `[\"Concert\", \"Gig\"]` for `\"Music\"`).",
+            "allOf": [{ "$ref": "#/components/schemas/TagAliases" }]
+          }
+        },
+        "required": ["id", "name", "aliases"]
+      },
+      "TagName": {
+        "type": "string",
+        "pattern": "^[a-z0-9][a-z0-9-]*$",
+        "minLength": 1,
+        "maxLength": 32,
+        "example": "format-like-topics-on-github"
+      },
+      "TagAliases": {
+        "type": "array",
+        "items": { "$ref": "#/components/schemas/TagAlias" },
+        "maxItems": 50
+      },
+      "TagAlias": {
+        "type": "string",
+        "maxLength": 32,
+        "minLength": 1,
+        "example": "alias-for-better-search-ux"
+      },
+      "EventServiceCreateRequest": {
+        "type": "object",
+        "properties": {
+          "form": {
+            "description": "Data for creating a new event.",
+            "allOf": [{ "$ref": "#/components/schemas/NewEventForm" }]
+          }
+        },
+        "required": ["form"]
+      },
+      "NewEventForm": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "description": "Event title.",
+            "allOf": [{ "$ref": "#/components/schemas/EventTitle" }]
+          },
+          "description": {
+            "description": "Detailed description.",
+            "allOf": [{ "$ref": "#/components/schemas/EventDescription" }]
+          },
+          "tag_ids": {
+            "description": "UUIDs of associated tags.",
+            "anyOf": [
+              { "$ref": "#/components/schemas/EventTagIds" },
+              { "nullable": true, "enum": [null] }
+            ]
+          }
+        },
+        "required": ["title", "description"]
+      },
+      "EventTagIds": {
+        "type": "array",
+        "items": { "$ref": "#/components/schemas/TagId" },
+        "maxItems": 10
+      },
+      "EventServiceCreateResponse": {
+        "type": "object",
+        "properties": {
+          "event_id": {
+            "description": "ID of the created event.",
+            "allOf": [{ "$ref": "#/components/schemas/EventId" }]
+          }
+        },
+        "required": ["event_id"]
+      },
+      "EventServiceFindRequestPath": {
+        "type": "object",
+        "properties": {
+          "event-id": {
+            "description": "UUID of the event to retrieve.",
+            "allOf": [{ "$ref": "#/components/schemas/EventId" }]
+          }
+        },
+        "required": ["event-id"]
+      },
+      "EventServiceFindResponse": {
+        "type": "object",
+        "properties": {
+          "event": {
+            "description": "Retrieved event object.",
+            "allOf": [{ "$ref": "#/components/schemas/Event" }]
+          }
+        },
+        "required": ["event"]
+      },
+      "EventServiceDeleteRequestPath": {
+        "type": "object",
+        "properties": {
+          "event-id": {
+            "description": "UUID of the event to be deleted.",
+            "allOf": [{ "$ref": "#/components/schemas/EventId" }]
+          }
+        },
+        "required": ["event-id"]
+      },
+      "EventServiceUpdateRequestPath": {
+        "type": "object",
+        "properties": {
+          "event-id": {
+            "description": "UUID of the event to be updated.",
+            "allOf": [{ "$ref": "#/components/schemas/EventId" }]
+          }
+        },
+        "required": ["event-id"]
+      },
+      "EventServiceUpdateRequest": {
+        "type": "object",
+        "properties": {
+          "form": {
+            "description": "Data for updating an event.",
+            "allOf": [{ "$ref": "#/components/schemas/UpdateEventForm" }]
+          }
+        },
+        "required": ["form"]
+      },
+      "UpdateEventForm": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "description": "Event title.",
+            "anyOf": [
+              { "$ref": "#/components/schemas/EventTitle" },
+              { "nullable": true, "enum": [null] }
+            ]
+          },
+          "description": {
+            "description": "Detailed description.",
+            "anyOf": [
+              { "$ref": "#/components/schemas/EventDescription" },
+              { "nullable": true, "enum": [null] }
+            ]
+          },
+          "tag_ids": {
+            "description": "UUIDs of associated tags.",
+            "anyOf": [
+              { "$ref": "#/components/schemas/EventTagIds" },
+              { "nullable": true, "enum": [null] }
+            ]
+          }
+        }
+      },
+      "EventServicePushImageRequestPath": {
+        "type": "object",
+        "properties": {
+          "event-id": {
+            "description": "UUID of the event to add an image to.",
+            "allOf": [{ "$ref": "#/components/schemas/EventId" }]
+          }
+        },
+        "required": ["event-id"]
+      },
+      "EventServicePushImageRequestMultipart": {
+        "type": "object",
+        "properties": { "image": { "$ref": "#/components/schemas/Bytes" } },
+        "required": ["image"]
+      },
+      "Bytes": {
+        "type": ["array", "string"],
+        "items": {
+          "type": "integer",
+          "format": "uint8",
+          "minimum": 0,
+          "maximum": 255
+        }
+      },
+      "EventServicePushImageResponse": {
+        "type": "object",
+        "properties": {
+          "image_id": { "$ref": "#/components/schemas/EventImageId" }
+        },
+        "required": ["image_id"]
+      },
+      "EventServiceReorderImageRequestPath": {
+        "type": "object",
+        "properties": {
+          "event-id": {
+            "description": "UUID of the event to reorder images for.",
+            "allOf": [{ "$ref": "#/components/schemas/EventId" }]
+          }
+        },
+        "required": ["event-id"]
+      },
+      "EventServiceReorderImagesRequest": {
+        "type": "object",
+        "properties": {
+          "image_ids": { "$ref": "#/components/schemas/EventImageIds" }
+        },
+        "required": ["image_ids"]
+      },
+      "EventServiceFindImageRequestPath": {
+        "type": "object",
+        "properties": {
+          "image-id": {
+            "description": "UUID of the event image to retrieve.",
+            "allOf": [{ "$ref": "#/components/schemas/EventImageId" }]
+          }
+        },
+        "required": ["image-id"]
+      },
+      "EventServiceDeleteImageRequestPath": {
+        "type": "object",
+        "properties": {
+          "-image-id": { "$ref": "#/components/schemas/EventImageId" }
+        },
+        "required": ["-image-id"]
+      },
+      "LanguageServiceAddRequest": {
+        "type": "object",
+        "properties": {
+          "form": { "$ref": "#/components/schemas/NewLanguageForm" }
+        },
+        "required": ["form"]
+      },
+      "NewLanguageForm": {
+        "type": "object",
+        "properties": {
+          "name": { "$ref": "#/components/schemas/LanguageName" }
+        },
+        "required": ["name"]
+      },
+      "LanguageName": { "type": "string", "minLength": 1, "maxLength": 32 },
+      "LanguageServiceAddResponse": {
+        "type": "object",
+        "properties": {
+          "language_id": { "$ref": "#/components/schemas/LanguageId" }
+        },
+        "required": ["language_id"]
+      },
+      "LanguageId": { "type": "string", "format": "uuid" },
+      "TagServiceListRequestQuery": {
+        "type": "object",
+        "properties": {
+          "last-id": {
+            "description": "UUID of last listed event.",
+            "anyOf": [
+              { "$ref": "#/components/schemas/TagId" },
+              { "nullable": true, "enum": [null] }
+            ]
+          },
+          "limit": {
+            "description": "Size of one batch of events.",
+            "anyOf": [
+              { "$ref": "#/components/schemas/PgLimit" },
+              { "nullable": true, "enum": [null] }
+            ]
+          }
+        }
+      },
+      "TagServiceListResponse": {
+        "type": "object",
+        "properties": {
+          "tags": {
+            "description": "List of all tags.",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Tag" }
+          }
+        },
+        "required": ["tags"]
+      },
+      "TagServiceCreateRequest": {
+        "type": "object",
+        "properties": {
+          "form": {
+            "description": "Data for creating a new tag.",
+            "allOf": [{ "$ref": "#/components/schemas/NewTagForm" }]
+          }
+        },
+        "required": ["form"]
+      },
+      "NewTagForm": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "Unique name.",
+            "allOf": [{ "$ref": "#/components/schemas/TagName" }]
+          },
+          "aliases": {
+            "description": "Alternative names.",
+            "anyOf": [
+              { "$ref": "#/components/schemas/TagAliases" },
+              { "nullable": true, "enum": [null] }
+            ]
+          }
+        },
+        "required": ["name"]
+      },
+      "TagServiceCreateResponse": {
+        "type": "object",
+        "properties": {
+          "tag_id": {
+            "description": "ID of the created tag.",
+            "allOf": [{ "$ref": "#/components/schemas/TagId" }]
+          }
+        },
+        "required": ["tag_id"]
+      },
+      "TagServiceFindRequestPath": {
+        "type": "object",
+        "properties": {
+          "tag-id": {
+            "description": "UUID of the tag to retrieve.",
+            "allOf": [{ "$ref": "#/components/schemas/TagId" }]
+          }
+        },
+        "required": ["tag-id"]
+      },
+      "TagServiceFindResponse": {
+        "type": "object",
+        "properties": {
+          "tag": {
+            "description": "Retrieved tag object.",
+            "allOf": [{ "$ref": "#/components/schemas/Tag" }]
+          }
+        },
+        "required": ["tag"]
+      },
+      "TagServiceDeleteRequestPath": {
+        "type": "object",
+        "properties": { "tag-id": { "$ref": "#/components/schemas/TagId" } },
+        "required": ["tag-id"]
+      },
+      "TagServiceSuggestRequestQuery": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "description": "Description to predict tags for.",
+            "allOf": [{ "$ref": "#/components/schemas/EventDescription" }]
+          }
+        },
+        "required": ["description"]
+      },
+      "TagServiceSuggestResponse": {
+        "type": "object",
+        "properties": {
+          "tags": {
+            "description": "A list of predicted tags for a description.",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Tag" }
+          }
+        },
+        "required": ["tags"]
+      }
+    }
+  },
+  "tags": [
+    { "name": "AuthService", "description": "Manages login sessions" },
+    {
+      "name": "EventService",
+      "description": "Manages event-related operations"
+    },
+    { "name": "LanguageService", "description": "Manages human languages" },
+    { "name": "TagService", "description": "Manages event tags" }
+  ]
+}

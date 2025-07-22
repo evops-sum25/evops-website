@@ -1,35 +1,29 @@
-import { useSignUp } from '@/lib/api/hooks/useAuth'
+import { useLogin } from '@/lib/api/hooks/useAuth'
 import { createFileRoute, useRouter } from '@tanstack/react-router'
 import { Key, User } from 'lucide-react'
 import { useState } from 'react'
 
-export const Route = createFileRoute('/signup')({
-  component: SignUpPage,
+export const Route = createFileRoute('/login')({
+  component: LoginPage,
 })
 
-function SignUpPage() {
+function LoginPage() {
   const [login, setLogin] = useState('')
-  const [displayName, setDisplayName] = useState('')
   const [password, setPassword] = useState('')
-  const [repeatPassword, setRepeatPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
-  const signUp = useSignUp()
+  const loginMutation = useLogin()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError(null)
-    if (password !== repeatPassword) {
-      setError('Passwords do not match')
-      return
-    }
     try {
-      const tokens = await signUp({ login, displayName, password })
+      const tokens = await loginMutation({ login, password })
       localStorage.setItem('accessToken', tokens.access)
       localStorage.setItem('refreshToken', tokens.refresh)
       router.navigate({ to: '/events' })
     } catch (e: any) {
-      setError(e?.message || 'Registration failed')
+      setError(e?.message || 'Login failed')
     }
   }
 
@@ -40,7 +34,7 @@ function SignUpPage() {
         onSubmit={handleSubmit}
       >
         <legend className="fieldset-legend w-full">
-          <h1 className="w-full text-center text-lg">Sign Up</h1>
+          <h1 className="w-full text-center text-lg">Log In</h1>
         </legend>
         <div className="input w-full">
           <User className="text-base-content/50 size-4" />
@@ -54,17 +48,6 @@ function SignUpPage() {
           />
         </div>
         <div className="input w-full">
-          <User className="text-base-content/50 size-4" />
-          <input
-            type="text"
-            className="w-full"
-            required
-            placeholder="Display Name"
-            value={displayName}
-            onChange={(e) => setDisplayName(e.target.value)}
-          />
-        </div>
-        <div className="input w-full">
           <Key className="text-base-content/50 size-4" />
           <input
             type="password"
@@ -75,20 +58,9 @@ function SignUpPage() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <div className="input w-full">
-          <Key className="text-base-content/50 size-4" />
-          <input
-            type="password"
-            className="w-full"
-            required
-            placeholder="Repeat Password"
-            value={repeatPassword}
-            onChange={(e) => setRepeatPassword(e.target.value)}
-          />
-        </div>
         {error && <div className="text-error w-full text-center">{error}</div>}
         <button className="btn btn-primary w-full" type="submit">
-          Sign up
+          Log in
         </button>
       </form>
     </main>

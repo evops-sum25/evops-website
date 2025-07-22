@@ -8,7 +8,7 @@ export default function Header() {
     typeof window !== 'undefined' && localStorage.getItem('accessToken')
 
   return (
-    <header className="flex w-full flex-row-reverse items-center gap-12 px-4 py-4 md:ml-56 md:max-w-[calc(100vw-14rem)] md:px-10">
+    <header className="flex w-full flex-row-reverse items-center justify-between px-4 py-4 md:ml-56 md:max-w-[calc(100vw-14rem)] md:justify-start md:gap-8 md:px-10">
       <LanguageSwitcher />
       {!isAuth && (
         <div className="flex gap-2">

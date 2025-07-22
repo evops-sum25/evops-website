@@ -1,4 +1,3 @@
-import LanguageSwitcher from '@/components/shared/LanguageSwitcher'
 import Loading from '@/components/shared/Loading'
 import { useNewEventForm, useTags } from '@/lib/api/hooks/newEventPage'
 import { createFileRoute } from '@tanstack/react-router'
@@ -60,7 +59,6 @@ function NewEventPage() {
             <h1 className="card-title mb-1 text-2xl">
               {step === 1 ? t('title') : t('images')}
             </h1>
-            <LanguageSwitcher />
           </div>
           <p className="text-base-content/70 mb-6">
             {step === 1 ? t('step1Description') : t('step2Description')}

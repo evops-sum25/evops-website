@@ -26,7 +26,6 @@ export function useNewEventForm() {
     title: '',
     description: '',
     tagIds: [],
-    withAttendance: false,
     imageFields: [{ file: null, preview: '' }],
   })
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)

@@ -1,4 +1,7 @@
 export default {
+  service: {
+    fetchingData: 'Загрузка данных…',
+  },
   eventPage: {
     loadingError: 'Ошибка загрузки: {{message}}',
     eventNotFound: 'Событие не найдено',
@@ -7,6 +10,13 @@ export default {
     greeting: 'Привет, гость!',
     signUp: 'Регистрация',
     myProfile: 'Мой профиль',
+    deleteEvent: 'Удалить',
+    confirmDelete: 'Удалить событие',
+    confirmDeleteDescription:
+      'Вы уверены, что хотите удалить это событие? Это действие нельзя отменить.',
+    cancel: 'Отмена',
+    delete: 'Удалить',
+    deleting: 'Удаление...',
   },
   eventsList: {
     title: 'События',
@@ -14,6 +24,17 @@ export default {
     greeting: 'Привет, гость!',
     signUp: 'Регистрация',
     myProfile: 'Мой профиль',
+    searchEmptyTitle: 'Введите запрос для поиска',
+    searchEmptyDescription: 'Начните вводить название или описание события',
+    showAllEvents: 'Показать все события',
+    noSearchResults: 'Ничего не найдено',
+    noSearchResultsFor: 'По запросу "{{query}}" ничего не найдено',
+    clearSearch: 'Очистить поиск',
+    searchResultsFor: 'Результаты по "{{query}}"',
+    resultsCount_one: '{{count}} результат',
+    resultsCount_few: '{{count}} результата',
+    resultsCount_many: '{{count}} результатов',
+    resultsCount_other: '{{count}} результатов',
   },
   newEvent: {
     step1: 'Шаг 1',
@@ -26,7 +47,6 @@ export default {
       title: 'Название',
       description: 'Описание',
       tags: 'Теги',
-      withAttendance: 'С посещаемостью',
       addImage: 'Добавить изображение',
       removeImage: 'Удалить',
       next: 'Далее',
@@ -75,5 +95,8 @@ export default {
     signupBtn: 'Зарегистрироваться',
     error: 'Ошибка регистрации',
     passwordsNoMatch: 'Пароли не совпадают',
+  },
+  searchArea: {
+    placeholder: 'Поиск',
   },
 } as const

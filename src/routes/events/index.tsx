@@ -2,7 +2,8 @@ import Loading from '@/components/shared/Loading'
 import TagBar from '@/components/shared/TagBar'
 import { Event as ApiEvent } from '@/gen/evops/api/v1/api_pb.ts'
 import getApi from '@/lib/api/api'
-import { useEvents } from '@/lib/api/hooks/getEvents.ts'
+import { useEvents, useSearch } from '@/lib/api/hooks/getEvents.ts'
+import { useSearchStore } from '@/lib/stores/searchStore.ts'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -18,47 +19,136 @@ function EventsList() {
   const [lastEvent, setLastEvent] = useState<string>('')
   const [isFetching, setFetching] = useState<boolean>(false)
 
-  const { data, isLoading, error, refetch } = useEvents(lastEvent)
+  const { query, isMode, clearSearch } = useSearchStore()
+
+  const {
+    data: eventsData,
+    isLoading: eventsLoading,
+    error,
+    refetch,
+  } = useEvents(lastEvent)
+
+  const { data: searchData, isLoading: searchLoading } = useSearch(query)
+
+  const displayEvents = isMode ? searchData?.events || [] : events
+  const isLoading = isMode ? searchLoading : eventsLoading
 
   useEffect(() => {
-    if (data?.events && data.events.length > 0) {
+    if (!isMode && eventsData?.events && eventsData.events.length > 0) {
       setEvents((prev) => {
         if (!lastEvent) {
-          return [...data.events]
+          return [...eventsData.events]
         }
-        return [...prev, ...data.events]
+        return [...prev, ...eventsData.events]
       })
-
-      setLastEvent(data.events[data.events.length - 1].id)
+      setLastEvent(eventsData.events[eventsData.events.length - 1].id)
     }
     setFetching(false)
-  }, [data])
+  }, [eventsData, isMode, lastEvent])
+
+  useEffect(() => {
+    if (isMode) {
+      setEvents([])
+      setLastEvent('')
+      setFetching(false)
+    }
+  }, [isMode])
 
   const scrollHandler = useCallback(() => {
+    if (isMode) return
+
     const position =
       document.documentElement.scrollHeight -
       (document.documentElement.scrollTop + window.innerHeight)
-    if (position < 300 && !isFetching) {
+    if (position < 300 && !isFetching && !eventsLoading) {
       setFetching(true)
       refetch()
     }
-  }, [isFetching, refetch])
+  }, [isFetching, eventsLoading, refetch, isMode])
 
   useEffect(() => {
     document.addEventListener('scroll', scrollHandler)
     return () => document.removeEventListener('scroll', scrollHandler)
   }, [scrollHandler])
 
-  if (isLoading && events.length === 0) return <Loading />
+  if (isMode && query.length === 0) {
+    return (
+      <main className="main-layout w-full overflow-x-hidden px-4 md:ml-56 md:max-w-[calc(100vw-14rem)] lg:px-80">
+        <div className="flex flex-col items-center justify-center py-20">
+          <h2 className="mb-4 text-2xl font-bold">{t('searchEmptyTitle')}</h2>
+          <p className="mb-6 text-center text-gray-600">
+            {t('searchEmptyDescription')}
+          </p>
+          <button onClick={clearSearch} className="btn btn-xl btn-secondary">
+            {t('showAllEvents')}
+          </button>
+        </div>
+      </main>
+    )
+  }
+
+  if (isMode && displayEvents.length === 0 && !isLoading) {
+    return (
+      <main className="main-layout w-full overflow-x-hidden px-4 md:ml-56 md:max-w-[calc(100vw-14rem)] lg:px-80">
+        <div className="flex flex-col items-center justify-center py-20">
+          <h2 className="mb-4 text-2xl font-bold">{t('noSearchResults')}</h2>
+          <p className="mb-6 text-center text-gray-600">
+            {t('noSearchResultsFor', { query })}
+          </p>
+          <button onClick={clearSearch} className="btn btn-xl btn-secondary">
+            {t('clearSearch')}
+          </button>
+        </div>
+      </main>
+    )
+  }
+
+  if (isLoading && displayEvents.length === 0) return <Loading />
   if (error) return <div>{t('loadingError', { message: String(error) })}</div>
 
   return (
-    <>
-      <main className="main-layout w-full overflow-x-hidden px-4 md:ml-56 md:max-w-[calc(100vw-14rem)] lg:px-80">
-        {events.map((event) => (
+    <main className="main-layout w-full overflow-x-hidden px-4 md:ml-56 md:max-w-[calc(100vw-14rem)] lg:px-80">
+      {isMode && (
+        <div className="bg-base-100/95 border-base-200 fixed top-16 right-0 left-0 z-20 border-b shadow-sm backdrop-blur-md md:right-0 md:left-56">
+          <div className="mx-auto px-4 py-4 lg:px-80">
+            <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+              <div className="text-center sm:text-left">
+                <h2 className="text-base-content text-lg font-semibold sm:text-xl">
+                  {t('searchResultsFor', { query })}
+                </h2>
+                <p className="text-base-content/70 mt-1 text-sm">
+                  {t('resultsCount', { count: displayEvents.length })}
+                </p>
+              </div>
+              <button
+                onClick={clearSearch}
+                className="btn btn-primary btn-sm min-w-fit gap-2"
+              >
+                <svg
+                  className="h-4 w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+                {t('showAllEvents')}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className={isMode ? 'mt-28 sm:mt-24' : ''}>
+        {displayEvents.map((event) => (
           <section
             key={event.id}
-            className="card mb-10 flex w-full flex-col items-center space-y-2"
+            className="card mb-10 flex w-screen flex-col items-center space-y-2 md:w-full"
           >
             <Link
               to="/events/$id"
@@ -108,7 +198,15 @@ function EventsList() {
             </div>
           </section>
         ))}
-      </main>
-    </>
+
+        {isFetching && !isMode && (
+          <div className="flex justify-center py-4">
+            <Loading />
+          </div>
+        )}
+      </div>
+    </main>
   )
 }
+
+export default EventsList

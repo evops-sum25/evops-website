@@ -10,6 +10,13 @@ export default {
     greeting: 'Hi, guest!',
     signUp: 'Sign Up',
     myProfile: 'My profile',
+    deleteEvent: 'Delete',
+    confirmDelete: 'Delete Event',
+    confirmDeleteDescription:
+      'Are you sure you want to delete this event? This action cannot be undone.',
+    cancel: 'Cancel',
+    delete: 'Delete',
+    deleting: 'Deleting...',
   },
   eventsList: {
     title: 'Events',
@@ -17,6 +24,15 @@ export default {
     greeting: 'Hi, guest!',
     signUp: 'Sign Up',
     myProfile: 'My profile',
+    searchEmptyTitle: 'Enter search query',
+    searchEmptyDescription: 'Type event title or description',
+    showAllEvents: 'Show all events',
+    noSearchResults: 'Not found',
+    noSearchResultsFor: 'Nothing for "{{query}}" query',
+    clearSearch: 'Clear search',
+    searchResultsFor: 'Results for "{{query}}"',
+    resultsCount_one: '{{count}} result',
+    resultsCount_other: '{{count}} results',
   },
   newEvent: {
     step1: 'Step 1',
@@ -78,5 +94,8 @@ export default {
     signupBtn: 'Sign up',
     error: 'Registration failed',
     passwordsNoMatch: 'Passwords do not match',
+  },
+  searchArea: {
+    placeholder: 'Search',
   },
 } as const

@@ -10,6 +10,13 @@ export default {
     greeting: 'Hi, guest!',
     signUp: 'Sign Up',
     myProfile: 'My profile',
+    deleteEvent: 'Delete',
+    confirmDelete: 'Delete Event',
+    confirmDeleteDescription:
+      'Are you sure you want to delete this event? This action cannot be undone.',
+    cancel: 'Cancel',
+    delete: 'Delete',
+    deleting: 'Deleting...',
   },
   eventsList: {
     title: 'Events',

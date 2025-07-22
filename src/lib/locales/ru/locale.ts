@@ -1,4 +1,7 @@
 export default {
+  service: {
+    fetchingData: 'Загрузка данных…',
+  },
   eventPage: {
     loadingError: 'Ошибка загрузки: {{message}}',
     eventNotFound: 'Событие не найдено',
@@ -7,6 +10,13 @@ export default {
     greeting: 'Привет, гость!',
     signUp: 'Регистрация',
     myProfile: 'Мой профиль',
+    deleteEvent: 'Удалить',
+    confirmDelete: 'Удалить событие',
+    confirmDeleteDescription:
+      'Вы уверены, что хотите удалить это событие? Это действие нельзя отменить.',
+    cancel: 'Отмена',
+    delete: 'Удалить',
+    deleting: 'Удаление...',
   },
   eventsList: {
     title: 'События',

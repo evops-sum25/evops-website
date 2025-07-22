@@ -58,7 +58,7 @@ function EventsList() {
         {events.map((event) => (
           <section
             key={event.id}
-            className="card my-10 flex w-full flex-col items-center space-y-2"
+            className="card mb-10 flex w-full flex-col items-center space-y-2"
           >
             <Link
               to="/events/$id"

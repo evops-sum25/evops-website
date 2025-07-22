@@ -30,7 +30,7 @@ export default function Header() {
   const isAuth = isSuccess && user
 
   return (
-    <header className="flex w-full flex-row-reverse items-center justify-between px-4 py-4 md:ml-56 md:max-w-[calc(100vw-14rem)] md:justify-start md:gap-8 md:px-10">
+    <header className="fixed bg-base-100 backdrop-blur-sm border-b border-base-200 shadow-lg z-20 flex w-full flex-row-reverse items-center justify-between px-4 py-4 md:ml-56 md:max-w-[calc(100vw-14rem)] md:justify-start md:gap-8 md:px-10">
       <LanguageSwitcher />
       {!isAuth && (
         <div className="flex gap-2">

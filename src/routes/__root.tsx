@@ -1,7 +1,6 @@
 import AsideNav from '@/components/widgets/AsideNav'
 import Footer from '@/components/widgets/Footer'
 import Header from '@/components/widgets/Header'
-import TanStackQueryLayout from '@/integrations/tanstack-query/layout'
 import {
   Outlet,
   createRootRouteWithContext,
@@ -26,7 +25,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
         <Outlet />
         {!hideAsideAndFooter && <Footer />}
         {/*<TanStackRouterDevtools />*/}
-        <TanStackQueryLayout />
+        {/*<TanStackQueryLayout />*/}
       </div>
     )
   },

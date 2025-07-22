@@ -26,7 +26,7 @@ function EventPage() {
     return <div>{t('eventNotFound')}</div>
   }
 
-  const event = data.event!
+  const event = data
   const images = event.imageIds.map((imageId: string) =>
     new URL(`/v1/events/images/${imageId}`, api.url).toString(),
   )
@@ -37,7 +37,7 @@ function EventPage() {
         <h1 className="mb-4 text-2xl font-bold">{event.title}</h1>
         {event?.author ? (
           <span className="text-base-content mb-4 text-xl font-bold">
-            by {event.author.name}
+            by {event.author.displayName}
           </span>
         ) : (
           ''

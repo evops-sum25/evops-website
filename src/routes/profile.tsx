@@ -1,8 +1,12 @@
 import { useMyInfo } from '@/lib/api/hooks/useAuth'
+import { createFileRoute } from '@tanstack/react-router'
 import { UserCircle } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
-export default function ProfilePage() {
+export const Route = createFileRoute('/profile')({
+  component: ProfilePage,
+})
+function ProfilePage() {
   const { t } = useTranslation('profile')
   const { data: user, isLoading, error } = useMyInfo()
 

@@ -23,12 +23,11 @@ export function useEvents({
     queryKey: ['events', apiParam],
     queryFn: async () => {
       const res = await api.eventService.list(apiParam)
-      return res.events
+      return res
     },
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
     refetchOnMount: true,
     staleTime: 0,
-    refetchInterval: 5 * 1000,
-    refetchIntervalInBackground: true,
+    enabled: true,
   })
 }

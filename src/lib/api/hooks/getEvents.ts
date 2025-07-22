@@ -18,3 +18,13 @@ export function useEvents(last: string = '') {
     staleTime: 0,
   })
 }
+
+export function useSearch(query: string) {
+  return useQuery({
+    queryKey: ['search', query],
+    queryFn: async () => await api.eventService.list({ search: query }),
+    enabled: query.length > 0,
+    refetchOnWindowFocus: false,
+    staleTime: 0,
+  })
+}

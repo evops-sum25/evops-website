@@ -57,6 +57,16 @@ export default {
       titleRequired: 'Title is required',
       descriptionRequired: 'Description is required',
     },
+    createTag: {
+      title: 'Create New Tag',
+      name: 'Name',
+      namePlaceholder: 'e.g., music, tech, sports',
+      aliases: 'Aliases (optional)',
+      aliasesPlaceholder: 'concert, gig, performance',
+      aliasesHint: 'Separate aliases with commas',
+      cancel: 'Cancel',
+      create: 'Create Tag',
+    },
   },
   asideNav: {
     home: 'Home',

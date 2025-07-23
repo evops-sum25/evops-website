@@ -58,6 +58,16 @@ export default {
       titleRequired: 'Название обязательно',
       descriptionRequired: 'Описание обязательно',
     },
+    createTag: {
+      title: 'Создать новый тег',
+      name: 'Название',
+      namePlaceholder: 'например, музыка, технологии, спорт',
+      aliases: 'Альтернативные названия (опционально)',
+      aliasesPlaceholder: 'концерт, выступление, представление',
+      aliasesHint: 'Разделите альтернативные названия запятыми',
+      cancel: 'Отмена',
+      create: 'Создать тег',
+    },
   },
   asideNav: {
     home: 'Дом',

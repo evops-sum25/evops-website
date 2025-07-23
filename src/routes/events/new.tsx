@@ -1,9 +1,10 @@
 import Loading from '@/components/shared/Loading'
+import { useCreateTag } from '@/lib/api/hooks/createTag'
 import { useNewEventForm, useTags } from '@/lib/api/hooks/newEventPage'
 import { requireAuth } from '@/lib/api/requireAuth.ts'
 import { createFileRoute } from '@tanstack/react-router'
-import { Plus, Trash } from 'lucide-react'
-import { ChangeEvent } from 'react'
+import { Plus, Trash, X } from 'lucide-react'
+import { ChangeEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export const Route = createFileRoute('/events/new')({
@@ -28,7 +29,35 @@ function NewEventPage() {
     isStep1Valid,
   } = useNewEventForm()
   const { data: tagsData, isLoading: tagsLoading } = useTags()
+  const createTag = useCreateTag()
+  const [isCreateTagModalOpen, setIsCreateTagModalOpen] = useState(false)
+  const [newTagForm, setNewTagForm] = useState({ name: '', aliases: '' })
+  const [isCreatingTag, setIsCreatingTag] = useState(false)
   const tags = tagsData || []
+
+  const handleCreateTag = async () => {
+    if (!newTagForm.name.trim()) return
+
+    setIsCreatingTag(true)
+    try {
+      const aliases = newTagForm.aliases
+        .split(',')
+        .map((alias) => alias.trim())
+        .filter((alias) => alias.length > 0)
+
+      await createTag({
+        name: newTagForm.name.trim(),
+        aliases: aliases.length > 0 ? aliases : undefined,
+      })
+
+      setIsCreateTagModalOpen(false)
+      setNewTagForm({ name: '', aliases: '' })
+    } catch (error) {
+      console.error('Failed to create tag:', error)
+    } finally {
+      setIsCreatingTag(false)
+    }
+  }
 
   if (tagsLoading) return <Loading />
 
@@ -39,12 +68,16 @@ function NewEventPage() {
           <div className="mb-6">
             <div className="mb-2 flex items-center justify-between">
               <span
-                className={`text-sm ${step >= 1 ? 'text-primary' : 'text-base-content/50'}`}
+                className={`text-sm ${
+                  step >= 1 ? 'text-primary' : 'text-base-content/50'
+                }`}
               >
                 {t('step1')}
               </span>
               <span
-                className={`text-sm ${step >= 2 ? 'text-primary' : 'text-base-content/50'}`}
+                className={`text-sm ${
+                  step >= 2 ? 'text-primary' : 'text-base-content/50'
+                }`}
               >
                 {t('step2')}
               </span>
@@ -98,13 +131,28 @@ function NewEventPage() {
                   />
                 </div>
                 <div className="form-control">
-                  <label className="label font-medium">{t('form.tags')}</label>
+                  <div className="mb-2 flex items-center justify-between">
+                    <label className="label font-medium">
+                      {t('form.tags')}
+                    </label>
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-primary btn-circle"
+                      onClick={() => setIsCreateTagModalOpen(true)}
+                    >
+                      <Plus size={16} />
+                    </button>
+                  </div>
                   <div className="border-base-300 h-32 overflow-y-auto rounded-lg border p-3">
                     <div className="flex flex-wrap gap-2">
                       {tags.map((tag) => (
                         <label
                           key={tag.id}
-                          className={`btn btn-sm btn-outline flex cursor-pointer items-center gap-2 ${formData.tagIds.includes(tag.id) ? 'btn-primary' : ''}`}
+                          className={`btn btn-sm btn-outline flex cursor-pointer items-center gap-2 ${
+                            formData.tagIds.includes(tag.id)
+                              ? 'btn-primary'
+                              : ''
+                          }`}
                         >
                           <input
                             type="checkbox"
@@ -201,6 +249,83 @@ function NewEventPage() {
           </form>
         </div>
       </div>
+
+      {/* Create Tag Modal */}
+      {isCreateTagModalOpen && (
+        <div className="modal modal-open">
+          <div className="modal-box">
+            <div className="mb-4 flex items-center justify-between">
+              <h3 className="text-lg font-bold">{t('createTag.title')}</h3>
+              <button
+                className="btn btn-sm btn-ghost btn-circle"
+                onClick={() => setIsCreateTagModalOpen(false)}
+              >
+                <X size={16} />
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <div className="form-control space-x-2">
+                <label className="label">
+                  <span className="label-text">{t('createTag.name')}</span>
+                </label>
+                <input
+                  type="text"
+                  className="input input-bordered"
+                  value={newTagForm.name}
+                  onChange={(e) =>
+                    setNewTagForm((prev) => ({ ...prev, name: e.target.value }))
+                  }
+                  placeholder={t('createTag.namePlaceholder')}
+                />
+              </div>
+
+              <div className="form-control space-y-2">
+                <label className="label">
+                  <span className="label-text">{t('createTag.aliases')}</span>
+                </label>
+                <input
+                  type="text"
+                  className="input input-bordered"
+                  value={newTagForm.aliases}
+                  onChange={(e) =>
+                    setNewTagForm((prev) => ({
+                      ...prev,
+                      aliases: e.target.value,
+                    }))
+                  }
+                  placeholder={t('createTag.aliasesPlaceholder')}
+                />
+                <label className="label">
+                  <span className="label-text-alt">
+                    {t('createTag.aliasesHint')}
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            <div className="modal-action">
+              <button
+                className="btn btn-ghost"
+                onClick={() => setIsCreateTagModalOpen(false)}
+              >
+                {t('createTag.cancel')}
+              </button>
+              <button
+                className="btn btn-primary"
+                onClick={handleCreateTag}
+                disabled={!newTagForm.name.trim() || isCreatingTag}
+              >
+                {isCreatingTag ? (
+                  <span className="loading loading-spinner loading-sm"></span>
+                ) : (
+                  t('createTag.create')
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

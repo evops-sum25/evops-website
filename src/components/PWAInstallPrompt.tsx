@@ -13,13 +13,16 @@ export default function PWAInstallPrompt() {
     useState<BeforeInstallPromptEvent | null>(null)
   const [showInstall, setShowInstall] = useState(false)
   const [isIOS, setIsIOS] = useState(false)
+  const [isFirefox, setIsFirefox] = useState(false)
   const [isStandalone, setIsStandalone] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
     const iOS =
       /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream
+    const firefox = navigator.userAgent.toLowerCase().includes('firefox')
     setIsIOS(iOS)
+    setIsFirefox(firefox)
 
     const standalone =
       window.matchMedia('(display-mode: standalone)').matches ||
@@ -28,6 +31,7 @@ export default function PWAInstallPrompt() {
     setIsStandalone(standalone)
 
     const handler = (e: Event) => {
+      console.log('[PWA] beforeinstallprompt event fired')
       e.preventDefault()
       setDeferredPrompt(e as BeforeInstallPromptEvent)
       setShowInstall(true)
@@ -35,20 +39,15 @@ export default function PWAInstallPrompt() {
 
     window.addEventListener('beforeinstallprompt', handler)
 
-    if (iOS && !standalone) {
-      const timer = setTimeout(() => {
-        setShowInstall(true)
-      }, 3000)
-      return () => {
-        clearTimeout(timer)
-        window.removeEventListener('beforeinstallprompt', handler)
-      }
-    }
+    if (!standalone) {
+      const timer = setTimeout(
+        () => {
+          console.log('[PWA] Showing install prompt (fallback)')
+          setShowInstall(true)
+        },
+        firefox ? 5000 : 3000,
+      )
 
-    if (!iOS && !standalone && 'serviceWorker' in navigator) {
-      const timer = setTimeout(() => {
-        setShowInstall(true)
-      }, 2000)
       return () => {
         clearTimeout(timer)
         window.removeEventListener('beforeinstallprompt', handler)
@@ -67,13 +66,18 @@ export default function PWAInstallPrompt() {
 
   const handleInstall = async () => {
     if (deferredPrompt) {
+      console.log('[PWA] Triggering install prompt')
       deferredPrompt.prompt()
       const { outcome } = await deferredPrompt.userChoice
+      console.log('[PWA] User choice:', outcome)
 
       if (outcome === 'accepted') {
         setDeferredPrompt(null)
         handleClose()
       }
+    } else {
+      console.log('[PWA] No deferred prompt available')
+      handleClose()
     }
   }
 
@@ -96,45 +100,63 @@ export default function PWAInstallPrompt() {
 
   return (
     <div
-      className={`fixed inset-0 z-50 transition-all duration-300 ${
+      className={`fixed inset-0 z-50 flex items-end justify-center transition-all duration-300 sm:items-center ${
         isVisible ? 'opacity-100' : 'pointer-events-none opacity-0'
       }`}
     >
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/20 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/40 backdrop-blur-sm"
         onClick={handleClose}
       />
 
-      {/* Modal */}
-      <div className="flex min-h-screen items-end justify-center p-4 sm:items-center">
+      <div className="relative mx-4 mb-4 w-full max-w-sm sm:mx-auto sm:mb-0">
         <div
-          className={`relative mx-auto w-full max-w-sm transition-all duration-300 ${
+          className={`relative transition-all duration-300 ${
             isVisible ? 'translate-y-0 scale-100' : 'translate-y-4 scale-95'
           }`}
         >
-          <div className="card bg-base-100 border-base-300 border shadow-2xl">
-            <div className="card-body">
-              <div className="mb-4 flex items-center gap-3">
-                <div className="bg-primary/10 flex h-12 w-12 items-center justify-center rounded-full">
-                  <img
-                    alt="logo"
-                    src="/logo.png"
-                    className="text-primary h-8 w-8"
+          <div className="card bg-base-100 border-base-300 overflow-hidden rounded-2xl border shadow-2xl sm:rounded-3xl">
+            <div className="from-primary/5 to-accent/5 relative bg-gradient-to-br p-6 pb-4">
+              <button
+                className="btn btn-ghost btn-sm btn-circle absolute top-4 right-4"
+                onClick={handleClose}
+                aria-label="Закрыть"
+              >
+                <svg
+                  className="h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
                   />
+                </svg>
+              </button>
+
+              <div className="flex items-center gap-4">
+                <div className="bg-primary/20 flex h-16 w-16 items-center justify-center rounded-2xl">
+                  <img alt="logo" src="/logo.png" className="h-10 w-10" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold">{t('title')}</h3>
-                  <p className="text-sm opacity-70">{t('subtitle')}</p>
+                  <h3 className="text-xl leading-tight font-bold">
+                    {t('title')}
+                  </h3>
+                  <p className="mt-1 text-sm opacity-70">{t('subtitle')}</p>
                 </div>
               </div>
+            </div>
 
-              {/* Основной контент */}
-              <div className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <div className="bg-success/10 mt-1 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full">
+            <div className="p-6 pt-4">
+              <div className="mb-6 space-y-4">
+                <div className="flex items-start gap-4">
+                  <div className="bg-success/10 mt-1 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl">
                     <svg
-                      className="text-success h-4 w-4"
+                      className="text-success h-5 w-5"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                     >
@@ -145,101 +167,120 @@ export default function PWAInstallPrompt() {
                       />
                     </svg>
                   </div>
-                  <div>
-                    <p className="text-sm font-medium">{t('feature1')}</p>
-                    <p className="text-xs opacity-60">{t('feature1Desc')}</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <div className="bg-success/10 mt-1 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full">
-                    <svg
-                      className="text-success h-4 w-4"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium">{t('feature2')}</p>
-                    <p className="text-xs opacity-60">{t('feature2Desc')}</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <div className="bg-success/10 mt-1 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full">
-                    <svg
-                      className="text-success h-4 w-4"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium">{t('feature3')}</p>
-                    <p className="text-xs opacity-60">{t('feature3Desc')}</p>
-                  </div>
-                </div>
-              </div>
-
-              {isIOS && (
-                <div className="alert alert-info mt-4">
-                  <svg
-                    className="h-5 w-5"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  <div className="text-sm">
-                    <p className="font-medium">{t('iosInstructions')}</p>
-                    <p className="mt-1 text-xs opacity-80">
-                      {t('iosSteps')} <span className="kbd kbd-xs">⎙</span> → "
-                      {t('iosAddToHome')}"
+                  <div className="min-w-0 flex-1">
+                    <p className="text-base font-medium">{t('feature1')}</p>
+                    <p className="mt-1 text-sm opacity-60">
+                      {t('feature1Desc')}
                     </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="bg-success/10 mt-1 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl">
+                    <svg
+                      className="text-success h-5 w-5"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-base font-medium">{t('feature2')}</p>
+                    <p className="mt-1 text-sm opacity-60">
+                      {t('feature2Desc')}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="bg-success/10 mt-1 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl">
+                    <svg
+                      className="text-success h-5 w-5"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-base font-medium">{t('feature3')}</p>
+                    <p className="mt-1 text-sm opacity-60">
+                      {t('feature3Desc')}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {isFirefox && (
+                <div className="alert alert-info mb-6 rounded-xl p-4">
+                  <div className="flex items-start gap-3">
+                    <svg
+                      className="mt-0.5 h-6 w-6 flex-shrink-0"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium">Для Firefox:</p>
+                      <p className="mt-1 text-sm opacity-80">
+                        Меню <span className="kbd kbd-xs mx-1">⋮</span> →
+                        "Установить" или "Добавить на главный экран"
+                      </p>
+                    </div>
                   </div>
                 </div>
               )}
 
-              <div className="card-actions mt-6 justify-end gap-2">
-                <button className="btn btn-ghost btn-sm" onClick={handleClose}>
-                  <svg
-                    className="mr-1 h-4 w-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                  {t('decline')}
-                </button>
+              {isIOS && (
+                <div className="alert alert-info mb-6 rounded-xl p-4">
+                  <div className="flex items-start gap-3">
+                    <svg
+                      className="mt-0.5 h-6 w-6 flex-shrink-0"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium">
+                        {t('iosInstructions')}
+                      </p>
+                      <p className="mt-1 text-sm opacity-80">
+                        {t('iosSteps')}{' '}
+                        <span className="kbd kbd-xs mx-1">⎙</span> → "
+                        {t('iosAddToHome')}"
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
 
+              <div className="flex flex-col gap-3 sm:flex-row-reverse">
                 {deferredPrompt ? (
                   <button
-                    className="btn btn-primary btn-sm"
+                    className="btn btn-primary btn-lg h-14 flex-1 rounded-xl text-base"
                     onClick={handleInstall}
                   >
                     <svg
-                      className="mr-1 h-4 w-4"
+                      className="mr-2 h-5 w-5"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -255,11 +296,11 @@ export default function PWAInstallPrompt() {
                   </button>
                 ) : (
                   <button
-                    className="btn btn-primary btn-sm"
+                    className="btn btn-primary btn-lg h-14 flex-1 rounded-xl text-base"
                     onClick={handleClose}
                   >
                     <svg
-                      className="mr-1 h-4 w-4"
+                      className="mr-2 h-5 w-5"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -274,6 +315,13 @@ export default function PWAInstallPrompt() {
                     {t('understood')}
                   </button>
                 )}
+
+                <button
+                  className="btn btn-ghost btn-lg h-14 flex-1 rounded-xl text-base sm:flex-initial"
+                  onClick={handleClose}
+                >
+                  {t('decline')}
+                </button>
               </div>
             </div>
           </div>

@@ -33,6 +33,10 @@ export default {
     searchResultsFor: 'Results for "{{query}}"',
     resultsCount_one: '{{count}} result',
     resultsCount_other: '{{count}} results',
+    noTagResults: 'No events found',
+    noTagResultsFor: 'No events found for "{{tagName}}" tag',
+    clearTagFilter: 'Clear filter',
+    tagFilterResultsFor: 'Events with "{{tagName}}" tag',
   },
   newEvent: {
     step1: 'Step 1',

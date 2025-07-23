@@ -1,3 +1,5 @@
+import { useSearchStore } from '@/lib/stores/searchStore'
+import { useNavigate } from '@tanstack/react-router'
 import clsx from 'clsx'
 
 export type TagColor =
@@ -19,8 +21,17 @@ export interface TagProps {
 }
 
 export default function Tag(props: TagProps) {
+  const navigate = useNavigate()
+  const { setTagFilter } = useSearchStore()
+
+  const handleTagClick = () => {
+    setTagFilter([props.id], props.name)
+    navigate({ to: '/events' })
+  }
+
   return (
     <button
+      onClick={handleTagClick}
       className={clsx([
         'btn btn-sm lg:btn-lg border-0 shadow-none active:text-white',
         props.color == 'red' &&

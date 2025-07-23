@@ -115,4 +115,20 @@ export default {
   searchArea: {
     placeholder: 'Поиск',
   },
+  pwaInstall: {
+    title: 'Установить приложение',
+    subtitle: 'EvOps — События и возможности',
+    feature1: 'Быстрый доступ',
+    feature1Desc: 'Запускайте прямо с главного экрана',
+    feature2: 'Работает офлайн',
+    feature2Desc: 'Просматривайте события без интернета',
+    feature3: 'Уведомления',
+    feature3Desc: 'Получайте напоминания о событиях',
+    iosInstructions: 'Инструкция для iOS',
+    iosSteps: 'Нажмите',
+    iosAddToHome: 'На экран «Домой»',
+    decline: 'Не сейчас',
+    accept: 'Установить',
+    understood: 'Понятно',
+  },
 } as const

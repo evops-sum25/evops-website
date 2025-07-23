@@ -115,4 +115,20 @@ export default {
   searchArea: {
     placeholder: 'Search',
   },
+  pwaInstall: {
+    title: 'Install App',
+    subtitle: 'EvOps — Events & Opportunities',
+    feature1: 'Quick Access',
+    feature1Desc: 'Launch directly from your home screen',
+    feature2: 'Works Offline',
+    feature2Desc: 'Browse events without internet',
+    feature3: 'Notifications',
+    feature3Desc: 'Get reminders about events',
+    iosInstructions: 'Instructions for iOS',
+    iosSteps: 'Tap',
+    iosAddToHome: 'Add to Home Screen',
+    decline: 'Not now',
+    accept: 'Install',
+    understood: 'Got it',
+  },
 } as const

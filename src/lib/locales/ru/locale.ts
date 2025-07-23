@@ -35,6 +35,10 @@ export default {
     resultsCount_few: '{{count}} результата',
     resultsCount_many: '{{count}} результатов',
     resultsCount_other: '{{count}} результатов',
+    noTagResults: 'События не найдены',
+    noTagResultsFor: 'События с тегом "{{tagName}}" не найдены',
+    clearTagFilter: 'Очистить фильтр',
+    tagFilterResultsFor: 'События с тегом "{{tagName}}"',
   },
   newEvent: {
     step1: 'Шаг 1',
@@ -57,6 +61,16 @@ export default {
     validation: {
       titleRequired: 'Название обязательно',
       descriptionRequired: 'Описание обязательно',
+    },
+    createTag: {
+      title: 'Создать новый тег',
+      name: 'Название',
+      namePlaceholder: 'например, музыка, технологии, спорт',
+      aliases: 'Альтернативные названия (опционально)',
+      aliasesPlaceholder: 'концерт, выступление, представление',
+      aliasesHint: 'Разделите альтернативные названия запятыми',
+      cancel: 'Отмена',
+      create: 'Создать тег',
     },
   },
   asideNav: {

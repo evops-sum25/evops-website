@@ -1,4 +1,4 @@
-import { useSearch } from '@/lib/api/hooks/getEvents.ts'
+import { useSearch } from '@/lib/api/hooks/eventService/getEvents.ts'
 import { useEffect, useState } from 'react'
 
 export function useSearchLogic(query: string) {

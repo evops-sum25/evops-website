@@ -1,5 +1,5 @@
 import { TagProps } from '@/components/shared/Tag.tsx'
-import getApi from '@/lib/api/api'
+import getApi from '@/lib/api/api.ts'
 import { FormDataState } from '@/lib/types.ts'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'

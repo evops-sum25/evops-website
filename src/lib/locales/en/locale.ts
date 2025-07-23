@@ -33,6 +33,10 @@ export default {
     searchResultsFor: 'Results for "{{query}}"',
     resultsCount_one: '{{count}} result',
     resultsCount_other: '{{count}} results',
+    noTagResults: 'No events found',
+    noTagResultsFor: 'No events found for "{{tagName}}" tag',
+    clearTagFilter: 'Clear filter',
+    tagFilterResultsFor: 'Events with "{{tagName}}" tag',
   },
   newEvent: {
     step1: 'Step 1',
@@ -56,6 +60,16 @@ export default {
     validation: {
       titleRequired: 'Title is required',
       descriptionRequired: 'Description is required',
+    },
+    createTag: {
+      title: 'Create New Tag',
+      name: 'Name',
+      namePlaceholder: 'e.g., music, tech, sports',
+      aliases: 'Aliases (optional)',
+      aliasesPlaceholder: 'concert, gig, performance',
+      aliasesHint: 'Separate aliases with commas',
+      cancel: 'Cancel',
+      create: 'Create Tag',
     },
   },
   asideNav: {

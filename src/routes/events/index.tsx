@@ -2,7 +2,11 @@ import Loading from '@/components/shared/Loading'
 import TagBar from '@/components/shared/TagBar'
 import { Event as ApiEvent } from '@/gen/evops/api/v1/api_pb.ts'
 import getApi from '@/lib/api/api'
-import { useEvents, useSearch } from '@/lib/api/hooks/getEvents.ts'
+import {
+  useEvents,
+  useEventsByTags,
+  useSearch,
+} from '@/lib/api/hooks/eventService/getEvents.ts'
 import { useSearchStore } from '@/lib/stores/searchStore.ts'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useCallback, useEffect, useState } from 'react'
@@ -17,9 +21,20 @@ function EventsList() {
   const api = getApi()
   const [events, setEvents] = useState<ApiEvent[]>([])
   const [lastEvent, setLastEvent] = useState<string>('')
+  const [tagFilterEvents, setTagFilterEvents] = useState<ApiEvent[]>([])
+  const [lastTagEvent, setLastTagEvent] = useState<string>('')
   const [isFetching, setFetching] = useState<boolean>(false)
+  const [isTagFetching, setTagFetching] = useState<boolean>(false)
 
-  const { query, isMode, clearSearch } = useSearchStore()
+  const {
+    query,
+    isMode,
+    selectedTagIds,
+    selectedTagName,
+    isTagFilterMode,
+    clearSearch,
+    clearTagFilter,
+  } = useSearchStore()
 
   const {
     data: eventsData,
@@ -30,11 +45,31 @@ function EventsList() {
 
   const { data: searchData, isLoading: searchLoading } = useSearch(query)
 
-  const displayEvents = isMode ? searchData?.events || [] : events
-  const isLoading = isMode ? searchLoading : eventsLoading
+  const {
+    data: tagFilterData,
+    isLoading: tagFilterLoading,
+    refetch: refetchTagFilter,
+  } = useEventsByTags(selectedTagIds, lastTagEvent)
+
+  const displayEvents = isMode
+    ? searchData?.events || []
+    : isTagFilterMode
+      ? tagFilterEvents
+      : events
+
+  const isLoading = isMode
+    ? searchLoading
+    : isTagFilterMode
+      ? tagFilterLoading && tagFilterEvents.length === 0
+      : eventsLoading
 
   useEffect(() => {
-    if (!isMode && eventsData?.events && eventsData.events.length > 0) {
+    if (
+      !isMode &&
+      !isTagFilterMode &&
+      eventsData?.events &&
+      eventsData.events.length > 0
+    ) {
       setEvents((prev) => {
         if (!lastEvent) {
           return [...eventsData.events]
@@ -44,7 +79,28 @@ function EventsList() {
       setLastEvent(eventsData.events[eventsData.events.length - 1].id)
     }
     setFetching(false)
-  }, [eventsData, isMode, lastEvent])
+  }, [eventsData, isMode, isTagFilterMode, lastEvent])
+
+  useEffect(() => {
+    if (
+      isTagFilterMode &&
+      tagFilterData?.events &&
+      tagFilterData.events.length > 0
+    ) {
+      setTagFilterEvents((prev) => {
+        if (!lastTagEvent) {
+          return [...tagFilterData.events]
+        }
+        return [...prev, ...tagFilterData.events]
+      })
+      if (tagFilterData.events.length > 0) {
+        setLastTagEvent(
+          tagFilterData.events[tagFilterData.events.length - 1].id,
+        )
+      }
+    }
+    setTagFetching(false)
+  }, [tagFilterData, isTagFilterMode])
 
   useEffect(() => {
     if (isMode) {
@@ -52,19 +108,48 @@ function EventsList() {
       setLastEvent('')
       setFetching(false)
     }
-  }, [isMode])
+    if (isTagFilterMode) {
+      setTagFilterEvents([])
+      setLastTagEvent('')
+      setTagFetching(false)
+    }
+    if (!isMode && !isTagFilterMode) {
+      setTagFilterEvents([])
+      setLastTagEvent('')
+      setTagFetching(false)
+    }
+  }, [isMode, isTagFilterMode, selectedTagIds])
 
   const scrollHandler = useCallback(() => {
-    if (isMode) return
-
     const position =
       document.documentElement.scrollHeight -
       (document.documentElement.scrollTop + window.innerHeight)
-    if (position < 300 && !isFetching && !eventsLoading) {
-      setFetching(true)
-      refetch()
+
+    if (position < 300) {
+      if (isTagFilterMode && !isTagFetching && !tagFilterLoading) {
+        if (tagFilterData?.events && tagFilterData.events.length === 25) {
+          setTagFetching(true)
+          refetchTagFilter()
+        }
+      } else if (!isMode && !isTagFilterMode && !isFetching && !eventsLoading) {
+        if (eventsData?.events && eventsData.events.length === 25) {
+          setFetching(true)
+          refetch()
+        }
+      }
     }
-  }, [isFetching, eventsLoading, refetch, isMode])
+  }, [
+    isFetching,
+    eventsLoading,
+    refetch,
+    isMode,
+    isTagFilterMode,
+    isTagFetching,
+    tagFilterLoading,
+    refetchTagFilter,
+    tagFilterData,
+    eventsData,
+  ])
 
   useEffect(() => {
     document.addEventListener('scroll', scrollHandler)
@@ -81,6 +166,23 @@ function EventsList() {
           </p>
           <button onClick={clearSearch} className="btn btn-xl btn-secondary">
             {t('showAllEvents')}
+          </button>
+        </div>
+      </main>
+    )
+  }
+
+  // Tag filter no results state
+  if (isTagFilterMode && displayEvents.length === 0 && !isLoading) {
+    return (
+      <main className="main-layout w-full overflow-x-hidden px-4 md:ml-56 md:max-w-[calc(100vw-14rem)] lg:px-80">
+        <div className="flex flex-col items-center justify-center py-20">
+          <h2 className="mb-4 text-2xl font-bold">{t('noTagResults')}</h2>
+          <p className="mb-6 text-center text-gray-600">
+            {t('noTagResultsFor', { tagName: selectedTagName })}
+          </p>
+          <button onClick={clearTagFilter} className="btn btn-xl btn-secondary">
+            {t('clearTagFilter')}
           </button>
         </div>
       </main>
@@ -108,6 +210,7 @@ function EventsList() {
 
   return (
     <main className="main-layout w-full overflow-x-hidden px-4 md:ml-56 md:max-w-[calc(100vw-14rem)] lg:px-80">
+      {/* Search results header */}
       {isMode && (
         <div className="bg-base-100/95 border-base-200 fixed top-16 right-0 left-0 z-20 border-b shadow-sm backdrop-blur-md md:right-0 md:left-56">
           <div className="mx-auto px-4 py-4 lg:px-80">
@@ -144,7 +247,44 @@ function EventsList() {
         </div>
       )}
 
-      <div className={isMode ? 'mt-28 sm:mt-24' : ''}>
+      {/* Tag filter header */}
+      {isTagFilterMode && (
+        <div className="bg-base-100/95 border-base-200 fixed top-16 right-0 left-0 z-20 border-b shadow-sm backdrop-blur-md md:right-0 md:left-56">
+          <div className="mx-auto px-4 py-4 lg:px-80">
+            <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+              <div className="text-center sm:text-left">
+                <h2 className="text-base-content text-lg font-semibold sm:text-xl">
+                  {t('tagFilterResultsFor', { tagName: selectedTagName })}
+                </h2>
+                <p className="text-base-content/70 mt-1 text-sm">
+                  {t('resultsCount', { count: displayEvents.length })}
+                </p>
+              </div>
+              <button
+                onClick={clearTagFilter}
+                className="btn btn-primary btn-sm min-w-fit gap-2"
+              >
+                <svg
+                  className="h-4 w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+                {t('showAllEvents')}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className={isMode || isTagFilterMode ? 'mt-28 sm:mt-24' : ''}>
         {displayEvents.map((event) => (
           <section
             key={event.id}
@@ -199,7 +339,13 @@ function EventsList() {
           </section>
         ))}
 
-        {isFetching && !isMode && (
+        {isFetching && !isMode && !isTagFilterMode && (
+          <div className="flex justify-center py-4">
+            <Loading />
+          </div>
+        )}
+
+        {isTagFetching && isTagFilterMode && (
           <div className="flex justify-center py-4">
             <Loading />
           </div>

@@ -12,7 +12,7 @@ export function useEvents(last: string = '') {
   }
 
   return useQuery({
-    queryKey: ['events'],
+    queryKey: ['events', last],
     queryFn: async () => await api.eventService.list(apiParam),
     refetchOnWindowFocus: false,
     staleTime: 0,
@@ -24,6 +24,23 @@ export function useSearch(query: string) {
     queryKey: ['search', query],
     queryFn: async () => await api.eventService.list({ search: query }),
     enabled: query.length > 0,
+    refetchOnWindowFocus: false,
+    staleTime: 0,
+  })
+}
+
+export function useEventsByTags(tagIds: string[], last: string = '') {
+  let apiParam
+  if (last === '') {
+    apiParam = { limit: 25n, tagIds: tagIds }
+  } else {
+    apiParam = { limit: 25n, lastId: last, tagIds: tagIds }
+  }
+
+  return useQuery({
+    queryKey: ['events', 'tags', tagIds, last],
+    queryFn: async () => await api.eventService.list(apiParam),
+    enabled: tagIds.length > 0,
     refetchOnWindowFocus: false,
     staleTime: 0,
   })

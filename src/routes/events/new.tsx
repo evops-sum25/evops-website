@@ -1,6 +1,9 @@
 import Loading from '@/components/shared/Loading'
-import { useCreateTag } from '@/lib/api/hooks/createTag'
-import { useNewEventForm, useTags } from '@/lib/api/hooks/newEventPage'
+import {
+  useNewEventForm,
+  useTags,
+} from '@/lib/api/hooks/eventService/newEventPage.ts'
+import { useCreateTag } from '@/lib/api/hooks/tagService/createTag.ts'
 import { requireAuth } from '@/lib/api/requireAuth.ts'
 import { createFileRoute } from '@tanstack/react-router'
 import { Plus, Trash, X } from 'lucide-react'
@@ -63,7 +66,7 @@ function NewEventPage() {
 
   return (
     <div className="flex min-h-[80vh] w-full items-center justify-center p-4 md:ml-56 md:max-w-[calc(100vw-14rem)]">
-      <div className="card bg-base-200 w-full max-w-2xl shadow-xl">
+      <div className="card bg-base-200 mt-30 w-full max-w-2xl shadow-xl">
         <div className="card-body">
           <div className="mb-6">
             <div className="mb-2 flex items-center justify-between">

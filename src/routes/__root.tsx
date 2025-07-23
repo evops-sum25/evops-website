@@ -1,3 +1,4 @@
+import PWAInstallPrompt from '@/components/PWAInstallPrompt'
 import AsideNav from '@/components/widgets/AsideNav'
 import Footer from '@/components/widgets/Footer'
 import Header from '@/components/widgets/Header'
@@ -19,12 +20,13 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
     const path = router.state.location.pathname
     const hideAsideAndFooter = path === '/login' || path === '/signup'
     return (
-      <div>
+      <>
         {!hideAsideAndFooter && <AsideNav />}
         <Header />
         <Outlet />
         {!hideAsideAndFooter && <Footer />}
-      </div>
+        <PWAInstallPrompt />
+      </>
     )
   },
 })

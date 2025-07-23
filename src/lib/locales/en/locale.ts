@@ -17,6 +17,9 @@ export default {
     cancel: 'Cancel',
     delete: 'Delete',
     deleting: 'Deleting...',
+    createdAt: 'Created {{date}}',
+    unknownDate: 'Unknown date',
+    createdLabel: 'Created',
   },
   eventsList: {
     title: 'Events',

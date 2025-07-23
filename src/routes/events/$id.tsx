@@ -1,3 +1,4 @@
+import EventMeta from '@/components/shared/EventMeta.tsx'
 import Loading from '@/components/shared/Loading'
 import Markdown from '@/components/shared/Markdown.tsx'
 import TagBar from '@/components/shared/TagBar.tsx'
@@ -6,6 +7,7 @@ import getApi from '@/lib/api/api.ts'
 import { useDeleteEvent } from '@/lib/api/hooks/eventService/deleteEvent.ts'
 import { useSingleEvent } from '@/lib/api/hooks/eventService/getSingleEvent.ts'
 import { useMyInfo } from '@/lib/api/hooks/useAuth.ts'
+import { formatDateForEventMeta } from '@/lib/functions/timestampUtils.ts'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { EllipsisVertical, Trash } from 'lucide-react'
 import { useEffect, useState } from 'react'
@@ -70,6 +72,8 @@ function EventPage() {
   const isAuthor =
     currentUser && event.author && currentUser.id === event.author.id
 
+  const createdAtMeta = formatDateForEventMeta(event.createdAt)
+
   return (
     <>
       <main className="main-layout w-full overflow-x-hidden px-4 md:ml-56 md:max-w-[calc(100vw-14rem)] lg:px-80">
@@ -119,6 +123,15 @@ function EventPage() {
         <article className="text-base-content mt-4 w-full lg:w-auto">
           <Markdown text={event.description} />
         </article>
+
+        {/* Event Footer */}
+        <footer className="border-base-300 mt-8 border-t pt-4">
+          <EventMeta
+            place={createdAtMeta.place}
+            date={createdAtMeta.date}
+            time={createdAtMeta.time}
+          />
+        </footer>
       </main>
 
       {/* Delete Confirmation Modal */}

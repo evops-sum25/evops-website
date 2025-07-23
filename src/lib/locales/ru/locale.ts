@@ -17,6 +17,8 @@ export default {
     cancel: 'Отмена',
     delete: 'Удалить',
     deleting: 'Удаление...',
+    createdAt: 'Создано {{date}}',
+    unknownDate: 'Неизвестная дата',
   },
   eventsList: {
     title: 'События',
@@ -60,7 +62,7 @@ export default {
     },
     validation: {
       titleRequired: 'Название обязательно',
-      descriptionRequired: 'Описание обязательно',
+      descriptionRequired: 'Описание о��язательно',
     },
     createTag: {
       title: 'Создать новый тег',
@@ -68,7 +70,7 @@ export default {
       namePlaceholder: 'например, музыка, технологии, спорт',
       aliases: 'Альтернативные названия (опционально)',
       aliasesPlaceholder: 'концерт, выступление, представление',
-      aliasesHint: 'Разделите альтернативные названия запятыми',
+      aliasesHint: 'Разделите альтерн��тивные названия запятыми',
       cancel: 'Отмена',
       create: 'Создать тег',
     },

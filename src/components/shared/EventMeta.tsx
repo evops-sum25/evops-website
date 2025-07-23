@@ -5,20 +5,13 @@ export interface EventMetaProps {
 }
 
 export default function EventMeta({ place, date, time }: EventMetaProps) {
-  const parsedDate = new Date(
-    `${date.split('.').reverse().join('-')}T${time.replace(' PM', '').replace(' AM', '')}`,
-  )
-  const formattedTime = parsedDate.toLocaleTimeString(undefined, {
-    hour: '2-digit',
-    minute: '2-digit',
-  })
   return (
-    <div className="text-base-content flex flex-row items-center gap-2 text-center font-bold">
+    <div className="text-base-content/60 flex flex-row items-center gap-2 text-sm">
       <p>{place}</p>
       <span>|</span>
-      <data value={date}>{date}</data>
+      <span>{date}</span>
       <span>|</span>
-      <time>{formattedTime}</time>
+      <span>{time}</span>
     </div>
   )
 }
